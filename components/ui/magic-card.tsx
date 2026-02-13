@@ -87,7 +87,7 @@ export function MagicCard({
           `,
         }}
       />
-      <div className="bg-background absolute inset-px rounded-[inherit]" />
+      <div className="absolute inset-px rounded-[inherit]" />
       <motion.div
         className="pointer-events-none absolute inset-px rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
@@ -97,7 +97,7 @@ export function MagicCard({
           opacity: gradientOpacity,
         }}
       />
-      <div className="relative">{children}</div>
+      <div className="relative h-full">{children}</div>
     </div>
   )
 }
