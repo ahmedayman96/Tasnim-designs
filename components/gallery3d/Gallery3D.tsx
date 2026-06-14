@@ -6,6 +6,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import * as THREE from "three";
 import Link from "next/link";
 import { artworks, type Artwork } from "@/lib/artworks";
+import RoomPreview from "@/components/room-preview/RoomPreview";
 
 /* ------------------------------------------------------------------ */
 /* Room dimensions                                                     */
@@ -13,8 +14,8 @@ import { artworks, type Artwork } from "@/lib/artworks";
 const ROOM = { width: 13, depth: 26, height: 4.6 };
 const HALF_W = ROOM.width / 2;
 const HALF_D = ROOM.depth / 2;
-const ART_Y = 2.0; // vertical centre of each painting
 const EYE = 1.6; // camera / eye height
+const ART_Y = EYE; // hang paintings centred at eye level
 
 /* Movement bounds (keep the player off the walls) */
 const BOUND_X = HALF_W - 1;
@@ -43,14 +44,14 @@ function buildLayout(): Placed[] {
     left.forEach((art, i) =>
         placed.push({
             art,
-            position: [-HALF_W + 0.15, ART_Y, spaceZ(left.length, i)],
+            position: [-HALF_W + 0.15, 0, spaceZ(left.length, i)],
             rotationY: Math.PI / 2, // face +x (into room)
         }),
     );
     right.forEach((art, i) =>
         placed.push({
             art,
-            position: [HALF_W - 0.15, ART_Y, spaceZ(right.length, i)],
+            position: [HALF_W - 0.15, 0, spaceZ(right.length, i)],
             rotationY: -Math.PI / 2, // face -x (into room)
         }),
     );
@@ -112,8 +113,9 @@ function ArtFrame({
     // Preserve the artwork's real aspect ratio
     const img = tex.image as HTMLImageElement | undefined;
     const aspect = img && img.width && img.height ? img.width / img.height : 1;
-    const H = 2.0;
+    const H = 1.7;
     const W = Math.min(3.2, H * aspect);
+    const plaqueY = ART_Y - H / 2 - 0.2; // sits just below the frame
 
     const plaque = useMemo(() => makePlaque(art), [art]);
 
@@ -178,7 +180,7 @@ function ArtFrame({
                 />
             </mesh>
             {/* plaque */}
-            <mesh position={[0, ART_Y - 1.35, 0.08]}>
+            <mesh position={[0, plaqueY, 0.08]}>
                 <planeGeometry args={[1.2, 0.36]} />
                 <meshBasicMaterial map={plaque} transparent />
             </mesh>
@@ -475,6 +477,7 @@ export default function Gallery3D() {
     const dragRef = useRef({ dist: 0 });
     const layout = useMemo(buildLayout, []);
     const [selected, setSelected] = useState<Artwork | null>(null);
+    const [previewArt, setPreviewArt] = useState<Artwork | null>(null);
     const [isTouch, setIsTouch] = useState(false);
     const [showHint, setShowHint] = useState(true);
     const [motionOn, setMotionOn] = useState(false);
@@ -643,12 +646,52 @@ export default function Gallery3D() {
                             <p className="mt-1 font-serif text-gold">${selected.price.toLocaleString()}</p>
                         </div>
                     </div>
-                    <Link
-                        href={`/artwork/${selected.slug}`}
-                        className="mt-4 block w-full rounded-full bg-gold py-2.5 text-center text-sm font-medium uppercase tracking-[0.15em] text-midnight transition-colors hover:bg-gold-light"
+                    <div className="mt-4 flex flex-col gap-2">
+                        <Link
+                            href={`/artwork/${selected.slug}`}
+                            className="block w-full rounded-full bg-gold py-2.5 text-center text-sm font-medium uppercase tracking-[0.15em] text-midnight transition-colors hover:bg-gold-light"
+                        >
+                            View &amp; Purchase
+                        </Link>
+                        <button
+                            onClick={() => setPreviewArt(selected)}
+                            className="flex w-full items-center justify-center gap-2 rounded-full border border-gold/40 py-2.5 text-sm font-medium uppercase tracking-[0.15em] text-gold transition-colors hover:bg-gold/10"
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2" />
+                                <path d="M3 15l5-5 4 4 3-3 6 6" />
+                                <circle cx="8.5" cy="8.5" r="1.5" />
+                            </svg>
+                            See it in your room
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* See-it-in-your-room modal */}
+            {previewArt && (
+                <div
+                    className="absolute inset-0 z-[60] flex items-start justify-center overflow-y-auto bg-midnight/85 p-4 backdrop-blur-md md:items-center"
+                    onClick={() => setPreviewArt(null)}
+                >
+                    <div
+                        className="relative my-8 w-full max-w-lg rounded-2xl border border-gold/15 bg-charcoal p-6"
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        View &amp; Purchase
-                    </Link>
+                        <button
+                            onClick={() => setPreviewArt(null)}
+                            className="absolute right-4 top-4 text-cream-muted transition-colors hover:text-gold"
+                            aria-label="Close"
+                        >
+                            ✕
+                        </button>
+                        <p className="text-xs uppercase tracking-[0.3em] text-gold">See It In Your Space</p>
+                        <h3 className="mt-2 font-serif text-2xl text-cream">{previewArt.title}</h3>
+                        <p className="mb-5 mt-1 text-sm text-cream-muted">
+                            Upload a photo of your room to preview it on your wall.
+                        </p>
+                        <RoomPreview artwork={previewArt} />
+                    </div>
                 </div>
             )}
         </div>

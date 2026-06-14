@@ -88,10 +88,7 @@ export async function POST(req: NextRequest) {
         const artPath = path.join(process.cwd(), "public", artwork.image);
         const artBuf = await fs.readFile(artPath);
 
-        const roomFile = await toFile(roomBuf, "room.png", {
-            type: room.type || "image/png",
-        });
-        const artFile = await toFile(artBuf, "artwork.png", { type: "image/png" });
+        const roomType = room.type || "image/png";
 
         const prompt =
             `The FIRST image is a photo of a real interior room. The SECOND image is a ` +
@@ -104,13 +101,38 @@ export async function POST(req: NextRequest) {
             `the artwork itself — keep its content faithful to the SECOND image.`;
 
         const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-        const result = await client.images.edit({
-            model: "gpt-image-1",
-            image: [roomFile, artFile],
-            prompt,
-            size: "auto",
-            quality: "medium",
-        });
+
+        // Fresh file handles per attempt (the SDK consumes the streams).
+        const runEdit = async (model: string) => {
+            const roomFile = await toFile(roomBuf, "room.png", { type: roomType });
+            const artFile = await toFile(artBuf, "artwork.png", { type: "image/png" });
+            return client.images.edit({
+                model,
+                image: [roomFile, artFile],
+                prompt,
+                size: "auto",
+                quality:
+                    (process.env.OPENAI_IMAGE_QUALITY as "low" | "medium" | "high") || "low",
+            });
+        };
+
+        const primaryModel = process.env.OPENAI_IMAGE_MODEL || "gpt-image-2";
+        let result;
+        try {
+            result = await runEdit(primaryModel);
+        } catch (e) {
+            const msg = e instanceof Error ? e.message : String(e);
+            // If the configured model isn't available to this account, fall back.
+            if (
+                primaryModel !== "gpt-image-1" &&
+                /model|not found|does not exist|unsupported|invalid/i.test(msg)
+            ) {
+                console.warn(`Model "${primaryModel}" unavailable (${msg}); retrying gpt-image-1`);
+                result = await runEdit("gpt-image-1");
+            } else {
+                throw e;
+            }
+        }
 
         const b64 = result.data?.[0]?.b64_json;
         if (!b64) {
