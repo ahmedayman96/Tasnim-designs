@@ -55,9 +55,9 @@ export default function Navbar() {
                     ))}
                 </div>
 
-                {/* Mobile Toggle */}
+                {/* Mobile Toggle (offset left so it clears the fixed cart button) */}
                 <button
-                    className="md:hidden flex flex-col gap-1.5 p-2"
+                    className="md:hidden flex flex-col gap-1.5 p-2 mr-16"
                     onClick={() => setIsOpen(!isOpen)}
                     aria-label="Toggle menu"
                 >

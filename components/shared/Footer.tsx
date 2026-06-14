@@ -32,13 +32,18 @@ export default function Footer() {
                             Explore
                         </h4>
                         <div className="flex flex-col gap-3">
-                            {["Gallery", "About", "Contact"].map((link) => (
+                            {[
+                                { label: "Gallery", href: "/#gallery" },
+                                { label: "3D Gallery", href: "/gallery-3d" },
+                                { label: "About", href: "/#about" },
+                                { label: "Contact", href: "/#contact" },
+                            ].map((link) => (
                                 <Link
-                                    key={link}
-                                    href={`/#${link.toLowerCase()}`}
+                                    key={link.label}
+                                    href={link.href}
                                     className="text-warm-gray hover:text-gold text-sm transition-colors"
                                 >
-                                    {link}
+                                    {link.label}
                                 </Link>
                             ))}
                         </div>
