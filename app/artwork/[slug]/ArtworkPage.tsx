@@ -7,7 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { MagicCard } from "@/components/ui/magic-card";
 import { RainbowButton } from "@/components/ui/rainbow-button";
-import { useRef } from "react";
+import RoomPreview from "@/components/room-preview/RoomPreview";
+import { useRef, useState } from "react";
 
 interface ArtworkPageProps {
     artwork: Artwork;
@@ -17,6 +18,7 @@ interface ArtworkPageProps {
 export default function ArtworkPage({ artwork, related }: ArtworkPageProps) {
     const { addToCart, items } = useCart();
     const isInCart = items.some((item) => item.artwork.slug === artwork.slug);
+    const [showPreview, setShowPreview] = useState(false);
     const heroRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: heroRef,
@@ -222,6 +224,28 @@ export default function ArtworkPage({ artwork, related }: ArtworkPageProps) {
                     </div>
                 </motion.div>
 
+                {/* See it in your room */}
+                <motion.button
+                    onClick={() => setShowPreview(true)}
+                    className="mt-4 flex w-full items-center justify-center gap-3 rounded-2xl border py-4 text-sm font-medium uppercase tracking-[0.15em] transition-all"
+                    style={{
+                        borderColor: `${artwork.theme.accent}30`,
+                        backgroundColor: `${artwork.theme.accent}08`,
+                        color: artwork.theme.textColor,
+                    }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    whileHover={{ borderColor: `${artwork.theme.accent}60` }}
+                >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <path d="M3 15l5-5 4 4 3-3 6 6" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                    </svg>
+                    See it in your room
+                </motion.button>
+
                 {/* Related Works */}
                 {related.length > 0 && (
                     <div className="mt-24">
@@ -276,6 +300,33 @@ export default function ArtworkPage({ artwork, related }: ArtworkPageProps) {
                     </div>
                 )}
             </section>
+
+            {/* See-it-in-your-room modal */}
+            {showPreview && (
+                <div
+                    className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto bg-midnight/80 p-4 backdrop-blur-md md:items-center"
+                    onClick={() => setShowPreview(false)}
+                >
+                    <div
+                        className="relative my-8 w-full max-w-lg rounded-2xl border border-gold/15 bg-charcoal p-6"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button
+                            onClick={() => setShowPreview(false)}
+                            className="absolute right-4 top-4 text-cream-muted transition-colors hover:text-gold"
+                            aria-label="Close"
+                        >
+                            ✕
+                        </button>
+                        <p className="text-xs uppercase tracking-[0.3em] text-gold">See It In Your Space</p>
+                        <h3 className="mt-2 font-serif text-2xl text-cream">{artwork.title}</h3>
+                        <p className="mb-5 mt-1 text-sm text-cream-muted">
+                            Upload a photo of your room to preview it on your wall.
+                        </p>
+                        <RoomPreview artwork={artwork} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

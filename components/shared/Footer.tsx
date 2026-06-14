@@ -35,6 +35,7 @@ export default function Footer() {
                             {[
                                 { label: "Gallery", href: "/#gallery" },
                                 { label: "3D Gallery", href: "/gallery-3d" },
+                                { label: "Room Preview", href: "/preview" },
                                 { label: "About", href: "/#about" },
                                 { label: "Contact", href: "/#contact" },
                             ].map((link) => (
