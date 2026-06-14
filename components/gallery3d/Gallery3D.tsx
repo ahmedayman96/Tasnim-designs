@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useTexture, Environment } from "@react-three/drei";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import Link from "next/link";
 import { artworks, type Artwork } from "@/lib/artworks";
@@ -258,14 +258,47 @@ function Room() {
 }
 
 /* ------------------------------------------------------------------ */
-/* First-person player: drag to look, WASD / joystick to move          */
+/* Device-orientation (gyroscope) → camera quaternion                  */
+/* Based on the classic three.js DeviceOrientationControls math.       */
+/* ------------------------------------------------------------------ */
+interface OrientState {
+    enabled: boolean;
+    hasReading: boolean;
+    alpha: number; // degrees
+    beta: number;
+    gamma: number;
+    orient: number; // screen orientation, degrees
+    offset: number; // alpha captured when enabled, so view starts down the hall
+}
+
+const _zee = new THREE.Vector3(0, 0, 1);
+const _orientEuler = new THREE.Euler();
+const _q0 = new THREE.Quaternion();
+const _q1 = new THREE.Quaternion(-Math.sqrt(0.5), 0, 0, Math.sqrt(0.5)); // -90° around x
+const DEG = Math.PI / 180;
+
+function applyDeviceQuaternion(quaternion: THREE.Quaternion, o: OrientState) {
+    const alpha = (o.alpha - o.offset) * DEG;
+    const beta = o.beta * DEG;
+    const gamma = o.gamma * DEG;
+    const orient = o.orient * DEG;
+    _orientEuler.set(beta, alpha, -gamma, "YXZ");
+    quaternion.setFromEuler(_orientEuler);
+    quaternion.multiply(_q1); // camera looks at the horizon when the phone is upright
+    quaternion.multiply(_q0.setFromAxisAngle(_zee, -orient)); // account for screen rotation
+}
+
+/* ------------------------------------------------------------------ */
+/* First-person player: phone-tilt or drag to look, WASD / joystick    */
 /* ------------------------------------------------------------------ */
 function Player({
     moveRef,
     dragRef,
+    orientRef,
 }: {
     moveRef: React.MutableRefObject<{ x: number; y: number }>;
     dragRef: React.MutableRefObject<{ dist: number }>;
+    orientRef: React.MutableRefObject<OrientState>;
 }) {
     const { camera, gl } = useThree();
     const keys = useRef<Record<string, boolean>>({});
@@ -324,8 +357,13 @@ function Player({
     }, [camera, gl, dragRef]);
 
     useFrame((_, delta) => {
-        // apply look
-        camera.rotation.set(look.current.pitch, look.current.yaw, 0);
+        // apply look — phone gyroscope if enabled, otherwise drag/keyboard yaw+pitch
+        const o = orientRef.current;
+        if (o.enabled && o.hasReading) {
+            applyDeviceQuaternion(camera.quaternion, o);
+        } else {
+            camera.rotation.set(look.current.pitch, look.current.yaw, 0);
+        }
         camera.updateMatrixWorld();
 
         // forward / right along the floor plane
@@ -439,12 +477,69 @@ export default function Gallery3D() {
     const [selected, setSelected] = useState<Artwork | null>(null);
     const [isTouch, setIsTouch] = useState(false);
     const [showHint, setShowHint] = useState(true);
+    const [motionOn, setMotionOn] = useState(false);
+    const [motionError, setMotionError] = useState<string | null>(null);
+    const orientRef = useRef<OrientState>({
+        enabled: false,
+        hasReading: false,
+        alpha: 0,
+        beta: 0,
+        gamma: 0,
+        orient: 0,
+        offset: 0,
+    });
 
     useEffect(() => {
         setIsTouch("ontouchstart" in window || navigator.maxTouchPoints > 0);
         const t = setTimeout(() => setShowHint(false), 6000);
         return () => clearTimeout(t);
     }, []);
+
+    const onOrient = useCallback((e: DeviceOrientationEvent) => {
+        if (e.alpha == null) return;
+        const o = orientRef.current;
+        if (!o.hasReading) {
+            o.offset = e.alpha; // first reading sets "forward" down the hall
+            o.hasReading = true;
+        }
+        o.alpha = e.alpha;
+        o.beta = e.beta ?? 0;
+        o.gamma = e.gamma ?? 0;
+        o.orient = window.screen?.orientation?.angle ?? 0;
+    }, []);
+
+    const enableMotion = useCallback(async () => {
+        try {
+            const DOE = window.DeviceOrientationEvent as unknown as {
+                requestPermission?: () => Promise<"granted" | "denied">;
+            };
+            if (DOE && typeof DOE.requestPermission === "function") {
+                const res = await DOE.requestPermission();
+                if (res !== "granted") {
+                    setMotionError("Motion access was denied");
+                    return;
+                }
+            }
+            orientRef.current.hasReading = false; // recapture heading on each enable
+            orientRef.current.enabled = true;
+            window.addEventListener("deviceorientation", onOrient, true);
+            setMotionOn(true);
+            setMotionError(null);
+        } catch {
+            setMotionError("Motion controls aren't available on this device");
+        }
+    }, [onOrient]);
+
+    const disableMotion = useCallback(() => {
+        window.removeEventListener("deviceorientation", onOrient, true);
+        orientRef.current.enabled = false;
+        setMotionOn(false);
+    }, [onOrient]);
+
+    useEffect(
+        () => () => window.removeEventListener("deviceorientation", onOrient, true),
+        [onOrient],
+    );
 
     return (
         <div className="relative h-[100svh] w-full overflow-hidden bg-midnight">
@@ -464,7 +559,7 @@ export default function Gallery3D() {
                     ))}
                     <Environment preset="apartment" environmentIntensity={0.2} />
                 </Suspense>
-                <Player moveRef={moveRef} dragRef={dragRef} />
+                <Player moveRef={moveRef} dragRef={dragRef} orientRef={orientRef} />
             </Canvas>
 
             {/* Title / hint overlay */}
@@ -479,7 +574,7 @@ export default function Gallery3D() {
                 {showHint && (
                     <p className="mt-4 max-w-md rounded-full border border-gold/20 bg-midnight/70 px-5 py-2 text-xs uppercase tracking-[0.2em] text-cream-muted backdrop-blur">
                         {isTouch
-                            ? "Drag to look · joystick to walk · tap a piece"
+                            ? "Enable motion & move your phone to look · joystick to walk"
                             : "Drag to look · W A S D to walk · click a piece"}
                     </p>
                 )}
@@ -495,6 +590,27 @@ export default function Gallery3D() {
             </Link>
 
             {isTouch && <Joystick moveRef={moveRef} />}
+
+            {/* Motion (gyroscope) toggle — touch devices only */}
+            {isTouch && (
+                <div className="absolute bottom-12 right-5 flex flex-col items-end gap-1" style={{ zIndex: 20 }}>
+                    <button
+                        onClick={motionOn ? disableMotion : enableMotion}
+                        className={`rounded-full border px-4 py-2.5 text-xs uppercase tracking-[0.15em] backdrop-blur transition-colors ${
+                            motionOn
+                                ? "border-gold/60 bg-gold/15 text-gold"
+                                : "border-gold/30 bg-midnight/70 text-cream-muted hover:text-gold"
+                        }`}
+                    >
+                        {motionOn ? "Motion ✓" : "Enable motion view"}
+                    </button>
+                    {motionError && (
+                        <span className="max-w-[12rem] text-right text-[10px] text-cream-muted/70">
+                            {motionError}
+                        </span>
+                    )}
+                </div>
+            )}
 
             {/* Selected artwork detail card */}
             {selected && (
