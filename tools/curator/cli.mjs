@@ -77,6 +77,7 @@ async function main() {
                     year: args.year ? Number(args.year) : undefined,
                     description: args.description,
                     story: args.story,
+                    notes: args.notes,
                 },
                 { commit: shouldCommit, push: shouldPush }
             );

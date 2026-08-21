@@ -62,6 +62,7 @@ export async function addArtwork(input, options = {}) {
                 medium: input.medium ?? "Mixed Media",
                 size: input.size ?? "",
                 year: input.year ?? new Date().getFullYear(),
+                notes: input.notes,
             },
             { catalogue, imageBuffer: input.imageBuffer }
         );
