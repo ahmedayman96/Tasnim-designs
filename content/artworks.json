@@ -95,25 +95,6 @@
     "gridSpan": "md:col-span-1 md:row-span-2"
   },
   {
-    "slug": "candles-and-landscape",
-    "title": "Candles and Landscape",
-    "titleAr": "",
-    "medium": "Mixed Media",
-    "size": "",
-    "year": 2026,
-    "price": null,
-    "image": "/images/candles-and-landscape.webp",
-    "description": "A vibrant mixed media painting showing two tall candles in glass holders set against a colorful, fragmented landscape with fruit and abstract forms.",
-    "story": "This work brings together the intimate glow of candles with a layered landscape beyond. I wanted to hold not just a single moment, but a merging of still life and distant horizons, where light and shadow play across familiar shapes and memories.",
-    "theme": {
-      "bg": "#110e0e",
-      "accent": "#b08282",
-      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
-      "textColor": "#e0d7d7"
-    },
-    "gridSpan": "md:col-span-1 md:row-span-2"
-  },
-  {
     "slug": "still-life-landscape",
     "title": "Still Life Landscape",
     "titleAr": "",
