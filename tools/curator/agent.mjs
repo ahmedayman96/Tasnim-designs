@@ -1,0 +1,259 @@
+/**
+ * الأسطى as a conversational agent.
+ *
+ * Replaces the keyword router. The model holds the conversation, decides what to
+ * do, and calls tools to do it — she can just talk.
+ *
+ * What is delegated: understanding her, choosing an action, writing English copy.
+ * What is not: the tools below are the only things it can do, and each one still
+ * validates its own arguments. The palette is still computed from the artwork's
+ * pixels, the repo layer still refuses to stage anything outside the catalogue and
+ * public/images, and a price still has to be a number she actually said.
+ */
+import { readCatalogue } from "./catalogue.mjs";
+import { removeArtwork, updateArtwork, replaceArtworkImage } from "./index.mjs";
+import { cropFromInstruction } from "./crop.mjs";
+
+const SYSTEM = `You are "الأسطى" — the studio assistant for Tasnim Elyamani, an
+Egyptian artist. You manage the gallery on her website, tasnimelyamani.com.
+
+Talk to her like a person. She writes in Egyptian Arabic, English, or a mix, and
+often sends voice notes, so expect transcription noise. Reply in whatever she
+used — Arabic to Arabic. Be warm, short, and practical. No corporate tone.
+
+WHAT YOU MANAGE
+Each piece has: an English title, an Arabic title, medium, size, year, price,
+a one-sentence description of what it looks like, and a story in her own first
+person voice. The palette of each page is generated from the artwork's own
+colours — you do not choose colours, and you cannot change the site's design.
+
+HOUSE VOICE, for the description and story
+Warm, unhurried, a little literary. Concrete over abstract — name real things.
+Never "stunning", "captivating", "masterpiece", "journey", "evoke". Never mention
+price or that it is for sale. Match the existing entries.
+
+THINGS THAT MATTER
+- The story is published as HER words, first person. Build it from what she tells
+  you. Do not invent relatives, places, dates or events she has not mentioned. If
+  she has told you nothing about a piece, leave the story empty rather than
+  inventing a reason she made it.
+- Never set a price she has not stated. If you are unsure of a number, ask.
+- Arabic titles are hers. Ask rather than translating, unless she asks you to.
+- You may describe what is visibly in the image — that is observation, not
+  invention.
+
+Do what she asks without narrating your plan. Confirm briefly once it's done. If
+she asks for something you have no tool for — changing the site's design, adding
+a page, anything about payments — say plainly that it's not something you can do
+and she should ask Ahmed.`;
+
+const TOOLS = [
+    {
+        type: "function",
+        function: {
+            name: "list_artworks",
+            description: "List every piece currently on the site with its price and status.",
+            parameters: { type: "object", properties: {}, required: [] },
+        },
+    },
+    {
+        type: "function",
+        function: {
+            name: "update_artwork",
+            description:
+                "Change one or more fields on a piece. Only pass the fields being changed.",
+            parameters: {
+                type: "object",
+                properties: {
+                    slug: { type: "string", description: "the piece's slug" },
+                    title: { type: "string" },
+                    titleAr: { type: "string", description: "Arabic title, in Arabic script" },
+                    medium: { type: "string" },
+                    size: { type: "string" },
+                    price: {
+                        type: "number",
+                        description: "USD. Only a number she has actually stated.",
+                    },
+                    sold: { type: "boolean" },
+                    story: {
+                        type: "string",
+                        description:
+                            "Her first-person account, in the house voice, built only from " +
+                            "what she has told you. Never invented.",
+                    },
+                    description: {
+                        type: "string",
+                        description: "One sentence on what the work looks like.",
+                    },
+                },
+                required: ["slug"],
+            },
+        },
+    },
+    {
+        type: "function",
+        function: {
+            name: "delete_artwork",
+            description: "Remove a piece from the site completely, along with its image.",
+            parameters: {
+                type: "object",
+                properties: { slug: { type: "string" } },
+                required: ["slug"],
+            },
+        },
+    },
+    {
+        type: "function",
+        function: {
+            name: "crop_artwork_photo",
+            description:
+                "Re-frame a piece using part of the photo she originally sent — when one " +
+                "photo held several paintings, or the framing was wrong. Recomputes the " +
+                "palette and description from the new crop.",
+            parameters: {
+                type: "object",
+                properties: {
+                    slug: { type: "string" },
+                    region: {
+                        type: "string",
+                        description:
+                            "Which part, in her words — e.g. 'the left one', 'الشمال', " +
+                            "'the one with the flowers'.",
+                    },
+                },
+                required: ["slug", "region"],
+            },
+        },
+    },
+];
+
+/**
+ * @param {object} deps
+ * @param {() => Buffer|undefined} deps.originalPhoto  the uncropped photo for this chat
+ * @param {(text: string) => Promise<void>} deps.notify progress back to Telegram
+ */
+async function runTool(name, args, deps) {
+    switch (name) {
+        case "list_artworks": {
+            const catalogue = await readCatalogue();
+            return catalogue.map((a) => ({
+                slug: a.slug,
+                title: a.title,
+                titleAr: a.titleAr || null,
+                price: a.price,
+                sold: Boolean(a.sold),
+                hasStory: Boolean(a.story),
+            }));
+        }
+
+        case "update_artwork": {
+            const { slug, ...changes } = args;
+            if (changes.price !== undefined) {
+                const n = Number(changes.price);
+                if (!Number.isFinite(n) || n <= 0) {
+                    return { error: "price must be a positive number" };
+                }
+                changes.price = n;
+            }
+            if (!Object.keys(changes).length) return { error: "nothing to change" };
+            const { artwork } = await updateArtwork(slug, changes, { commit: true, push: true });
+            return { ok: true, slug: artwork.slug, changed: Object.keys(changes) };
+        }
+
+        case "delete_artwork": {
+            const { artwork } = await removeArtwork(args.slug, { commit: true, push: true });
+            return { ok: true, deleted: artwork.title };
+        }
+
+        case "crop_artwork_photo": {
+            const original = deps.originalPhoto();
+            if (!original) {
+                return { error: "I no longer have the original photo — ask her to resend it." };
+            }
+            const cropped = await cropFromInstruction(original, args.region);
+            if (!cropped) return { error: "could not work out which part she meant" };
+            const { artwork } = await replaceArtworkImage(args.slug, cropped, {
+                commit: true,
+                push: true,
+            });
+            return { ok: true, slug: artwork.slug, description: artwork.description };
+        }
+
+        default:
+            return { error: `no such tool: ${name}` };
+    }
+}
+
+/**
+ * One turn of conversation. `history` is mutated so the caller keeps context
+ * across messages.
+ */
+export async function respond(history, deps) {
+    const key = process.env.CURATOR_API_KEY;
+    const model = process.env.CURATOR_MODEL;
+    if (!key || !model) throw new Error("CURATOR_API_KEY and CURATOR_MODEL must be set");
+
+    const catalogue = await readCatalogue();
+    const context =
+        `On the site right now:\n` +
+        catalogue
+            .map(
+                (a) =>
+                    `- ${a.slug}: "${a.title}"${a.titleAr ? ` / ${a.titleAr}` : ""}, ` +
+                    `${a.price === null ? "no price yet" : `$${a.price}`}` +
+                    `${a.sold ? ", sold" : ""}${a.story ? "" : ", no story yet"}`
+            )
+            .join("\n") +
+        (deps.focusSlug ? `\n\nShe is talking about: ${deps.focusSlug}` : "");
+
+    // Up to a few rounds so it can chain calls — look something up, then change it.
+    for (let round = 0; round < 5; round += 1) {
+        const res = await fetch(
+            process.env.CURATOR_API_URL || "https://api.openai.com/v1/chat/completions",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+                body: JSON.stringify({
+                    model,
+                    temperature: 0.6,
+                    max_tokens: 900,
+                    tools: TOOLS,
+                    messages: [
+                        { role: "system", content: SYSTEM },
+                        { role: "system", content: context },
+                        ...history,
+                    ],
+                }),
+            }
+        );
+
+        if (!res.ok) {
+            throw new Error(`agent failed (${res.status}): ${(await res.text()).slice(0, 200)}`);
+        }
+
+        const message = (await res.json()).choices?.[0]?.message;
+        if (!message) throw new Error("empty reply from the model");
+        history.push(message);
+
+        const calls = message.tool_calls ?? [];
+        if (!calls.length) return message.content ?? "";
+
+        for (const call of calls) {
+            let result;
+            try {
+                const args = JSON.parse(call.function.arguments || "{}");
+                console.log(`  tool ${call.function.name}(${JSON.stringify(args).slice(0, 120)})`);
+                result = await runTool(call.function.name, args, deps);
+            } catch (err) {
+                result = { error: err.message };
+            }
+            history.push({
+                role: "tool",
+                tool_call_id: call.id,
+                content: JSON.stringify(result).slice(0, 4000),
+            });
+        }
+    }
+
+    return "خلصت، بس اتلخبطت شوية — تحبي تقوليلي تاني؟";
+}

@@ -4,20 +4,16 @@
  *
  *   node --env-file=.env.local tools/curator/bot.mjs
  *
- * Send a photo; it goes up. No questions asked — the model titles and describes
- * the piece from the image itself, and everything it cannot see (why she made it,
- * what it is worth) is left blank rather than invented. She fills those in by
- * replying in plain Arabic afterwards.
+ * Send a photo and it goes up. Everything else is a conversation — she just says
+ * what she wants, typed or spoken, in Arabic or English, and the agent in
+ * agent.mjs decides what to do. This file only carries messages between Telegram
+ * and the agent; it makes no decisions of its own.
  *
  * Raw Bot API over long polling: no dependencies, no webhook, no public IP.
  */
-import { addArtwork, removeArtwork, updateArtwork, replaceArtworkImage, repo } from "./index.mjs";
-import { readCatalogue } from "./catalogue.mjs";
-import { generateCopy } from "./copy.mjs";
+import { addArtwork, repo } from "./index.mjs";
+import { respond } from "./agent.mjs";
 import { transcribe } from "./transcribe.mjs";
-import { cropFromInstruction, looksLikeCropInstruction } from "./crop.mjs";
-import { promises as fs } from "node:fs";
-import path from "node:path";
 
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const API = `https://api.telegram.org/bot${TOKEN}`;
@@ -118,99 +114,30 @@ async function publishAndReport(chat, artwork, prefix, original) {
     await say(chat, (prefix ? `${prefix}\n\n` : "") + card(artwork, live));
 }
 
-// -------------------------------------------------------------- Edit rules ---
+// ---------------------------------------------------------- Conversation ---
 
-/**
- * Plain-Arabic edits. Order matters: the Arabic-title rule has to be tested
- * before the title rule, since it also begins with a name-ish word.
- */
-const EDITS = [
-    { re: /^(?:بالعربي|عربي)\s+(.+)$/is, field: "titleAr" },
-    { re: /^(?:الاسم|اسمها|سميها|title)\s+(.+)$/is, field: "title" },
-    { re: /^(?:السعر|سعرها|price)\s+([\d.,]+)$/i, field: "price" },
-    { re: /^(?:الخامة|الخامات|medium)\s+(.+)$/is, field: "medium" },
-    { re: /^(?:المقاس|الحجم|size)\s+(.+)$/is, field: "size" },
-    { re: /^(?:احكي|اكتب|القصة|story|notes)\s+(.+)$/is, field: "__notes" },
-];
+/** Recent turns per chat, so she can say "and that one too". */
+const conversations = new Map();
 
-async function applyEdit(chat, slug, field, raw) {
-    const catalogue = await readCatalogue();
-    const artwork = catalogue.find((a) => a.slug === slug);
-    if (!artwork) throw new Error("مش لاقي اللوحة دي");
-
-    // Notes aren't stored — they're rewritten into the story, in her voice.
-    if (field === "__notes") {
-        await say(chat, "✍️ ثانية…");
-        const image = await fs.readFile(path.join(process.cwd(), "public", artwork.image));
-        const written = await generateCopy(
-            { title: artwork.title, medium: artwork.medium, size: artwork.size, year: artwork.year, notes: raw },
-            { catalogue: catalogue.filter((a) => a.slug !== slug), imageBuffer: image }
-        );
-        const { artwork: updated } = await updateArtwork(
-            slug,
-            { story: written.story, description: written.description },
-            { commit: true }
-        );
-        await publishAndReport(chat, updated, "✅ اتكتبت");
-        return;
-    }
-
-    const value = field === "price" ? Number(String(raw).replace(/[^0-9.]/g, "")) : raw.trim();
-    if (field === "price" && (!Number.isFinite(value) || value <= 0)) {
-        await say(chat, "اكتبي رقم، زي «السعر 1400»");
-        return;
-    }
-
-    const { artwork: updated } = await updateArtwork(slug, { [field]: value }, { commit: true });
-    await publishAndReport(chat, updated, "✅ اتظبطت");
+function historyFor(chat) {
+    if (!conversations.has(chat)) conversations.set(chat, []);
+    const history = conversations.get(chat);
+    // Keep it bounded; older turns stop being useful and cost tokens.
+    if (history.length > 24) history.splice(0, history.length - 24);
+    return history;
 }
 
-/** Re-frame a piece already on the site, keeping its title, price and story. */
-async function replaceImage(chat, slug, buffer) {
-    const { artwork } = await replaceArtworkImage(slug, buffer, { commit: true });
-    await publishAndReport(chat, artwork, "✂️ اتقصت");
-}
+async function converse(chat, text) {
+    const history = historyFor(chat);
+    history.push({ role: "user", content: text });
 
-// ---------------------------------------------------------------- Commands ---
+    const reply = await respond(history, {
+        focusSlug: focusSlug(chat),
+        originalPhoto: () => focus.get(chat)?.original,
+        notify: (t) => say(chat, t),
+    });
 
-async function handleCommand(chat, text) {
-    const c = text.trim().toLowerCase();
-
-    if (c === "/start" || c === "/help") {
-        await say(chat,
-            "أهلاً يا فنانة 👋 أنا <b>الأسطى</b>.\n\n" +
-            "ابعتيلي <b>صورة</b> اللوحة وهي هتتنشر على الموقع على طول، " +
-            "وهبعتلك اللينك.\n\n" +
-            "وبعدين لو حابة تغيري حاجة اكتبيلي عادي:\n" +
-            "• «الاسم Golden Hour»\n" +
-            "• «بالعربي ساعة الذهب»\n" +
-            "• «السعر 1400»\n" +
-            "• «احكي رسمتها بالليل والضوء كان...»\n" +
-            "• «خدي اللوحة الشمال بس» — لو الصورة فيها أكتر من لوحة\n" +
-            "• «تراجع» — تشيل آخر لوحة\n\n" +
-            "وتقدري تبعتيلي <b>فويس</b> بدل ما تكتبي 🎤\n\n" +
-            "/list — كل اللوحات");
-        return true;
-    }
-
-    if (c === "/list") {
-        const catalogue = await readCatalogue();
-        await say(chat, `🖼 <b>${catalogue.length} لوحات</b>\n\n` + catalogue
-            .map((a) => `• ${a.title} — ${a.sold ? "اتباعت" : money(a.price)}`).join("\n"));
-        return true;
-    }
-
-    if (text.trim() === "تراجع" || c === "/undo") {
-        const slug = focusSlug(chat);
-        if (!slug) { await say(chat, "مفيش حاجة أشيلها."); return true; }
-        await say(chat, "⏪ بشيلها…");
-        const { artwork } = await removeArtwork(slug, { commit: true, push: true });
-        focus.delete(chat);
-        await say(chat, `اتشالت «${artwork.title}». هتختفي من الموقع خلال دقيقتين.`);
-        return true;
-    }
-
-    return false;
+    if (reply) await say(chat, reply);
 }
 
 // ----------------------------------------------------------------- Router ---
@@ -243,68 +170,32 @@ async function handleMessage(message) {
         await say(chat, `سمعت:\n<i>«${text}»</i>`);
     }
 
-    if (text.startsWith("/") || text === "تراجع") {
-        if (await handleCommand(chat, text)) return;
-    }
-
-    // A photo publishes immediately. Anything she sent with it is either an
-    // instruction about which part of the photo to use, or notes about the piece.
+    // A photo always means a new piece; it goes up straight away.
     if (message.photo) {
         await say(chat, "📸 وصلتني… بجهزها");
         const original = await downloadPhoto(message.photo);
-
-        let imageBuffer = original;
-        let notes = text || undefined;
-
-        if (looksLikeCropInstruction(text)) {
-            const cropped = await cropFromInstruction(original, text);
-            if (cropped) {
-                imageBuffer = cropped;
-                // It described the framing, not the painting — don't publish it
-                // as her account of the work.
-                notes = undefined;
-                await say(chat, "✂️ خدت الجزء اللي قلتي عليه بس");
-            }
-        }
-
-        const { artwork } = await addArtwork({ imageBuffer, notes }, { commit: true });
+        const { artwork } = await addArtwork(
+            { imageBuffer: original, notes: text || undefined },
+            { commit: true }
+        );
         await publishAndReport(chat, artwork, "🚀 نزلت", original);
+
+        // Let the agent know, so "make it 1400" next message has something to act on.
+        historyFor(chat).push({
+            role: "user",
+            content:
+                `[she sent a photo of a new piece; it is now on the site as ` +
+                `slug "${artwork.slug}", titled "${artwork.title}", no price set` +
+                `${text ? `. She said: ${text}` : ""}]`,
+        });
         return;
     }
 
     if (!text) return;
 
-    const slug = focusSlug(chat);
-    if (!slug) {
-        await say(chat, "ابعتيلي صورة الأول 📸");
-        return;
-    }
-
-    // "actually, just the left one" — re-crop from the photo she originally sent.
-    if (looksLikeCropInstruction(text)) {
-        const original = focus.get(chat)?.original;
-        if (!original) {
-            await say(chat, "الصورة الأصلية مش معايا، ابعتيها تاني 📸");
-            return;
-        }
-        const cropped = await cropFromInstruction(original, text);
-        if (cropped) {
-            await say(chat, "✂️ بقصها…");
-            await replaceImage(chat, slug, cropped);
-            return;
-        }
-    }
-
-    for (const { re, field } of EDITS) {
-        const match = text.match(re);
-        if (match) {
-            await applyEdit(chat, slug, field, match[1]);
-            return;
-        }
-    }
-
-    // Anything else that isn't a command is taken as her describing the piece.
-    await applyEdit(chat, slug, "__notes", text);
+    // Everything else is just conversation.
+    await tg("sendChatAction", { chat_id: chat, action: "typing" }).catch(() => { });
+    await converse(chat, text);
 }
 
 // --------------------------------------------------------------- Long poll ---
