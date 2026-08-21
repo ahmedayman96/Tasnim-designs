@@ -11,10 +11,11 @@
  *
  * Raw Bot API over long polling: no dependencies, no webhook, no public IP.
  */
-import { addArtwork, removeArtwork, updateArtwork, repo } from "./index.mjs";
+import { addArtwork, removeArtwork, updateArtwork, replaceArtworkImage, repo } from "./index.mjs";
 import { readCatalogue } from "./catalogue.mjs";
 import { generateCopy } from "./copy.mjs";
 import { transcribe } from "./transcribe.mjs";
+import { cropFromInstruction, looksLikeCropInstruction } from "./crop.mjs";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
@@ -64,8 +65,13 @@ async function downloadPhoto(photoSizes) {
 
 // ------------------------------------------------------------------- State ---
 
-/** The piece each chat is currently talking about — edits apply to it. */
+/**
+ * The piece each chat is currently talking about — edits apply to it.
+ * Keeps the original uncropped photo so "actually, just the left one" still works
+ * after the piece has already gone up.
+ */
 const focus = new Map();
+const focusSlug = (chat) => focus.get(chat)?.slug;
 
 const money = (n) => (typeof n === "number" ? `$${n.toLocaleString("en-US")}` : "من غير سعر");
 
@@ -101,9 +107,13 @@ function card(artwork, live) {
     );
 }
 
-async function publishAndReport(chat, artwork, prefix) {
+async function publishAndReport(chat, artwork, prefix, original) {
     await repo.push();
-    focus.set(chat, artwork.slug);
+    const previous = focus.get(chat);
+    focus.set(chat, {
+        slug: artwork.slug,
+        original: original ?? (previous?.slug === artwork.slug ? previous.original : undefined),
+    });
     const live = await waitForLive(artwork.slug);
     await say(chat, (prefix ? `${prefix}\n\n` : "") + card(artwork, live));
 }
@@ -155,6 +165,12 @@ async function applyEdit(chat, slug, field, raw) {
     await publishAndReport(chat, updated, "✅ اتظبطت");
 }
 
+/** Re-frame a piece already on the site, keeping its title, price and story. */
+async function replaceImage(chat, slug, buffer) {
+    const { artwork } = await replaceArtworkImage(slug, buffer, { commit: true });
+    await publishAndReport(chat, artwork, "✂️ اتقصت");
+}
+
 // ---------------------------------------------------------------- Commands ---
 
 async function handleCommand(chat, text) {
@@ -170,7 +186,9 @@ async function handleCommand(chat, text) {
             "• «بالعربي ساعة الذهب»\n" +
             "• «السعر 1400»\n" +
             "• «احكي رسمتها بالليل والضوء كان...»\n" +
+            "• «خدي اللوحة الشمال بس» — لو الصورة فيها أكتر من لوحة\n" +
             "• «تراجع» — تشيل آخر لوحة\n\n" +
+            "وتقدري تبعتيلي <b>فويس</b> بدل ما تكتبي 🎤\n\n" +
             "/list — كل اللوحات");
         return true;
     }
@@ -183,7 +201,7 @@ async function handleCommand(chat, text) {
     }
 
     if (text.trim() === "تراجع" || c === "/undo") {
-        const slug = focus.get(chat);
+        const slug = focusSlug(chat);
         if (!slug) { await say(chat, "مفيش حاجة أشيلها."); return true; }
         await say(chat, "⏪ بشيلها…");
         const { artwork } = await removeArtwork(slug, { commit: true, push: true });
@@ -229,24 +247,52 @@ async function handleMessage(message) {
         if (await handleCommand(chat, text)) return;
     }
 
-    // A photo publishes immediately. Anything she typed with it becomes her notes.
+    // A photo publishes immediately. Anything she sent with it is either an
+    // instruction about which part of the photo to use, or notes about the piece.
     if (message.photo) {
         await say(chat, "📸 وصلتني… بجهزها");
-        const imageBuffer = await downloadPhoto(message.photo);
-        const { artwork } = await addArtwork(
-            { imageBuffer, notes: text || undefined },
-            { commit: true }
-        );
-        await publishAndReport(chat, artwork, "🚀 نزلت");
+        const original = await downloadPhoto(message.photo);
+
+        let imageBuffer = original;
+        let notes = text || undefined;
+
+        if (looksLikeCropInstruction(text)) {
+            const cropped = await cropFromInstruction(original, text);
+            if (cropped) {
+                imageBuffer = cropped;
+                // It described the framing, not the painting — don't publish it
+                // as her account of the work.
+                notes = undefined;
+                await say(chat, "✂️ خدت الجزء اللي قلتي عليه بس");
+            }
+        }
+
+        const { artwork } = await addArtwork({ imageBuffer, notes }, { commit: true });
+        await publishAndReport(chat, artwork, "🚀 نزلت", original);
         return;
     }
 
     if (!text) return;
 
-    const slug = focus.get(chat);
+    const slug = focusSlug(chat);
     if (!slug) {
         await say(chat, "ابعتيلي صورة الأول 📸");
         return;
+    }
+
+    // "actually, just the left one" — re-crop from the photo she originally sent.
+    if (looksLikeCropInstruction(text)) {
+        const original = focus.get(chat)?.original;
+        if (!original) {
+            await say(chat, "الصورة الأصلية مش معايا، ابعتيها تاني 📸");
+            return;
+        }
+        const cropped = await cropFromInstruction(original, text);
+        if (cropped) {
+            await say(chat, "✂️ بقصها…");
+            await replaceImage(chat, slug, cropped);
+            return;
+        }
     }
 
     for (const { re, field } of EDITS) {
@@ -285,6 +331,19 @@ async function main() {
                 }
             }
         } catch (err) {
+            // Two instances polling means one silently steals every message and
+            // the other looks alive while doing nothing — which cost us an
+            // afternoon of "the voice notes don't work". Fail loudly instead.
+            if (/Conflict/i.test(err.message)) {
+                console.error(
+                    "\nAnother الأسطى is already running and is receiving the messages.\n" +
+                    "Stop it before starting this one:\n" +
+                    "  Get-CimInstance Win32_Process -Filter \"Name='node.exe'\" |\n" +
+                    "    Where-Object { $_.CommandLine -like '*curator*bot.mjs*' } |\n" +
+                    "    ForEach-Object { Stop-Process -Id $_.ProcessId -Force }\n"
+                );
+                process.exit(1);
+            }
             console.error("poll:", err.message);
             await new Promise((r) => setTimeout(r, 5000));
         }

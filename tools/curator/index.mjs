@@ -109,6 +109,61 @@ export async function addArtwork(input, options = {}) {
     return { artwork, sha, image };
 }
 
+/**
+ * Swap the image on an existing piece — used when she re-frames a photo after it
+ * has gone up. The palette, tile size and description all derive from the image,
+ * so they are recomputed rather than left describing the old framing.
+ */
+export async function replaceArtworkImage(slug, imageBuffer, options = {}) {
+    const { commit: shouldCommit = true, push: shouldPush = false } = options;
+
+    const catalogue = await readCatalogue();
+    const index = catalogue.findIndex((a) => a.slug === slug);
+    if (index === -1) throw new Error(`no artwork with slug "${slug}"`);
+
+    const image = await writeArtworkImage(imageBuffer, slug);
+    const theme = await themeFromImage(imageBuffer);
+
+    let description = catalogue[index].description;
+    if (copyConfigured()) {
+        try {
+            const written = await generateCopy(
+                {
+                    title: catalogue[index].title,
+                    medium: catalogue[index].medium,
+                    size: catalogue[index].size,
+                    year: catalogue[index].year,
+                    // Her story still stands; only what is visible has changed.
+                    notes: catalogue[index].story || undefined,
+                },
+                { catalogue: catalogue.filter((a) => a.slug !== slug), imageBuffer }
+            );
+            description = written.description;
+        } catch {
+            // Keep the old description rather than failing the re-crop.
+        }
+    }
+
+    catalogue[index] = {
+        ...catalogue[index],
+        image: image.path,
+        description,
+        theme,
+        gridSpan: gridSpanFor(image.width, image.height),
+    };
+    await writeCatalogue(catalogue);
+
+    const sha = shouldCommit
+        ? await repo.commit(
+            [CATALOGUE_PATH, `public${image.path}`],
+            `content: re-frame "${catalogue[index].title}"`
+        )
+        : null;
+    if (shouldCommit && shouldPush) await repo.push();
+
+    return { artwork: catalogue[index], sha };
+}
+
 /** Remove a piece and its image. */
 export async function removeArtwork(slug, options = {}) {
     const { commit: shouldCommit = true, push: shouldPush = false } = options;
