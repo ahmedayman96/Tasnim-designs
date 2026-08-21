@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
+import { getArtworkBySlug } from "@/lib/artworks";
 
 export async function POST(request: Request) {
     try {
@@ -12,16 +13,32 @@ export async function POST(request: Request) {
             );
         }
 
-        // Create line items for Stripe
-        const lineItems = items.map((item: { title: string; price: number; image: string }) => ({
+        // Resolve every item against the catalogue on the server. Title, price and
+        // image are taken from here and never from the request body — the client is
+        // free to claim any price it likes, and Stripe would honour it.
+        const resolved = items.map((item: { slug?: string }) =>
+            item?.slug ? getArtworkBySlug(item.slug) : undefined
+        );
+
+        if (resolved.some((artwork) => !artwork)) {
+            return NextResponse.json(
+                { error: "Unknown artwork in cart" },
+                { status: 400 }
+            );
+        }
+
+        const baseUrl =
+            process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
+
+        const lineItems = resolved.map((artwork) => ({
             price_data: {
                 currency: "usd",
                 product_data: {
-                    name: item.title,
-                    images: item.image ? [`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001"}${item.image}`] : [],
+                    name: artwork!.title,
+                    images: artwork!.image ? [`${baseUrl}${artwork!.image}`] : [],
                     description: "Original artwork by Tasnim Elyamani",
                 },
-                unit_amount: Math.round(item.price * 100), // Stripe uses cents
+                unit_amount: Math.round(artwork!.price * 100), // Stripe uses cents
             },
             quantity: 1,
         }));
@@ -31,14 +48,14 @@ export async function POST(request: Request) {
             payment_method_types: ["card"],
             line_items: lineItems,
             mode: "payment",
-            success_url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001"}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001"}/checkout/cancel`,
+            success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${baseUrl}/checkout/cancel`,
             shipping_address_collection: {
                 allowed_countries: ["AE", "SA", "US", "GB", "DE", "FR", "CA", "AU", "KW", "QA", "BH", "OM"],
             },
             billing_address_collection: "required",
             metadata: {
-                items: JSON.stringify(items.map((i: { title: string }) => i.title)),
+                items: JSON.stringify(resolved.map((artwork) => artwork!.title)),
             },
         });
 
