@@ -93,5 +93,24 @@
       "textColor": "#e0d7d7"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
+  },
+  {
+    "slug": "candles-and-landscape",
+    "title": "Candles and Landscape",
+    "titleAr": "",
+    "medium": "Mixed Media",
+    "size": "",
+    "year": 2026,
+    "price": null,
+    "image": "/images/candles-and-landscape.webp",
+    "description": "A tall painting depicting two white candles in ornate holders in the foreground with a stylized landscape of fields, buildings, and a cloudy sky framed by abstract vertical shapes in warm colors.",
+    "story": "",
+    "theme": {
+      "bg": "#110e0e",
+      "accent": "#b08282",
+      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
+      "textColor": "#e0d7d7"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2"
   }
 ]
