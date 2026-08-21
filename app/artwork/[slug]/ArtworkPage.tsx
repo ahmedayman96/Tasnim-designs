@@ -1,6 +1,6 @@
 "use client";
 
-import type { Artwork } from "@/lib/artworks";
+import { priceLabel, type Artwork } from "@/lib/artworks";
 import { useCart } from "@/lib/cart-context";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
@@ -204,7 +204,7 @@ export default function ArtworkPage({ artwork, related }: ArtworkPageProps) {
                             className="font-serif text-4xl font-bold"
                             style={{ color: artwork.theme.accent }}
                         >
-                            ${artwork.price}
+                            {priceLabel(artwork)}
                         </p>
                     </div>
                     <div className="flex items-center gap-4">

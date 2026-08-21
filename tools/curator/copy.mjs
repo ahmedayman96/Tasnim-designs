@@ -84,12 +84,14 @@ function parseReply(text) {
     }
 
     const parsed = JSON.parse(candidate.slice(start, end + 1));
-    if (!parsed.description || !parsed.story) {
-        throw new Error("model reply missing description or story");
+    if (!parsed.description) {
+        throw new Error("model reply missing description");
     }
+    // An empty story is expected when there are no notes to rewrite.
     return {
         description: String(parsed.description).trim(),
-        story: String(parsed.story).trim(),
+        story: String(parsed.story ?? "").trim(),
+        title: parsed.title ? String(parsed.title).trim() : undefined,
     };
 }
 
@@ -100,6 +102,17 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  * refused twice and then answered immediately. Retry transient failures (429, 5xx,
  * empty replies) rather than making the artist retype her message.
  */
+/**
+ * GPT-5 and the o-series renamed the token cap and refuse any temperature other
+ * than the default, so the request shape has to differ by model family.
+ */
+function requestBody(model, messages) {
+    const restricted = /^(gpt-5|o[13-9])/.test(model);
+    return restricted
+        ? { model, messages, max_completion_tokens: 2000 }
+        : { model, messages, temperature: 0.8, max_tokens: 700 };
+}
+
 async function callOnce(messages, { url, key, model }) {
     const res = await fetch(url, {
         method: "POST",
@@ -107,7 +120,7 @@ async function callOnce(messages, { url, key, model }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${key}`,
         },
-        body: JSON.stringify({ model, messages, temperature: 0.8, max_tokens: 700 }),
+        body: JSON.stringify(requestBody(model, messages)),
     });
 
     if (!res.ok) {
@@ -153,11 +166,11 @@ export function copyConfigured() {
  * @param options {catalogue, imageBuffer}
  */
 export async function generateCopy(facts, { catalogue = [], imageBuffer } = {}) {
-    if (!facts.notes || !String(facts.notes).trim()) {
-        throw new Error(
-            "notes are required — the model rewrites the artist's own words and " +
-            "must not invent them"
-        );
+    // Without notes the model has no true source for the story, so it must not
+    // write one at all. It may still describe what it can see — that is
+    // observation, not invention — and the artist fills in the rest later.
+    if (!facts.notes && !imageBuffer) {
+        throw new Error("generateCopy needs either the artist's notes or the image");
     }
 
     const config = {
@@ -169,9 +182,20 @@ export async function generateCopy(facts, { catalogue = [], imageBuffer } = {}) 
         throw new Error("CURATOR_API_KEY and CURATOR_MODEL must be set to generate copy");
     }
 
-    const facts_text =
-        `Title: ${facts.title}\nMedium: ${facts.medium}\nYear: ${facts.year}\n\n` +
-        `Tasnim's notes on this piece — rewrite these, invent nothing beyond them:\n${facts.notes}`;
+    const facts_text = facts.notes
+        ? `Title: ${facts.title}\nMedium: ${facts.medium}\nYear: ${facts.year}\n\n` +
+        `Tasnim's notes on this piece — rewrite these, invent nothing beyond them:\n${facts.notes}`
+        // No notes yet: describe strictly what is visible and leave the story empty
+        // rather than inventing a reason the piece was made.
+        : `${facts.title ? `Title: ${facts.title}\n` : ""}Medium: ${facts.medium}\n` +
+        `Year: ${facts.year}\n\n` +
+        `Tasnim has not sent notes for this piece yet. Describe ONLY what you can ` +
+        `actually see in the image. Return "story": "" — an empty string. Do not ` +
+        `write a story, do not guess why she made it.` +
+        (facts.title
+            ? ""
+            : `\n\nAlso suggest a short, plain title for it as "title" — two or three ` +
+            `words, drawn from what is visible, no flourish.`);
     const base = [{ role: "system", content: SYSTEM }, ...examplesFrom(catalogue)];
 
     // Showing the model the actual artwork gives far better copy — but not every

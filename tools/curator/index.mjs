@@ -38,27 +38,26 @@ export async function addArtwork(input, options = {}) {
     const { commit: shouldCommit = true, push: shouldPush = false } = options;
 
     if (!input.imageBuffer) throw new Error("an image is required");
-    if (!input.title) throw new Error("a title is required");
-    if (!input.titleAr) throw new Error("an Arabic title is required");
-    if (typeof input.price !== "number") throw new Error("a numeric price is required");
+    if (input.price !== undefined && input.price !== null && typeof input.price !== "number") {
+        throw new Error("price must be a number, or omitted for on-request");
+    }
 
     const catalogue = await readCatalogue();
-    const slug = uniqueSlug(slugify(input.title), catalogue);
 
-    const image = await writeArtworkImage(input.imageBuffer, slug);
-    const theme = await themeFromImage(input.imageBuffer);
+    let { description, story, title } = input;
 
-    let { description, story } = input;
-    if (!description || !story) {
+    // With no title supplied the model suggests one from the image, so the slug
+    // can only be settled after the copy step.
+    if (!description || (!story && input.notes) || !title) {
         if (!copyConfigured()) {
             throw new Error(
-                "no description/story supplied and no model configured " +
+                "nothing supplied to write from and no model configured " +
                 "(set CURATOR_API_KEY and CURATOR_MODEL)"
             );
         }
         const written = await generateCopy(
             {
-                title: input.title,
+                title,
                 medium: input.medium ?? "Mixed Media",
                 size: input.size ?? "",
                 year: input.year ?? new Date().getFullYear(),
@@ -66,18 +65,25 @@ export async function addArtwork(input, options = {}) {
             },
             { catalogue, imageBuffer: input.imageBuffer }
         );
+        title = title ?? written.title ?? "Untitled";
         description = description ?? written.description;
-        story = story ?? written.story;
+        story = story ?? written.story ?? "";
     }
+
+    const slug = uniqueSlug(slugify(title), catalogue);
+    const image = await writeArtworkImage(input.imageBuffer, slug);
+    const theme = await themeFromImage(input.imageBuffer);
 
     const artwork = {
         slug,
-        title: input.title,
-        titleAr: input.titleAr,
+        title,
+        titleAr: input.titleAr ?? "",
         medium: input.medium ?? "Mixed Media",
         size: input.size ?? "",
         year: input.year ?? new Date().getFullYear(),
-        price: input.price,
+        // Explicitly null rather than absent, so "not priced yet" is a stated fact
+        // in the JSON rather than a missing key someone might read as an oversight.
+        price: input.price ?? null,
         image: image.path,
         description,
         story,

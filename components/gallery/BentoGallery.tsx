@@ -1,7 +1,7 @@
 "use client";
 
 import { MagicCard } from "@/components/ui/magic-card";
-import { artworks } from "@/lib/artworks";
+import { artworks, priceLabel } from "@/lib/artworks";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -98,7 +98,7 @@ export default function BentoGallery() {
                                                 </p>
                                             </div>
                                             <span className="text-gold font-serif text-lg font-bold">
-                                                ${artwork.price}
+                                                {priceLabel(artwork)}
                                             </span>
                                         </div>
                                     </div>

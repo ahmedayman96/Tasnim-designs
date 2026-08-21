@@ -1,16 +1,21 @@
 #!/usr/bin/env node
 /**
- * "الأسطى" — a Telegram bot that adds work to the gallery.
+ * "الأسطى" — Telegram bot for the gallery.
  *
  *   node --env-file=.env.local tools/curator/bot.mjs
  *
- * Talks to the Telegram Bot API directly over long polling: no dependencies, no
- * webhook, no public IP, works from behind a home router. It collects a photo and
- * four answers, then calls addArtwork() — it has no other capabilities, and the
- * curator itself refuses to write anywhere but the catalogue and public/images.
+ * Send a photo; it goes up. No questions asked — the model titles and describes
+ * the piece from the image itself, and everything it cannot see (why she made it,
+ * what it is worth) is left blank rather than invented. She fills those in by
+ * replying in plain Arabic afterwards.
+ *
+ * Raw Bot API over long polling: no dependencies, no webhook, no public IP.
  */
 import { addArtwork, removeArtwork, updateArtwork, repo } from "./index.mjs";
 import { readCatalogue } from "./catalogue.mjs";
+import { generateCopy } from "./copy.mjs";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const API = `https://api.telegram.org/bot${TOKEN}`;
@@ -18,9 +23,7 @@ const FILE_API = `https://api.telegram.org/file/bot${TOKEN}`;
 const SITE = process.env.SITE_URL || "https://tasnimelyamani.com";
 
 const ALLOWED = (process.env.TELEGRAM_ALLOWED_IDS || "")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
+    .split(",").map((s) => s.trim()).filter(Boolean);
 
 if (!TOKEN) {
     console.error("TELEGRAM_BOT_TOKEN is not set");
@@ -40,11 +43,10 @@ async function tg(method, payload) {
     return data.result;
 }
 
-const say = (chat, text, extra = {}) =>
-    tg("sendMessage", { chat_id: chat, text, parse_mode: "HTML", ...extra });
+const say = (chat, text) =>
+    tg("sendMessage", { chat_id: chat, text, parse_mode: "HTML", disable_web_page_preview: false });
 
 async function downloadPhoto(photoSizes) {
-    // Telegram sends several resolutions; the last is the largest.
     const largest = photoSizes[photoSizes.length - 1];
     const file = await tg("getFile", { file_id: largest.file_id });
     const res = await fetch(`${FILE_API}/${file.file_path}`);
@@ -54,235 +56,189 @@ async function downloadPhoto(photoSizes) {
 
 // ------------------------------------------------------------------- State ---
 
-/** One in-flight submission per chat. Lost on restart, which is fine — she just resends. */
-const sessions = new Map();
-/** Last published commit per chat, so "تراجع" knows what to undo. */
-const lastPublished = new Map();
+/** The piece each chat is currently talking about — edits apply to it. */
+const focus = new Map();
 
-const STEPS = ["title", "titleAr", "notes", "price", "confirm"];
-
-const ASK = {
-    title: "📛 اسم العمل بالإنجليزي؟\n<i>English title</i>",
-    titleAr: "🇪🇬 والاسم بالعربي؟",
-    notes:
-        "✍️ احكيلي عن اللوحة — أي حاجة، كلمتين كفاية.\n" +
-        "<i>Tell me about it in your own words — I'll only use what you say, " +
-        "I won't make anything up.</i>",
-    price: "💵 السعر بالدولار؟ (أرقام بس)",
-};
-
-function money(n) {
-    return `$${n.toLocaleString("en-US")}`;
-}
-
-// -------------------------------------------------------------- Publishing ---
+const money = (n) => (typeof n === "number" ? `$${n.toLocaleString("en-US")}` : "من غير سعر");
 
 /**
- * The site rebuilds after a push, so "it's live" is only true once the new page
- * actually serves. Poll it rather than guessing at a deploy time.
+ * The site rebuilds after a push, so only claim it's live once the page serves.
  */
 async function waitForLive(slug, timeoutMs = 240000) {
     const url = `${SITE}/artwork/${slug}`;
     const deadline = Date.now() + timeoutMs;
     while (Date.now() < deadline) {
         try {
-            const res = await fetch(url, { method: "HEAD", redirect: "follow" });
-            if (res.ok) return url;
-        } catch { /* deploy in progress */ }
+            if ((await fetch(url, { method: "HEAD", redirect: "follow" })).ok) return url;
+        } catch { /* still building */ }
         await new Promise((r) => setTimeout(r, 10000));
     }
     return null;
 }
 
-async function publish(chat, session) {
-    await say(chat, "⏳ ثانية واحدة… بجهز اللوحة");
+function card(artwork, live) {
+    const missing = [];
+    if (!artwork.titleAr) missing.push("«بالعربي ...» للاسم العربي");
+    if (artwork.price === null) missing.push("«السعر ١٤٠٠» عشان تتباع");
+    if (!artwork.story) missing.push("«احكي ...» بكلامك انتي عن اللوحة");
 
-    const { artwork, sha } = await addArtwork(
-        {
-            imageBuffer: session.imageBuffer,
-            title: session.title,
-            titleAr: session.titleAr,
-            price: session.price,
-            notes: session.notes,
-            medium: session.medium,
-            size: session.size,
-        },
-        { commit: true, push: true }
+    return (
+        `🖼 <b>${artwork.title}</b>${artwork.titleAr ? ` — ${artwork.titleAr}` : ""}\n` +
+        `${money(artwork.price)}\n\n` +
+        `<i>${artwork.description}</i>\n` +
+        (artwork.story ? `\n${artwork.story}\n` : "") +
+        (live ? `\n${live}\n` : "") +
+        (missing.length ? `\nناقص لسه:\n• ${missing.join("\n• ")}\n` : "") +
+        `\n«تراجع» لو عايزة تشيليها`
     );
-
-    lastPublished.set(chat, { sha, title: artwork.title });
-
-    await say(
-        chat,
-        `✅ <b>${artwork.title}</b> — ${money(artwork.price)}\n\n` +
-        `<i>${artwork.description}</i>\n\n` +
-        `${artwork.story}\n\n` +
-        `🚀 بنشرها دلوقتي… هستناها تطلع وأقولك.`
-    );
-
-    const url = await waitForLive(artwork.slug);
-    if (url) {
-        await say(chat, `🎉 نزلت!\n${url}\n\nلو عايزة تلغيها اكتب <b>تراجع</b>`);
-    } else {
-        await say(
-            chat,
-            "تم الرفع، بس الموقع لسه بيبني. جربي اللينك بعد شوية:\n" +
-            `${SITE}/artwork/${artwork.slug}`
-        );
-    }
 }
 
-// ---------------------------------------------------------------- Handlers ---
+async function publishAndReport(chat, artwork, prefix) {
+    await repo.push();
+    focus.set(chat, artwork.slug);
+    const live = await waitForLive(artwork.slug);
+    await say(chat, (prefix ? `${prefix}\n\n` : "") + card(artwork, live));
+}
+
+// -------------------------------------------------------------- Edit rules ---
+
+/**
+ * Plain-Arabic edits. Order matters: the Arabic-title rule has to be tested
+ * before the title rule, since it also begins with a name-ish word.
+ */
+const EDITS = [
+    { re: /^(?:بالعربي|عربي)\s+(.+)$/is, field: "titleAr" },
+    { re: /^(?:الاسم|اسمها|سميها|title)\s+(.+)$/is, field: "title" },
+    { re: /^(?:السعر|سعرها|price)\s+([\d.,]+)$/i, field: "price" },
+    { re: /^(?:الخامة|الخامات|medium)\s+(.+)$/is, field: "medium" },
+    { re: /^(?:المقاس|الحجم|size)\s+(.+)$/is, field: "size" },
+    { re: /^(?:احكي|اكتب|القصة|story|notes)\s+(.+)$/is, field: "__notes" },
+];
+
+async function applyEdit(chat, slug, field, raw) {
+    const catalogue = await readCatalogue();
+    const artwork = catalogue.find((a) => a.slug === slug);
+    if (!artwork) throw new Error("مش لاقي اللوحة دي");
+
+    // Notes aren't stored — they're rewritten into the story, in her voice.
+    if (field === "__notes") {
+        await say(chat, "✍️ ثانية…");
+        const image = await fs.readFile(path.join(process.cwd(), "public", artwork.image));
+        const written = await generateCopy(
+            { title: artwork.title, medium: artwork.medium, size: artwork.size, year: artwork.year, notes: raw },
+            { catalogue: catalogue.filter((a) => a.slug !== slug), imageBuffer: image }
+        );
+        const { artwork: updated } = await updateArtwork(
+            slug,
+            { story: written.story, description: written.description },
+            { commit: true }
+        );
+        await publishAndReport(chat, updated, "✅ اتكتبت");
+        return;
+    }
+
+    const value = field === "price" ? Number(String(raw).replace(/[^0-9.]/g, "")) : raw.trim();
+    if (field === "price" && (!Number.isFinite(value) || value <= 0)) {
+        await say(chat, "اكتبي رقم، زي «السعر 1400»");
+        return;
+    }
+
+    const { artwork: updated } = await updateArtwork(slug, { [field]: value }, { commit: true });
+    await publishAndReport(chat, updated, "✅ اتظبطت");
+}
+
+// ---------------------------------------------------------------- Commands ---
 
 async function handleCommand(chat, text) {
-    const command = text.trim().toLowerCase();
+    const c = text.trim().toLowerCase();
 
-    if (command === "/start" || command === "/help") {
-        await say(
-            chat,
+    if (c === "/start" || c === "/help") {
+        await say(chat,
             "أهلاً يا فنانة 👋 أنا <b>الأسطى</b>.\n\n" +
-            "ابعتيلي <b>صورة</b> اللوحة وأنا هسألك على الباقي وأنشرها على الموقع.\n\n" +
-            "الأوامر:\n" +
-            "/list — اللوحات اللي على الموقع\n" +
-            "/cancel — إلغاء اللي بنعمله دلوقتي\n" +
-            "<b>تراجع</b> — إلغاء آخر لوحة نشرتها"
-        );
+            "ابعتيلي <b>صورة</b> اللوحة وهي هتتنشر على الموقع على طول، " +
+            "وهبعتلك اللينك.\n\n" +
+            "وبعدين لو حابة تغيري حاجة اكتبيلي عادي:\n" +
+            "• «الاسم Golden Hour»\n" +
+            "• «بالعربي ساعة الذهب»\n" +
+            "• «السعر 1400»\n" +
+            "• «احكي رسمتها بالليل والضوء كان...»\n" +
+            "• «تراجع» — تشيل آخر لوحة\n\n" +
+            "/list — كل اللوحات");
         return true;
     }
 
-    if (command === "/list") {
+    if (c === "/list") {
         const catalogue = await readCatalogue();
-        const lines = catalogue.map(
-            (a) => `• ${a.title} — ${money(a.price)}${a.sold ? " (اتباعت)" : ""}`
-        );
-        await say(chat, `🖼 <b>${catalogue.length} لوحات</b>\n\n${lines.join("\n")}`);
+        await say(chat, `🖼 <b>${catalogue.length} لوحات</b>\n\n` + catalogue
+            .map((a) => `• ${a.title} — ${a.sold ? "اتباعت" : money(a.price)}`).join("\n"));
         return true;
     }
 
-    if (command === "/cancel") {
-        sessions.delete(chat);
-        await say(chat, "تمام، لغيت. ابعتي صورة تاني لما تكوني جاهزة.");
-        return true;
-    }
-
-    if (text.trim() === "تراجع" || command === "/undo") {
-        const last = lastPublished.get(chat);
-        if (!last) {
-            await say(chat, "مفيش حاجة أتراجع عنها.");
-            return true;
-        }
-        await say(chat, `⏪ بشيل «${last.title}»…`);
-        await repo.revert(last.sha);
-        await repo.push();
-        lastPublished.delete(chat);
-        await say(chat, "اتشالت. هتختفي من الموقع خلال دقيقتين.");
+    if (text.trim() === "تراجع" || c === "/undo") {
+        const slug = focus.get(chat);
+        if (!slug) { await say(chat, "مفيش حاجة أشيلها."); return true; }
+        await say(chat, "⏪ بشيلها…");
+        const { artwork } = await removeArtwork(slug, { commit: true, push: true });
+        focus.delete(chat);
+        await say(chat, `اتشالت «${artwork.title}». هتختفي من الموقع خلال دقيقتين.`);
         return true;
     }
 
     return false;
 }
 
+// ----------------------------------------------------------------- Router ---
+
 async function handleMessage(message) {
     const chat = message.chat.id;
     const from = message.from;
 
-    // Access control. With no allow-list configured, report the id and refuse —
-    // that's how the ids get collected in the first place.
     if (!ALLOWED.length) {
         console.log(`[id] ${from.id}  ${from.first_name ?? ""} @${from.username ?? "-"}`);
-        await say(
-            chat,
-            `👋 Your Telegram ID is <code>${from.id}</code>\n\n` +
-            "Add it to TELEGRAM_ALLOWED_IDS in .env.local and restart me."
-        );
+        await say(chat, `👋 Your Telegram ID is <code>${from.id}</code>\n\nAdd it to TELEGRAM_ALLOWED_IDS and restart me.`);
         return;
     }
     if (!ALLOWED.includes(String(from.id))) {
         console.log(`[denied] ${from.id} @${from.username ?? "-"}`);
-        return; // Silence is the right reply to strangers.
+        return;
     }
 
-    const text = message.text ?? message.caption ?? "";
+    const text = (message.text ?? message.caption ?? "").trim();
 
-    if (text.startsWith("/") || text.trim() === "تراجع") {
+    if (text.startsWith("/") || text === "تراجع") {
         if (await handleCommand(chat, text)) return;
     }
 
-    // A photo starts a new submission.
+    // A photo publishes immediately. Anything she typed with it becomes her notes.
     if (message.photo) {
-        await say(chat, "📸 وصلتني الصورة");
+        await say(chat, "📸 وصلتني… بجهزها");
         const imageBuffer = await downloadPhoto(message.photo);
-        sessions.set(chat, { imageBuffer, step: 0 });
-        await say(chat, ASK.title);
+        const { artwork } = await addArtwork(
+            { imageBuffer, notes: text || undefined },
+            { commit: true }
+        );
+        await publishAndReport(chat, artwork, "🚀 نزلت");
         return;
     }
 
-    const session = sessions.get(chat);
-    if (!session) {
-        await say(chat, "ابعتيلي صورة اللوحة الأول 📸");
+    if (!text) return;
+
+    const slug = focus.get(chat);
+    if (!slug) {
+        await say(chat, "ابعتيلي صورة الأول 📸");
         return;
     }
 
-    const step = STEPS[session.step];
-    const answer = text.trim();
-    if (!answer) return;
-
-    switch (step) {
-        case "title":
-            session.title = answer;
-            session.step += 1;
-            await say(chat, ASK.titleAr);
-            break;
-
-        case "titleAr":
-            session.titleAr = answer;
-            session.step += 1;
-            await say(chat, ASK.notes);
-            break;
-
-        case "notes":
-            session.notes = answer;
-            session.step += 1;
-            await say(chat, ASK.price);
-            break;
-
-        case "price": {
-            const price = Number(answer.replace(/[^0-9.]/g, ""));
-            if (!Number.isFinite(price) || price <= 0) {
-                await say(chat, "اكتبي رقم بس، زي 1400");
-                return;
-            }
-            session.price = price;
-            session.step += 1;
-            // The one confirmation: a typo here is a real price on a live shop.
-            await say(
-                chat,
-                `تأكيد: <b>${session.title}</b> بسعر <b>${money(price)}</b>؟\n\n` +
-                "اكتبي <b>نعم</b> للنشر، أو <b>لأ</b> لتغيير السعر."
-            );
-            break;
-        }
-
-        case "confirm": {
-            if (/^(لا|لأ|no)$/i.test(answer)) {
-                session.step = STEPS.indexOf("price");
-                await say(chat, ASK.price);
-                return;
-            }
-            if (!/^(نعم|ايوه|أيوه|اه|آه|yes|y)$/i.test(answer)) {
-                await say(chat, "اكتبي <b>نعم</b> أو <b>لأ</b>");
-                return;
-            }
-            sessions.delete(chat);
-            try {
-                await publish(chat, session);
-            } catch (err) {
-                console.error(err);
-                await say(chat, `❌ حصلت مشكلة:\n<code>${err.message.slice(0, 300)}</code>`);
-            }
-            break;
+    for (const { re, field } of EDITS) {
+        const match = text.match(re);
+        if (match) {
+            await applyEdit(chat, slug, field, match[1]);
+            return;
         }
     }
+
+    // Anything else that isn't a command is taken as her describing the piece.
+    await applyEdit(chat, slug, "__notes", text);
 }
 
 // --------------------------------------------------------------- Long poll ---
@@ -290,20 +246,14 @@ async function handleMessage(message) {
 async function main() {
     const me = await tg("getMe", {});
     console.log(`الأسطى running as @${me.username}`);
-    console.log(
-        ALLOWED.length
-            ? `allowed ids: ${ALLOWED.join(", ")}`
-            : "no allow-list yet — message the bot and it will report your id"
-    );
+    console.log(ALLOWED.length
+        ? `allowed ids: ${ALLOWED.join(", ")}`
+        : "no allow-list yet — message the bot and it will report your id");
 
     let offset = 0;
     for (;;) {
         try {
-            const updates = await tg("getUpdates", {
-                offset,
-                timeout: 30,
-                allowed_updates: ["message"],
-            });
+            const updates = await tg("getUpdates", { offset, timeout: 30, allowed_updates: ["message"] });
             for (const update of updates) {
                 offset = update.update_id + 1;
                 if (!update.message) continue;
@@ -321,7 +271,4 @@ async function main() {
     }
 }
 
-main().catch((err) => {
-    console.error(err);
-    process.exit(1);
-});
+main().catch((err) => { console.error(err); process.exit(1); });

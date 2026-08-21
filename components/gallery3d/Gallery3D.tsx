@@ -5,7 +5,7 @@ import { useTexture, Environment } from "@react-three/drei";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import Link from "next/link";
-import { artworks, type Artwork } from "@/lib/artworks";
+import { artworks, priceLabel, type Artwork } from "@/lib/artworks";
 import RoomPreview from "@/components/room-preview/RoomPreview";
 
 /* ------------------------------------------------------------------ */
@@ -86,7 +86,7 @@ function makePlaque(art: Artwork): THREE.Texture {
 
     ctx.fillStyle = "#c9a55a";
     ctx.font = "600 30px Georgia, serif";
-    ctx.fillText(`$${art.price.toLocaleString()}`, w / 2, 128);
+    ctx.fillText(priceLabel(art), w / 2, 128);
 
     const tex = new THREE.CanvasTexture(canvas);
     tex.colorSpace = THREE.SRGBColorSpace;
@@ -643,7 +643,7 @@ export default function Gallery3D() {
                             <p className="mt-1 text-xs text-cream-muted">
                                 {selected.medium} · {selected.size} · {selected.year}
                             </p>
-                            <p className="mt-1 font-serif text-gold">${selected.price.toLocaleString()}</p>
+                            <p className="mt-1 font-serif text-gold">{priceLabel(selected)}</p>
                         </div>
                     </div>
                     <div className="mt-4 flex flex-col gap-2">

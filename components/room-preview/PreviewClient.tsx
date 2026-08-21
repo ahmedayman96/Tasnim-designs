@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { artworks, type Artwork } from "@/lib/artworks";
+import { artworks, priceLabel, type Artwork } from "@/lib/artworks";
 import RoomPreview from "./RoomPreview";
 
 export default function PreviewClient() {
@@ -42,7 +42,7 @@ export default function PreviewClient() {
                                 />
                                 <div className="p-3">
                                     <p className="truncate font-serif text-sm text-cream">{a.title}</p>
-                                    <p className="text-xs text-gold">${a.price.toLocaleString()}</p>
+                                    <p className="text-xs text-gold">{priceLabel(a)}</p>
                                 </div>
                             </button>
                         ))}
@@ -61,7 +61,7 @@ export default function PreviewClient() {
                             />
                             <div>
                                 <p className="font-serif text-cream">{selected.title}</p>
-                                <p className="text-xs text-gold">${selected.price.toLocaleString()}</p>
+                                <p className="text-xs text-gold">{priceLabel(selected)}</p>
                             </div>
                         </div>
                         <button

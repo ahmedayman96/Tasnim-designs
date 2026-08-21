@@ -1,6 +1,7 @@
 "use client";
 
 import { useCart } from "@/lib/cart-context";
+import { priceLabel } from "@/lib/artworks";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
@@ -133,7 +134,7 @@ export default function CartPanel() {
                                                     {item.artwork.medium}
                                                 </p>
                                                 <p className="text-gold font-serif font-bold mt-1">
-                                                    ${item.artwork.price}
+                                                    {priceLabel(item.artwork)}
                                                 </p>
                                             </div>
                                             <button

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { getArtworkBySlug } from "@/lib/artworks";
+import { getArtworkBySlug, isPurchasable } from "@/lib/artworks";
 
 export async function POST(request: Request) {
     try {
@@ -27,6 +27,15 @@ export async function POST(request: Request) {
             );
         }
 
+        // A piece with no price set, or one already sold, cannot be bought — this
+        // is what keeps newly added work out of checkout until a price is typed.
+        if (!resolved.every((artwork) => isPurchasable(artwork!))) {
+            return NextResponse.json(
+                { error: "One of these pieces is not available for purchase" },
+                { status: 409 }
+            );
+        }
+
         const baseUrl =
             process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
 
@@ -38,7 +47,8 @@ export async function POST(request: Request) {
                     images: artwork!.image ? [`${baseUrl}${artwork!.image}`] : [],
                     description: "Original artwork by Tasnim Elyamani",
                 },
-                unit_amount: Math.round(artwork!.price * 100), // Stripe uses cents
+                // Non-null: isPurchasable() above rejects anything without a price.
+                unit_amount: Math.round(artwork!.price! * 100), // Stripe uses cents
             },
             quantity: 1,
         }));

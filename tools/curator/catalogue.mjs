@@ -37,10 +37,11 @@ export function uniqueSlug(desired, artworks) {
 /** Fields the site will break without. Checked before anything is written. */
 export function validateArtwork(artwork) {
     const problems = [];
-    const required = [
-        "slug", "title", "titleAr", "medium", "size",
-        "year", "price", "image", "description", "story",
-    ];
+
+    // A piece can go up as a draft: no price yet (shown as "price on request",
+    // and refused by checkout), no Arabic title, no story until she writes one.
+    // These are the fields the page genuinely cannot render without.
+    const required = ["slug", "title", "medium", "year", "image", "description"];
 
     for (const field of required) {
         const value = artwork[field];
@@ -49,8 +50,15 @@ export function validateArtwork(artwork) {
         }
     }
 
-    if (typeof artwork.price !== "number" || !Number.isFinite(artwork.price) || artwork.price <= 0) {
-        problems.push("price must be a positive number");
+    // null is a deliberate "not for sale yet". Any other non-positive value is a bug.
+    if (artwork.price !== null && artwork.price !== undefined) {
+        if (
+            typeof artwork.price !== "number" ||
+            !Number.isFinite(artwork.price) ||
+            artwork.price <= 0
+        ) {
+            problems.push("price must be a positive number, or null for on-request");
+        }
     }
     if (typeof artwork.year !== "number" || artwork.year < 1900 || artwork.year > 2100) {
         problems.push("year looks wrong");
