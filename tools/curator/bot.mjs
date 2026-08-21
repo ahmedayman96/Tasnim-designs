@@ -14,6 +14,7 @@
 import { addArtwork, removeArtwork, updateArtwork, repo } from "./index.mjs";
 import { readCatalogue } from "./catalogue.mjs";
 import { generateCopy } from "./copy.mjs";
+import { transcribe } from "./transcribe.mjs";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
@@ -46,12 +47,19 @@ async function tg(method, payload) {
 const say = (chat, text) =>
     tg("sendMessage", { chat_id: chat, text, parse_mode: "HTML", disable_web_page_preview: false });
 
-async function downloadPhoto(photoSizes) {
-    const largest = photoSizes[photoSizes.length - 1];
-    const file = await tg("getFile", { file_id: largest.file_id });
+async function download(fileId) {
+    const file = await tg("getFile", { file_id: fileId });
     const res = await fetch(`${FILE_API}/${file.file_path}`);
-    if (!res.ok) throw new Error(`could not download photo (${res.status})`);
-    return Buffer.from(await res.arrayBuffer());
+    if (!res.ok) throw new Error(`could not download file (${res.status})`);
+    return {
+        buffer: Buffer.from(await res.arrayBuffer()),
+        name: file.file_path.split("/").pop(),
+    };
+}
+
+/** Telegram sends several resolutions; the last is the largest. */
+async function downloadPhoto(photoSizes) {
+    return (await download(photoSizes[photoSizes.length - 1].file_id)).buffer;
 }
 
 // ------------------------------------------------------------------- State ---
@@ -203,7 +211,19 @@ async function handleMessage(message) {
         return;
     }
 
-    const text = (message.text ?? message.caption ?? "").trim();
+    let text = (message.text ?? message.caption ?? "").trim();
+
+    // A voice note becomes text and then follows exactly the same path as typing,
+    // so she can speak any instruction, not just the story.
+    const audio = message.voice ?? message.audio;
+    if (audio) {
+        await say(chat, "🎧 بسمع…");
+        const { buffer, name } = await download(audio.file_id);
+        text = await transcribe(buffer, name || "voice.ogg");
+        // Always show it back — a mis-heard word would otherwise be published in
+        // her voice without her ever seeing it.
+        await say(chat, `سمعت:\n<i>«${text}»</i>`);
+    }
 
     if (text.startsWith("/") || text === "تراجع") {
         if (await handleCommand(chat, text)) return;
