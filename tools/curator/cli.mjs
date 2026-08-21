@@ -33,6 +33,8 @@ function parseArgs(argv) {
 }
 
 function money(n) {
+    // null is a deliberate "not priced yet", not a missing value.
+    if (typeof n !== "number") return "on request";
     return `$${n.toLocaleString("en-US")}`;
 }
 
