@@ -112,5 +112,24 @@
       "textColor": "#e6dbd1"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
+  },
+  {
+    "slug": "abstract-form",
+    "title": "Abstract Form",
+    "titleAr": "",
+    "medium": "Mixed Media",
+    "size": "",
+    "year": 2026,
+    "price": null,
+    "image": "/images/abstract-form.webp",
+    "description": "An irregularly shaped panel painted with flowing washes of blue, brown, and white, creating a marbled, organic effect.",
+    "story": "",
+    "theme": {
+      "bg": "#120f0c",
+      "accent": "#c7996b",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e6dbd1"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2"
   }
 ]
