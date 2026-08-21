@@ -12,8 +12,22 @@
 const DEFAULT_MODEL = "gpt-4o-transcribe";
 
 /**
- * @param {Buffer} audio    Telegram voice notes are OGG/Opus, which is accepted.
- * @param {string} filename extension matters — the API sniffs the format from it
+ * The API picks the decoder from the filename extension, not from the bytes, and
+ * the gpt-4o transcribe models reject "oga" while accepting the identical file as
+ * "ogg". Telegram names every voice note .oga, so the extension is normalised
+ * here. (whisper-1 accepts .oga, but transcribes her dialect noticeably worse —
+ * "الحاطة قداني" where gpt-4o-transcribe gets "الحيطة قدامي".)
+ */
+function sendableName(filename) {
+    const ext = (filename.split(".").pop() || "").toLowerCase();
+    const SUPPORTED = ["flac", "m4a", "mp3", "mp4", "mpeg", "mpga", "ogg", "wav", "webm"];
+    if (ext === "oga" || !SUPPORTED.includes(ext)) return "voice.ogg";
+    return filename;
+}
+
+/**
+ * @param {Buffer} audio    Telegram voice notes are Ogg/Opus
+ * @param {string} filename as Telegram named it; normalised before sending
  */
 export async function transcribe(audio, filename = "voice.ogg") {
     const key = process.env.CURATOR_API_KEY;
@@ -22,7 +36,7 @@ export async function transcribe(audio, filename = "voice.ogg") {
     const model = process.env.CURATOR_TRANSCRIBE_MODEL || DEFAULT_MODEL;
 
     const form = new FormData();
-    form.append("file", new Blob([audio]), filename);
+    form.append("file", new Blob([audio]), sendableName(filename));
     form.append("model", model);
     // She speaks Arabic; naming it stops the model hedging between languages on
     // short or noisy clips.
