@@ -150,5 +150,24 @@
       "textColor": "#e0d7d7"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
+  },
+  {
+    "slug": "blue-geode",
+    "title": "Blue Geode",
+    "titleAr": "",
+    "medium": "Mixed Media",
+    "size": "",
+    "year": 2026,
+    "price": null,
+    "image": "/images/blue-geode.webp",
+    "description": "An irregular blue and teal geode-like form with swirling patterns, edged with textured gold, set against a background of horizontal purple and black stripes.",
+    "story": "",
+    "theme": {
+      "bg": "#110e0e",
+      "accent": "#b08282",
+      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
+      "textColor": "#e0d7d7"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2"
   }
 ]
