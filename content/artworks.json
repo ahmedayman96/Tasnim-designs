@@ -74,24 +74,5 @@
       "textColor": "#c8c0e8"
     },
     "gridSpan": "md:col-span-2 md:row-span-1"
-  },
-  {
-    "slug": "still-life-scene",
-    "title": "Still Life Scene",
-    "titleAr": "",
-    "medium": "Mixed Media",
-    "size": "",
-    "year": 2026,
-    "price": null,
-    "image": "/images/still-life-scene.webp",
-    "description": "A large vertical painting depicting a cubist-inspired still life with candles, fruit, and a landscape visible through a window, set against a richly colored geometric background.",
-    "story": "",
-    "theme": {
-      "bg": "#110e0e",
-      "accent": "#b08282",
-      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
-      "textColor": "#e0d7d7"
-    },
-    "gridSpan": "md:col-span-1 md:row-span-2"
   }
 ]
