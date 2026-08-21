@@ -95,25 +95,6 @@
     "gridSpan": "md:col-span-1 md:row-span-2"
   },
   {
-    "slug": "untitled",
-    "title": "Untitled",
-    "titleAr": "",
-    "medium": "Mixed Media",
-    "size": "",
-    "year": 2026,
-    "price": null,
-    "image": "/images/untitled.webp",
-    "description": "An irregularly shaped mixed media piece featuring soft, flowing swirls of blue, brown, and white hues.",
-    "story": "This work exists as a fluid expression of form and color, where shapes move softly across the surface. It is meant to be seen on its own, without background distractions, allowing the subtle interplay of hues to speak quietly.",
-    "theme": {
-      "bg": "#110f0d",
-      "accent": "#bc8d76",
-      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
-      "textColor": "#e2d9d5"
-    },
-    "gridSpan": "md:col-span-1 md:row-span-2"
-  },
-  {
     "slug": "abstract-form",
     "title": "Abstract Form",
     "titleAr": "",
