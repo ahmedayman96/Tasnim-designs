@@ -69,7 +69,43 @@ async function downloadPhoto(photoSizes) {
 const focus = new Map();
 const focusSlug = (chat) => focus.get(chat)?.slug;
 
-const money = (n) => (typeof n === "number" ? `$${n.toLocaleString("en-US")}` : "من غير سعر");
+/**
+ * She switches between Arabic and English freely, so the bot's own lines follow
+ * whichever she last used rather than being fixed in one language.
+ */
+const lastLang = new Map();
+const isArabic = (text) => /[؀-ۿ]/.test(text ?? "");
+const langFor = (chat) => lastLang.get(chat) ?? "ar";
+
+const SAY = {
+    ar: {
+        gotPhoto: "📸 وصلتني… بجهزها",
+        listening: "🎧 بسمع…",
+        heard: "سمعت",
+        published: "🚀 نزلت",
+        noPrice: "من غير سعر",
+        missing: "ناقص لسه",
+        needAr: "الاسم بالعربي",
+        needPrice: "السعر، عشان تتباع",
+        needStory: "احكيلي عنها بكلامك",
+    },
+    en: {
+        gotPhoto: "📸 Got it — one moment",
+        listening: "🎧 Listening…",
+        heard: "Heard",
+        published: "🚀 It's up",
+        noPrice: "no price yet",
+        missing: "Still missing",
+        needAr: "the Arabic title",
+        needPrice: "a price, so it can sell",
+        needStory: "a few words from you about it",
+    },
+};
+
+const t = (chat) => SAY[langFor(chat)];
+
+const money = (n, chat) =>
+    typeof n === "number" ? `$${n.toLocaleString("en-US")}` : t(chat).noPrice;
 
 /**
  * The site rebuilds after a push, so only claim it's live once the page serves.
@@ -86,11 +122,12 @@ async function waitForLive(slug, timeoutMs = 240000) {
     return null;
 }
 
-function card(artwork, live) {
+function card(artwork, live, chat) {
+    const L = t(chat);
     const missing = [];
-    if (!artwork.titleAr) missing.push("«بالعربي ...» للاسم العربي");
-    if (artwork.price === null) missing.push("«السعر ١٤٠٠» عشان تتباع");
-    if (!artwork.story) missing.push("«احكي ...» بكلامك انتي عن اللوحة");
+    if (!artwork.titleAr) missing.push(L.needAr);
+    if (artwork.price === null) missing.push(L.needPrice);
+    if (!artwork.story) missing.push(L.needStory);
 
     return (
         `🖼 <b>${artwork.title}</b>${artwork.titleAr ? ` — ${artwork.titleAr}` : ""}\n` +
@@ -157,28 +194,30 @@ async function handleMessage(message) {
     }
 
     let text = (message.text ?? message.caption ?? "").trim();
+    if (text) lastLang.set(chat, isArabic(text) ? "ar" : "en");
 
     // A voice note becomes text and then follows exactly the same path as typing,
     // so she can speak any instruction, not just the story.
     const audio = message.voice ?? message.audio;
     if (audio) {
-        await say(chat, "🎧 بسمع…");
+        await say(chat, t(chat).listening);
         const { buffer, name } = await download(audio.file_id);
         text = await transcribe(buffer, name || "voice.ogg");
+        lastLang.set(chat, isArabic(text) ? "ar" : "en");
         // Always show it back — a mis-heard word would otherwise be published in
         // her voice without her ever seeing it.
-        await say(chat, `سمعت:\n<i>«${text}»</i>`);
+        await say(chat, `${t(chat).heard}:\n<i>“${text}”</i>`);
     }
 
     // A photo always means a new piece; it goes up straight away.
     if (message.photo) {
-        await say(chat, "📸 وصلتني… بجهزها");
+        await say(chat, t(chat).gotPhoto);
         const original = await downloadPhoto(message.photo);
         const { artwork } = await addArtwork(
             { imageBuffer: original, notes: text || undefined },
             { commit: true }
         );
-        await publishAndReport(chat, artwork, "🚀 نزلت", original);
+        await publishAndReport(chat, artwork, t(chat).published, original);
 
         // Let the agent know, so "make it 1400" next message has something to act on.
         historyFor(chat).push({

@@ -38,9 +38,12 @@ export async function transcribe(audio, filename = "voice.ogg") {
     const form = new FormData();
     form.append("file", new Blob([audio]), sendableName(filename));
     form.append("model", model);
-    // She speaks Arabic; naming it stops the model hedging between languages on
-    // short or noisy clips.
-    form.append("language", "ar");
+    // Language is deliberately not pinned: she speaks Arabic and English, often in
+    // the same sentence, and forcing "ar" turned English notes into Arabic-looking
+    // nonsense. Auto-detection handles both, and code-switching, correctly.
+    if (process.env.CURATOR_TRANSCRIBE_LANG) {
+        form.append("language", process.env.CURATOR_TRANSCRIBE_LANG);
+    }
 
     const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
         method: "POST",
