@@ -226,24 +226,5 @@
       "textColor": "#e0d7d7"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
-  },
-  {
-    "slug": "flowing-form-3",
-    "title": "Flowing Form",
-    "titleAr": "",
-    "medium": "Mixed Media",
-    "size": "",
-    "year": 2026,
-    "price": null,
-    "image": "/images/flowing-form-3.webp",
-    "description": "An abstract, irregularly shaped mixed media piece featuring flowing swirls of blue, brown, and beige tones blending softly together.",
-    "story": "",
-    "theme": {
-      "bg": "#110e0e",
-      "accent": "#b08282",
-      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
-      "textColor": "#e0d7d7"
-    },
-    "gridSpan": "md:col-span-1 md:row-span-1"
   }
 ]
