@@ -264,5 +264,24 @@
       "textColor": "#e0d7d7"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
+  },
+  {
+    "slug": "textured-landscape",
+    "title": "Textured Landscape",
+    "titleAr": "",
+    "medium": "Mixed Media",
+    "size": "",
+    "year": 2026,
+    "price": null,
+    "image": "/images/textured-landscape.webp",
+    "description": "An abstract mixed media piece featuring a textured surface with earthy tones of brown, beige, and black, suggesting a landscape with a smoky or cloudy formation rising from the lower area.",
+    "story": "",
+    "theme": {
+      "bg": "#110e0e",
+      "accent": "#b08282",
+      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
+      "textColor": "#e0d7d7"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-1"
   }
 ]
