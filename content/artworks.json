@@ -38,25 +38,6 @@
     "gridSpan": "md:col-span-1 md:row-span-1"
   },
   {
-    "slug": "spring-fragments",
-    "title": "Spring Fragments",
-    "titleAr": "شظايا الربيع",
-    "medium": "Mixed Media Collage",
-    "size": "20 × 24 in",
-    "year": 2024,
-    "price": 1000,
-    "image": "/images/artwork-3.png",
-    "description": "A delicate bouquet deconstructed and reassembled — roses and jasmine in tessellated pastels against iron filigree.",
-    "story": "My grandmother's balcony always overflowed with flowers in spring. The roses she tended had this quality of being both fragile and fierce. I collaged newspaper fragments as her words, the iron railing as her strength, and the flowers as the softness she showed only to those she loved.",
-    "theme": {
-      "bg": "#161214",
-      "accent": "#c4899e",
-      "gradient": "from-pink-900/20 via-transparent to-purple-900/10",
-      "textColor": "#e8d0d8"
-    },
-    "gridSpan": "md:col-span-1 md:row-span-2"
-  },
-  {
     "slug": "still-life-window",
     "title": "Still Life Window",
     "titleAr": "",
