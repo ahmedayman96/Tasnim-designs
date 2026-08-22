@@ -57,25 +57,6 @@
     "gridSpan": "md:col-span-1 md:row-span-2"
   },
   {
-    "slug": "cosmic-metropolis",
-    "title": "Cosmic Metropolis",
-    "titleAr": "المدينة الكونية",
-    "medium": "Mixed Media Digital Collage",
-    "size": "24 × 24 in",
-    "year": 2024,
-    "price": 1500,
-    "image": "/images/artwork-4.png",
-    "description": "A nocturnal cityscape dissolving into constellations — silver towers, crescent moons, and the electric hum of a city dreaming.",
-    "story": "Cities at night have always felt like they exist in a different dimension. The silver frame mirrors the cold beauty of skyscrapers, while the deep navy reveals a cosmos hidden just above the rooftops. The crescent moon is both celestial and deeply personal — a symbol of home.",
-    "theme": {
-      "bg": "#0a0a14",
-      "accent": "#8b7ec8",
-      "gradient": "from-indigo-900/20 via-transparent to-purple-900/10",
-      "textColor": "#c8c0e8"
-    },
-    "gridSpan": "md:col-span-2 md:row-span-1"
-  },
-  {
     "slug": "still-life-window",
     "title": "Still Life Window",
     "titleAr": "",
