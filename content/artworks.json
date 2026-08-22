@@ -152,25 +152,6 @@
     "gridSpan": "md:col-span-1 md:row-span-2"
   },
   {
-    "slug": "gold-veins",
-    "title": "Gold Veins",
-    "titleAr": "",
-    "medium": "Mixed Media",
-    "size": "",
-    "year": 2026,
-    "price": null,
-    "image": "/images/gold-veins.webp",
-    "description": "An irregularly shaped panel composed of various colored sections in shades of blue, purple, brown, and teal, separated by textured gold lines, set against a striped purple and black background.",
-    "story": "",
-    "theme": {
-      "bg": "#110e0e",
-      "accent": "#b08282",
-      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
-      "textColor": "#e0d7d7"
-    },
-    "gridSpan": "md:col-span-1 md:row-span-2"
-  },
-  {
     "slug": "flowing-form-2",
     "title": "Flowing Form",
     "titleAr": "",
