@@ -284,5 +284,24 @@
     },
     "gridSpan": "md:col-span-1 md:row-span-1",
     "sold": true
+  },
+  {
+    "slug": "untitled-2",
+    "title": "Untitled",
+    "titleAr": "",
+    "medium": "Mixed Media",
+    "size": "",
+    "year": 2026,
+    "price": null,
+    "image": "/images/untitled-2.webp",
+    "description": "A vibrant mixed media painting featuring tall candlesticks on a table set against a window view of a landscape with palm trees and a dramatic sky.",
+    "story": "ممكن تبدل ال still life window بالصوره دي عشان ظبط الاضائه بتعتها",
+    "theme": {
+      "bg": "#110e0e",
+      "accent": "#b08282",
+      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
+      "textColor": "#e0d7d7"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2"
   }
 ]
