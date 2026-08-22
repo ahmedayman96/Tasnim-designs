@@ -14,6 +14,7 @@
 import { addArtwork, repo } from "./index.mjs";
 import { respond } from "./agent.mjs";
 import { transcribe } from "./transcribe.mjs";
+import sharp from "sharp";
 
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const API = `https://api.telegram.org/bot${TOKEN}`;
@@ -52,11 +53,6 @@ async function download(fileId) {
         buffer: Buffer.from(await res.arrayBuffer()),
         name: file.file_path.split("/").pop(),
     };
-}
-
-/** Telegram sends several resolutions; the last is the largest. */
-async function downloadPhoto(photoSizes) {
-    return (await download(photoSizes[photoSizes.length - 1].file_id)).buffer;
 }
 
 // ------------------------------------------------------------------- State ---
@@ -131,12 +127,11 @@ function card(artwork, live, chat) {
 
     return (
         `🖼 <b>${artwork.title}</b>${artwork.titleAr ? ` — ${artwork.titleAr}` : ""}\n` +
-        `${money(artwork.price)}\n\n` +
+        `${money(artwork.price, chat)}\n\n` +
         `<i>${artwork.description}</i>\n` +
         (artwork.story ? `\n${artwork.story}\n` : "") +
         (live ? `\n${live}\n` : "") +
-        (missing.length ? `\nناقص لسه:\n• ${missing.join("\n• ")}\n` : "") +
-        `\n«تراجع» لو عايزة تشيليها`
+        (missing.length ? `\n${L.missing}:\n• ${missing.join("\n• ")}\n` : "")
     );
 }
 
@@ -148,7 +143,7 @@ async function publishAndReport(chat, artwork, prefix, original) {
         original: original ?? (previous?.slug === artwork.slug ? previous.original : undefined),
     });
     const live = await waitForLive(artwork.slug);
-    await say(chat, (prefix ? `${prefix}\n\n` : "") + card(artwork, live));
+    await say(chat, (prefix ? `${prefix}\n\n` : "") + card(artwork, live, chat));
 }
 
 // ---------------------------------------------------------- Conversation ---
@@ -175,6 +170,50 @@ async function converse(chat, text) {
     });
 
     if (reply) await say(chat, reply);
+}
+
+/**
+ * Pull an image out of whatever she sent. Returns a Buffer, null if the message
+ * carries no image at all, or "unusable" when it holds something image-shaped that
+ * cannot be used (an animated sticker, a HEIC the decoder can't read) — in which
+ * case she has already been told why.
+ */
+async function incomingImage(message, chat) {
+    let fileId = null;
+
+    if (message.photo) {
+        fileId = message.photo[message.photo.length - 1].file_id;
+    } else if (message.sticker) {
+        // Static stickers are WebP and decode fine. Animated ones are Lottie JSON
+        // or WebM video and have no single frame to hang on a wall.
+        if (message.sticker.is_animated || message.sticker.is_video) {
+            await say(chat, langFor(chat) === "ar"
+                ? "الاستيكر ده متحرك، مش هينفع كلوحة. ابعتيهالي صورة."
+                : "That sticker is animated, so I can't use it as artwork. Send it as an image instead.");
+            return "unusable";
+        }
+        fileId = message.sticker.file_id;
+    } else if (message.document && (message.document.mime_type || "").startsWith("image/")) {
+        fileId = message.document.file_id;
+    }
+
+    if (!fileId) return null;
+
+    const { buffer } = await download(fileId);
+
+    // Confirm it actually decodes before it reaches the catalogue, so an
+    // unsupported format fails here with an explanation rather than deep inside
+    // the publishing path.
+    try {
+        await sharp(buffer).metadata();
+    } catch {
+        await say(chat, langFor(chat) === "ar"
+            ? "مش قادر أفتح الصورة دي. جربي تبعتيها JPG أو PNG."
+            : "I couldn't open that image. Try sending it as a JPG or PNG.");
+        return "unusable";
+    }
+
+    return buffer;
 }
 
 // ----------------------------------------------------------------- Router ---
@@ -209,21 +248,24 @@ async function handleMessage(message) {
         await say(chat, `${t(chat).heard}:\n<i>“${text}”</i>`);
     }
 
-    // A photo always means a new piece; it goes up straight away.
-    if (message.photo) {
+    // Any incoming image starts a new piece — sent as a photo, as a file, or as a
+    // sticker. Telegram recompresses "photo" uploads hard, so a document is
+    // actually the better way to send artwork and is worth accepting.
+    const incoming = await incomingImage(message, chat);
+    if (incoming === "unusable") return;
+    if (incoming) {
         await say(chat, t(chat).gotPhoto);
-        const original = await downloadPhoto(message.photo);
         const { artwork } = await addArtwork(
-            { imageBuffer: original, notes: text || undefined },
+            { imageBuffer: incoming, notes: text || undefined },
             { commit: true }
         );
-        await publishAndReport(chat, artwork, t(chat).published, original);
+        await publishAndReport(chat, artwork, t(chat).published, incoming);
 
         // Let the agent know, so "make it 1400" next message has something to act on.
         historyFor(chat).push({
             role: "user",
             content:
-                `[she sent a photo of a new piece; it is now on the site as ` +
+                `[she sent an image of a new piece; it is now on the site as ` +
                 `slug "${artwork.slug}", titled "${artwork.title}", no price set` +
                 `${text ? `. She said: ${text}` : ""}]`,
         });
