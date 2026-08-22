@@ -51,6 +51,19 @@ THINGS THAT MATTER
 - You may describe what is visibly in the image — that is observation, not
   invention.
 
+PICKING THE RIGHT PIECE
+Never invent a slug. Several pieces have similar or identical titles — there are
+two called "Blue Geode" and two called "Flowing Form" — so a slug you assemble
+yourself will usually be wrong. Use a slug exactly as it appears in the list you
+were given, or call list_artworks first. If a tool tells you the piece is
+ambiguous, ask her which one and describe them so she can tell them apart.
+
+IF A TOOL RETURNS AN ERROR, THE WORK DID NOT HAPPEN
+Say so, in her language, and say what went wrong. Never reply "done" or "تمام"
+after a failed call. If the error lists candidates, look at them and either retry
+with the right one or ask her. Telling her a piece was deleted when it is still on
+her website is worse than any error message.
+
 Do what she asks without narrating your plan. Confirm briefly once it's done. If
 she asks for something you have no tool for — changing the site's design, adding
 a page, anything about payments — say plainly that it's not something you can do
@@ -141,6 +154,63 @@ const TOOLS = [
  * @param {() => Buffer|undefined} deps.originalPhoto  the uncropped photo for this chat
  * @param {(text: string) => Promise<void>} deps.notify progress back to Telegram
  */
+
+/**
+ * Turn whatever the model passed into a real slug.
+ *
+ * It guesses: asked to delete "Gold Veins" it invented "gold-veins-2", the call
+ * failed, and it told her the piece was gone. So accept a slug or a title, match
+ * loosely, and when several pieces could be meant say so instead of picking one —
+ * she has two "Blue Geode" and two "Flowing Form".
+ *
+ * @returns {{slug: string} | {error: string, candidates?: string[]}}
+ */
+function resolveSlug(wanted, catalogue) {
+    const all = catalogue.map((a) => a.slug);
+    if (!wanted) return { error: "no slug given", candidates: all };
+
+    const norm = (v) => String(v).toLowerCase().replace(/[^a-z0-9]+/g, "");
+    const target = norm(wanted);
+
+    // An exact slug is unambiguous by definition and always wins.
+    const exact = catalogue.find((a) => a.slug === wanted);
+    if (exact) return { slug: exact.slug };
+
+    // Ambiguity is checked before any loose matching. "Blue Geode" normalises onto
+    // the slug blue-geode, but two pieces carry that title — silently taking the
+    // first would delete whichever happened to be added first.
+    const byTitle = catalogue.filter((a) => norm(a.title) === target);
+    if (byTitle.length > 1) {
+        return {
+            error:
+                `"${wanted}" matches ${byTitle.length} pieces. Ask her which one, ` +
+                `describing them so she can tell them apart.`,
+            candidates: byTitle.map((a) => a.slug),
+        };
+    }
+
+    const bySlug = catalogue.filter((a) => norm(a.slug) === target);
+    if (bySlug.length === 1) return { slug: bySlug[0].slug };
+    if (byTitle.length === 1) return { slug: byTitle[0].slug };
+
+    // Last resort: a prefix match, which catches the invented "-2" and "-3" suffixes.
+    const near = catalogue.filter(
+        (a) => norm(a.slug).startsWith(target) || target.startsWith(norm(a.slug))
+    );
+    if (near.length === 1) return { slug: near[0].slug };
+    if (near.length > 1) {
+        return {
+            error: `"${wanted}" is ambiguous. Ask her which one she means.`,
+            candidates: near.map((a) => a.slug),
+        };
+    }
+
+    return {
+        error: `There is nothing called "${wanted}". Do NOT tell her it was done.`,
+        candidates: all,
+    };
+}
+
 async function runTool(name, args, deps) {
     switch (name) {
         case "list_artworks": {
@@ -156,7 +226,10 @@ async function runTool(name, args, deps) {
         }
 
         case "update_artwork": {
-            const { slug, ...changes } = args;
+            const { slug: asked, ...changes } = args;
+            const found = resolveSlug(asked, await readCatalogue());
+            if (found.error) return found;
+            const slug = found.slug;
             if (changes.price !== undefined) {
                 const n = Number(changes.price);
                 if (!Number.isFinite(n) || n <= 0) {
@@ -170,11 +243,16 @@ async function runTool(name, args, deps) {
         }
 
         case "delete_artwork": {
-            const { artwork } = await removeArtwork(args.slug, { commit: true, push: true });
-            return { ok: true, deleted: artwork.title };
+            const found = resolveSlug(args.slug, await readCatalogue());
+            if (found.error) return found;
+            const { artwork } = await removeArtwork(found.slug, { commit: true, push: true });
+            return { ok: true, deleted: artwork.title, slug: found.slug };
         }
 
         case "crop_artwork_photo": {
+            const foundCrop = resolveSlug(args.slug, await readCatalogue());
+            if (foundCrop.error) return foundCrop;
+            args = { ...args, slug: foundCrop.slug };
             const original = deps.originalPhoto();
             if (!original) {
                 return { error: "I no longer have the original photo — ask her to resend it." };
