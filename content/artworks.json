@@ -95,25 +95,6 @@
     "gridSpan": "md:col-span-1 md:row-span-2"
   },
   {
-    "slug": "abstract-form",
-    "title": "Abstract Form",
-    "titleAr": "",
-    "medium": "Mixed Media",
-    "size": "",
-    "year": 2026,
-    "price": null,
-    "image": "/images/abstract-form.webp",
-    "description": "An abstract mixed media piece with fluid, swirling shapes in shades of blue, brown, and white on an irregularly shaped surface.",
-    "story": "",
-    "theme": {
-      "bg": "#110f0d",
-      "accent": "#bc8d76",
-      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
-      "textColor": "#e2d9d5"
-    },
-    "gridSpan": "md:col-span-1 md:row-span-2"
-  },
-  {
     "slug": "flowing-form",
     "title": "Flowing Form",
     "titleAr": "",
