@@ -132,5 +132,24 @@
     },
     "gridSpan": "md:col-span-1 md:row-span-1",
     "sold": true
+  },
+  {
+    "slug": "blue-geode",
+    "title": "Blue Geode",
+    "titleAr": "",
+    "medium": "Mixed Media",
+    "size": "",
+    "year": 2026,
+    "price": null,
+    "image": "/images/blue-geode.webp",
+    "description": "An abstract mixed media piece resembling a geode slice with swirling shades of turquoise, teal, and gray, bordered by textured white and gold edges.",
+    "story": "",
+    "theme": {
+      "bg": "#110e0e",
+      "accent": "#b08282",
+      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
+      "textColor": "#e0d7d7"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2"
   }
 ]
