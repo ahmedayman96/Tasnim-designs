@@ -151,5 +151,25 @@
       "textColor": "#d4e3e2"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
+  },
+  {
+    "slug": "resin-chess-set",
+    "title": "Resin Chess Set",
+    "titleAr": "",
+    "medium": "Cast resin, pigment and gold leaf",
+    "size": "",
+    "year": 2026,
+    "price": null,
+    "image": "/images/resin-chess-set.webp",
+    "description": "A handmade chess set with translucent blue and white resin pieces, some accented with gold leaf, arranged on a textured blue and white resin board with uneven edges.",
+    "story": "",
+    "theme": {
+      "bg": "#0d1012",
+      "accent": "#6ca4c6",
+      "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
+      "textColor": "#d3dde4"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-1",
+    "category": "object"
   }
 ]
