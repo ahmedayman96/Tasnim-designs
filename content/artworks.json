@@ -133,25 +133,6 @@
     "gridSpan": "md:col-span-1 md:row-span-1"
   },
   {
-    "slug": "untitled",
-    "title": "Untitled",
-    "titleAr": "",
-    "medium": "Mixed Media",
-    "size": "",
-    "year": 2026,
-    "price": null,
-    "image": "/images/untitled.webp",
-    "description": "An abstract mixed media composition featuring vivid blue and purple shapes outlined in gold veins against a striped background.",
-    "story": "This work explores the beauty found in fractured forms, where each section is defined by delicate gold lines. It reflects a fascination with natural patterns and the way light catches uneven surfaces.",
-    "theme": {
-      "bg": "#110e0e",
-      "accent": "#b08282",
-      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
-      "textColor": "#e0d7d7"
-    },
-    "gridSpan": "md:col-span-1 md:row-span-2"
-  },
-  {
     "slug": "textured-landscape",
     "title": "Sunset",
     "titleAr": "غروب الشمس",
