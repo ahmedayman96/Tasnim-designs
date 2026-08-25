@@ -12,7 +12,7 @@
  *   node tools/curator/cli.mjs undo
  */
 import { promises as fs } from "node:fs";
-import { addArtwork, removeArtwork, updateArtwork, repo } from "./index.mjs";
+import { addArtwork, removeArtwork, updateArtwork, replaceArtworkImage, repo } from "./index.mjs";
 import { readCatalogue } from "./catalogue.mjs";
 
 function parseArgs(argv) {
@@ -97,6 +97,21 @@ async function main() {
             break;
         }
 
+        case "replace-image": {
+            if (!args.slug) throw new Error("--slug is required");
+            if (!args.image) throw new Error("--image is required");
+            if (shouldCommit) await repo.assertCleanTree();
+            const { artwork, sha } = await replaceArtworkImage(
+                args.slug,
+                await fs.readFile(args.image),
+                { commit: shouldCommit, push: shouldPush }
+            );
+            console.log(`Re-framed "${artwork.title}"`);
+            console.log(`  ${artwork.description}`);
+            if (sha) console.log(`  committed ${sha.slice(0, 8)}`);
+            break;
+        }
+
         case "remove": {
             if (!args.slug) throw new Error("--slug is required");
             if (shouldCommit) await repo.assertCleanTree();
@@ -142,7 +157,7 @@ async function main() {
         }
 
         default:
-            console.error("commands: list | add | remove | update | undo");
+            console.error("commands: list | add | remove | update | replace-image | undo");
             process.exitCode = 1;
     }
 }
