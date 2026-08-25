@@ -91,15 +91,21 @@ export async function themeFromImage(buffer) {
 /**
  * Find the colour of the *paint*.
  *
- * sharp's stats().dominant reports the commonest colour in the frame, which for
- * these photographs is the background — she shoots against white, and cut-out PNGs
- * are transparent. Every piece was coming back rgb(248,248,248) or rgb(8,8,8),
- * collapsing to hue 0, so the whole gallery was assigned the same dusty rose no
- * matter what colour the work actually was.
+ * Two problems, both found the hard way.
  *
- * So: ignore anything transparent, near-white, near-black or barely coloured, and
- * average the hue of what remains. Averaged as vectors on the colour wheel, since
- * hue wraps — the mean of 350° and 10° is 0°, not 180°.
+ * First, sharp's stats().dominant reports the commonest colour in the frame, which
+ * for these photographs is the background — she shoots against white, and cut-out
+ * PNGs are transparent. Every piece came back rgb(248,248,248) or rgb(8,8,8),
+ * collapsing to hue 0, so the whole gallery was assigned the same dusty rose.
+ *
+ * Second, averaging the remaining hues fails on a bimodal palette. "Abstract Faces"
+ * is blue near 215 degrees and orange near 25 — almost opposite each other — and
+ * the mean of two opposing hues is meaningless. It returned amber, which appears
+ * nowhere in the painting.
+ *
+ * So take the *mode*: bin the hues, weight each pixel by saturation, and pick the
+ * heaviest bin. A painting that is mostly blue with orange accents reads blue,
+ * which is what a person would say looking at it.
  */
 async function dominantPaintColour(buffer) {
     const { data, info } = await sharp(buffer)
@@ -108,36 +114,63 @@ async function dominantPaintColour(buffer) {
         .raw()
         .toBuffer({ resolveWithObject: true });
 
-    let x = 0;
-    let y = 0;
-    let satTotal = 0;
+    const BINS = 36; // 10 degrees each
+    const weight = new Array(BINS).fill(0);
+    const sumSat = new Array(BINS).fill(0);
+    const pixels = new Array(BINS).fill(0);
+    const sumX = new Array(BINS).fill(0);
+    const sumY = new Array(BINS).fill(0);
     let counted = 0;
 
     for (let i = 0; i < data.length; i += info.channels) {
         if (data[i + 3] < 128) continue; // transparent cut-out
         const { h, s, l } = rgbToHsl({ r: data[i], g: data[i + 1], b: data[i + 2] });
-        if (l < 0.12 || l > 0.9) continue; // paper, shadow, blown highlight
-        if (s < 0.15) continue; // grey — carries no hue worth using
+        // Cream and unbleached canvas are pale and barely saturated, and on these
+        // paintings they cover more area than anything else. Excluded, or a piece
+        // that reads blue and orange comes back beige.
+        if (l < 0.12 || l > 0.82) continue;
+        if (s < 0.22) continue;
 
+        const bin = Math.min(BINS - 1, Math.floor(h / (360 / BINS)));
         const radians = (h * Math.PI) / 180;
-        // Weight by saturation so vivid passages steer the palette more than washes.
-        x += Math.cos(radians) * s;
-        y += Math.sin(radians) * s;
-        satTotal += s;
+        // Squared, so a vivid passage counts for more than a large wash.
+        const w = s * s;
+        weight[bin] += w;
+        sumSat[bin] += s;
+        pixels[bin] += 1;
+        sumX[bin] += Math.cos(radians) * w;
+        sumY[bin] += Math.sin(radians) * w;
         counted += 1;
     }
 
-    // A genuinely monochrome piece: fall back to the old measure rather than
-    // inventing a hue from noise.
     if (counted < 20) {
         const { dominant } = await sharp(buffer).stats();
         const { h, s } = rgbToHsl(dominant);
         return { hue: h, saturation: s };
     }
 
-    let hue = (Math.atan2(y, x) * 180) / Math.PI;
+    // Fold each bin together with its neighbours, so a hue straddling a boundary
+    // isn't split in half and beaten by a narrower band.
+    let best = 0;
+    let bestScore = -1;
+    for (let bin = 0; bin < BINS; bin += 1) {
+        const score =
+            weight[(bin - 1 + BINS) % BINS] * 0.5 +
+            weight[bin] +
+            weight[(bin + 1) % BINS] * 0.5;
+        if (score > bestScore) {
+            bestScore = score;
+            best = bin;
+        }
+    }
+
+    // Within the winning band, the circular mean is safe — everything in it is
+    // already close together.
+    let hue = (Math.atan2(sumY[best], sumX[best]) * 180) / Math.PI;
     if (hue < 0) hue += 360;
-    return { hue, saturation: satTotal / counted };
+
+    const saturation = pixels[best] ? sumSat[best] / pixels[best] : 0.3;
+    return { hue, saturation };
 }
 
 /**

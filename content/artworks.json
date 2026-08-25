@@ -49,10 +49,10 @@
     "description": "A still life scene with candles, fruit, and flowers arranged on a table before a window revealing a stylized landscape.",
     "story": "في اللوحة دي، حاولت ألملم تفاصيل اللحظة اللي بتتجمع فيها أشياء بسيطة حوالينا: ورد في فازة، شوية فواكه، وضوء ناعم بيغمر الطاولة الخشبية. الألوان والخطوط بتتداخل عشان تحكي حكاية هدوء ودفء بيتخلل المكان.",
     "theme": {
-      "bg": "#11100e",
-      "accent": "#b89e7a",
-      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
-      "textColor": "#e1dcd5"
+      "bg": "#11100d",
+      "accent": "#bdaa75",
+      "gradient": "from-yellow-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e2dfd4"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
   },
@@ -68,10 +68,10 @@
     "description": "An abstract, freeform shape with flowing swaths of blue, brown, and beige blending softly across a white background.",
     "story": "",
     "theme": {
-      "bg": "#0f110e",
-      "accent": "#99b280",
-      "gradient": "from-emerald-900/20 via-transparent to-teal-900/10",
-      "textColor": "#dbe0d6"
+      "bg": "#0c1112",
+      "accent": "#6bb6c7",
+      "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
+      "textColor": "#d2e1e5"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
   },
@@ -87,10 +87,10 @@
     "description": "An abstract mixed media piece resembling a geode with swirling blue and grey hues, accented by textured gold edges and a central gold-lined void.",
     "story": "",
     "theme": {
-      "bg": "#0d1111",
-      "accent": "#74beaf",
-      "gradient": "from-teal-900/20 via-transparent to-blue-900/10",
-      "textColor": "#d4e2e0"
+      "bg": "#0c1112",
+      "accent": "#6bb3c7",
+      "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
+      "textColor": "#d1e1e5"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
   },
@@ -106,10 +106,10 @@
     "description": "A stained glass-like composition of irregularly shaped fragments in shades of blue, purple, brown, and teal, separated by bold gold lines, set against a black background.",
     "story": "",
     "theme": {
-      "bg": "#0d1112",
-      "accent": "#6baec7",
+      "bg": "#0c1112",
+      "accent": "#6bafc7",
       "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
-      "textColor": "#d2dfe4"
+      "textColor": "#d1e0e6"
     },
     "gridSpan": "md:col-span-1 md:row-span-1"
   },
@@ -126,9 +126,9 @@
     "story": "I called this piece Sunset because I wanted to capture the earth's layers as if I was sculpting the texture with a palette knife. The bottom shows earth and clay textures, with marble and crystals emerging upwards, while the top is a clear epoxy sky. The clouds form as the sun sets, casting shades of sunset colors across the scene.",
     "theme": {
       "bg": "#110f0e",
-      "accent": "#b09682",
+      "accent": "#b5957d",
       "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
-      "textColor": "#e0dbd7"
+      "textColor": "#e1dbd6"
     },
     "gridSpan": "md:col-span-1 md:row-span-1",
     "sold": true
@@ -145,10 +145,10 @@
     "description": "An abstract mixed media piece resembling a geode slice with swirling shades of turquoise, teal, and gray, bordered by textured white and gold edges.",
     "story": "",
     "theme": {
-      "bg": "#0d1211",
-      "accent": "#72c0bb",
-      "gradient": "from-teal-900/20 via-transparent to-blue-900/10",
-      "textColor": "#d4e3e2"
+      "bg": "#0c1212",
+      "accent": "#6bbfc7",
+      "gradient": "from-teal-900/20 via-transparent to-indigo-900/10",
+      "textColor": "#d1e4e6"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
   },
@@ -164,10 +164,10 @@
     "description": "A handmade chess set with translucent blue and white resin pieces, some accented with gold leaf, arranged on a textured blue and white resin board with uneven edges.",
     "story": "",
     "theme": {
-      "bg": "#0d1012",
-      "accent": "#6ca4c6",
+      "bg": "#0c1112",
+      "accent": "#6bafc7",
       "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
-      "textColor": "#d3dde4"
+      "textColor": "#d1e0e6"
     },
     "gridSpan": "md:col-span-1 md:row-span-1",
     "category": "object"
@@ -184,10 +184,10 @@
     "description": "A large vertical composition filled with abstracted faces and eyes in a limited palette of blue, black, white, and orange, with bold black outlines and geometric shapes.",
     "story": "",
     "theme": {
-      "bg": "#12100d",
-      "accent": "#c4a56e",
-      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
-      "textColor": "#e4ded3"
+      "bg": "#0c1012",
+      "accent": "#6b9ec7",
+      "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
+      "textColor": "#d1dce6"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
   }
