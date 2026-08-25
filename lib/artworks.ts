@@ -23,6 +23,12 @@ export interface Artwork {
         textColor: string;
     };
     gridSpan?: string; // Tailwind classes for bento grid
+    /**
+     * "painting" hangs on a wall; "object" is a made thing — the resin chess set,
+     * a table, a vessel. They sell to different people and photograph differently,
+     * so they get their own section. Absent means painting.
+     */
+    category?: "painting" | "object";
     /** Originals are one of a kind — a sold piece stays on show but can't be bought. */
     sold?: boolean;
 }
@@ -37,6 +43,14 @@ export const artworks: Artwork[] = artworksData as Artwork[];
 export function getArtworkBySlug(slug: string): Artwork | undefined {
     return artworks.find((a) => a.slug === slug);
 }
+
+/** Wall pieces — the main gallery. */
+export const paintings: Artwork[] = artworks.filter(
+    (a) => (a.category ?? "painting") === "painting"
+);
+
+/** Functional and sculptural work — chess sets, tables, vessels. */
+export const objects: Artwork[] = artworks.filter((a) => a.category === "object");
 
 /** A piece can be bought only if it has a price and hasn't already sold. */
 export function isPurchasable(artwork: Artwork): boolean {

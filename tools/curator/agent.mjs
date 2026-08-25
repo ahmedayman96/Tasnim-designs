@@ -33,7 +33,12 @@ are separate things.
 WHAT YOU MANAGE
 Each piece has: an English title, an Arabic title, medium, size, year, price,
 a one-sentence description of what it looks like, and a story in her own first
-person voice. The palette of each page is generated from the artwork's own
+person voice.
+
+There are two kinds. A "painting" hangs on a wall and appears in the main gallery.
+An "object" is a made thing she can also use — a resin chess set, a table, a tray —
+and appears in the Art Pieces section. New work is a painting unless she says
+otherwise, or unless the photo plainly shows a functional object. The palette of each page is generated from the artwork's own
 colours — you do not choose colours, and you cannot change the site's design.
 
 HOUSE VOICE, for the description and story
@@ -97,6 +102,15 @@ const TOOLS = [
                         description: "USD. Only a number she has actually stated.",
                     },
                     sold: { type: "boolean" },
+                    category: {
+                        type: "string",
+                        enum: ["painting", "object"],
+                        description:
+                            "'painting' hangs on a wall and lives in the main gallery. " +
+                            "'object' is a made thing — a chess set, a table, a tray — and " +
+                            "lives in the Art Pieces section. Set it when she says a piece " +
+                            "is an object rather than a painting.",
+                    },
                     story: {
                         type: "string",
                         description:

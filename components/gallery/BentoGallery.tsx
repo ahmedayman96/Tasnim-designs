@@ -1,18 +1,28 @@
 "use client";
 
 import { MagicCard } from "@/components/ui/magic-card";
-import { artworks, priceLabel } from "@/lib/artworks";
+import { paintings, priceLabel, type Artwork } from "@/lib/artworks";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 
-export default function BentoGallery() {
+export default function BentoGallery({
+    items = paintings,
+    id = "gallery",
+    eyebrow = "Selected Works · أعمال مختارة",
+    heading = "The Collection",
+}: {
+    items?: Artwork[];
+    id?: string;
+    eyebrow?: string;
+    heading?: string;
+} = {}) {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     return (
-        <section className="relative py-24 md:py-32 px-6 md:px-12" id="gallery">
+        <section className="relative py-24 md:py-32 px-6 md:px-12" id={id}>
             {/* Background glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-gold/[0.02] rounded-full blur-[150px] pointer-events-none" />
 
@@ -26,10 +36,10 @@ export default function BentoGallery() {
                     transition={{ duration: 0.8 }}
                 >
                     <p className="text-gold text-sm uppercase tracking-[0.3em] mb-4 font-medium">
-                        Selected Works · أعمال مختارة
+                        {eyebrow}
                     </p>
                     <h2 className="font-serif text-4xl md:text-6xl font-bold text-cream mb-4">
-                        The Collection
+                        {heading}
                     </h2>
                     <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto" />
                 </motion.div>
@@ -39,7 +49,7 @@ export default function BentoGallery() {
                     ref={ref}
                     className="grid grid-cols-1 md:grid-cols-3 auto-rows-[280px] md:auto-rows-[320px] gap-4"
                 >
-                    {artworks.map((artwork, i) => (
+                    {items.map((artwork, i) => (
                         <motion.div
                             key={artwork.slug}
                             className={`${artwork.gridSpan || ""} relative`}

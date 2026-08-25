@@ -89,6 +89,7 @@ export async function addArtwork(input, options = {}) {
         story,
         theme,
         gridSpan: gridSpanFor(image.width, image.height),
+        ...(input.category === "object" ? { category: "object" } : {}),
     };
 
     const problems = validateArtwork(artwork);
@@ -199,7 +200,7 @@ export async function updateArtwork(slug, changes, options = {}) {
     const index = catalogue.findIndex((a) => a.slug === slug);
     if (index === -1) throw new Error(`no artwork with slug "${slug}"`);
 
-    const allowed = ["price", "sold", "title", "titleAr", "description", "story", "size", "medium"];
+    const allowed = ["price", "sold", "title", "titleAr", "description", "story", "size", "medium", "category"];
     const rejected = Object.keys(changes).filter((k) => !allowed.includes(k));
     if (rejected.length) throw new Error(`cannot change: ${rejected.join(", ")}`);
 
