@@ -171,5 +171,24 @@
     },
     "gridSpan": "md:col-span-1 md:row-span-1",
     "category": "object"
+  },
+  {
+    "slug": "abstract-faces",
+    "title": "Abstract Faces",
+    "titleAr": "",
+    "medium": "Mixed Media",
+    "size": "",
+    "year": 2026,
+    "price": null,
+    "image": "/images/abstract-faces.webp",
+    "description": "A large vertical composition filled with abstracted faces and eyes in a limited palette of blue, black, white, and orange, with bold black outlines and geometric shapes.",
+    "story": "",
+    "theme": {
+      "bg": "#12100d",
+      "accent": "#c4a56e",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e4ded3"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2"
   }
 ]
