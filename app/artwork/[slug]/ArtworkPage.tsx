@@ -6,7 +6,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { MagicCard } from "@/components/ui/magic-card";
-import { RainbowButton } from "@/components/ui/rainbow-button";
 import RoomPreview from "@/components/room-preview/RoomPreview";
 import { useRef, useState } from "react";
 
@@ -218,9 +217,12 @@ export default function ArtworkPage({ artwork, related }: ArtworkPageProps) {
                         >
                             {isInCart ? "✓ In Collection" : "Add to Collection"}
                         </button>
-                        <RainbowButton className="px-8 py-3">
+                        <Link
+                            href="/book"
+                            className="px-8 py-3 rounded-xl border border-gold/30 text-gold hover:bg-gold/10 hover:border-gold/60 font-bold text-sm uppercase tracking-[0.15em] transition-all inline-flex items-center"
+                        >
                             Inquire
-                        </RainbowButton>
+                        </Link>
                     </div>
                 </motion.div>
 

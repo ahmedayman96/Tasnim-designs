@@ -50,3 +50,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Stray media dropped into the repo root — raw photos and video from her camera
+# roll land here on the way to the bot. GitHub rejects anything over 100MB, and a
+# single .MOV already blocked a push. Web-ready exports live in public/images/.
+/*.MOV
+/*.mov
+/*.mp4
+/*.jpg
+/*.jpeg
+/*.png
+/*.heic
+/*.HEIC

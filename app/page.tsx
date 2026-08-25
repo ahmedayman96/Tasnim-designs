@@ -2,10 +2,10 @@
 
 import Navbar from "@/components/shared/Navbar";
 import ScrollHero from "@/components/hero/ScrollHero";
+import Link from "next/link";
 import BentoGallery from "@/components/gallery/BentoGallery";
 import TextReveal from "@/components/shared/TextReveal";
 import Footer from "@/components/shared/Footer";
-import { RainbowButton } from "@/components/ui/rainbow-button";
 import {
   ScrollVelocityContainer,
   ScrollVelocityRow,
@@ -172,9 +172,19 @@ export default function Home() {
             collaboration.
           </p>
 
-          <RainbowButton className="text-lg px-10 py-4 font-medium">
-            Inquire for a Commission
-          </RainbowButton>
+          {/* Goes to the Cal.com booking page — this was previously a button with
+              no href, so the site's main call to action did nothing when clicked. */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/book" className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-gold via-gold-light to-gold text-midnight font-bold uppercase tracking-[0.15em] transition-all hover:shadow-[0_0_40px_rgba(201,165,90,0.35)] hover:-translate-y-0.5 text-base px-10 py-4">
+              Start a Commission
+            </Link>
+            <Link
+              href="/#gallery"
+              className="text-cream-muted hover:text-gold text-sm uppercase tracking-[0.2em] transition-colors px-4 py-3"
+            >
+              See the Collection
+            </Link>
+          </div>
 
           <p className="text-warm-gray/40 text-xs mt-6 tracking-wider">
             Response within 24 hours · Custom quotes · Worldwide shipping
