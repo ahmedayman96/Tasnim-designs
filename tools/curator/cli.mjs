@@ -58,22 +58,22 @@ async function main() {
         }
 
         case "add": {
+            // Only the image is required. A piece can go up as a draft — the model
+            // titles it from what it can see, and price/Arabic title/story are
+            // filled in later, exactly as they are when she sends a photo.
             if (!args.image) throw new Error("--image is required");
-            if (!args.title) throw new Error("--title is required");
-            if (!args["title-ar"]) throw new Error("--title-ar is required");
-            if (!args.price) throw new Error("--price is required");
 
             if (shouldCommit) await repo.assertCleanTree();
 
             const imageBuffer = await fs.readFile(args.image);
-            console.log(`Adding "${args.title}"…`);
+            console.log(`Adding ${args.title ? `"${args.title}"` : "a new piece"}…`);
 
             const { artwork, sha } = await addArtwork(
                 {
                     imageBuffer,
                     title: args.title,
                     titleAr: args["title-ar"],
-                    price: Number(args.price),
+                    price: args.price ? Number(args.price) : undefined,
                     medium: args.medium,
                     size: args.size,
                     year: args.year ? Number(args.year) : undefined,
