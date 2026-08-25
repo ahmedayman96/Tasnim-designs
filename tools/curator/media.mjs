@@ -73,20 +73,71 @@ function hslToHex(h, s, l) {
  * four entries use.
  */
 export async function themeFromImage(buffer) {
-    const { dominant } = await sharp(buffer).stats();
-    const { h, s } = rgbToHsl(dominant);
+    const { hue, saturation } = await dominantPaintColour(buffer);
 
     // Muted artwork shouldn't produce a grey theme; give it a floor.
-    const sat = Math.max(s, 0.25);
-    const family = familyForHue(h);
-    const secondary = familyForHue((h + 60) % 360);
+    const sat = Math.max(saturation, 0.25);
+    const family = familyForHue(hue);
+    const secondary = familyForHue((hue + 60) % 360);
 
     return {
-        bg: hslToHex(h, Math.min(sat * 0.35, 0.2), 0.06),
-        accent: hslToHex(h, Math.min(sat * 0.9, 0.45), 0.6),
+        bg: hslToHex(hue, Math.min(sat * 0.35, 0.2), 0.06),
+        accent: hslToHex(hue, Math.min(sat * 0.9, 0.45), 0.6),
         gradient: `from-${family}-900/20 via-transparent to-${secondary}-900/10`,
-        textColor: hslToHex(h, Math.min(sat * 0.5, 0.3), 0.86),
+        textColor: hslToHex(hue, Math.min(sat * 0.5, 0.3), 0.86),
     };
+}
+
+/**
+ * Find the colour of the *paint*.
+ *
+ * sharp's stats().dominant reports the commonest colour in the frame, which for
+ * these photographs is the background — she shoots against white, and cut-out PNGs
+ * are transparent. Every piece was coming back rgb(248,248,248) or rgb(8,8,8),
+ * collapsing to hue 0, so the whole gallery was assigned the same dusty rose no
+ * matter what colour the work actually was.
+ *
+ * So: ignore anything transparent, near-white, near-black or barely coloured, and
+ * average the hue of what remains. Averaged as vectors on the colour wheel, since
+ * hue wraps — the mean of 350° and 10° is 0°, not 180°.
+ */
+async function dominantPaintColour(buffer) {
+    const { data, info } = await sharp(buffer)
+        .resize(80, 80, { fit: "inside" })
+        .ensureAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+
+    let x = 0;
+    let y = 0;
+    let satTotal = 0;
+    let counted = 0;
+
+    for (let i = 0; i < data.length; i += info.channels) {
+        if (data[i + 3] < 128) continue; // transparent cut-out
+        const { h, s, l } = rgbToHsl({ r: data[i], g: data[i + 1], b: data[i + 2] });
+        if (l < 0.12 || l > 0.9) continue; // paper, shadow, blown highlight
+        if (s < 0.15) continue; // grey — carries no hue worth using
+
+        const radians = (h * Math.PI) / 180;
+        // Weight by saturation so vivid passages steer the palette more than washes.
+        x += Math.cos(radians) * s;
+        y += Math.sin(radians) * s;
+        satTotal += s;
+        counted += 1;
+    }
+
+    // A genuinely monochrome piece: fall back to the old measure rather than
+    // inventing a hue from noise.
+    if (counted < 20) {
+        const { dominant } = await sharp(buffer).stats();
+        const { h, s } = rgbToHsl(dominant);
+        return { hue: h, saturation: s };
+    }
+
+    let hue = (Math.atan2(y, x) * 180) / Math.PI;
+    if (hue < 0) hue += 360;
+    return { hue, saturation: satTotal / counted };
 }
 
 /**
