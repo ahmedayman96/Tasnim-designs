@@ -1,92 +1,123 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
-import ProjectSequence from "@/components/architecture/ProjectSequence";
-import Link from "next/link";
-import { projects } from "@/lib/projects";
-import { SERVICES } from "@/lib/architecture";
+import { SERVICES, allProjects, projectKind } from "@/lib/architecture";
 
 export const metadata: Metadata = {
     title: "Architecture & Interiors — Tasnim Elyamani",
     description:
-        "Residential architecture and interior design by Tasnim Elyamani — private villas, full interior packages, and construction documentation.",
+        "Architecture and interior design by Tasnim Elyamani — apartments, private villas, retail and public interiors, from drawings through 3D to finished rooms.",
 };
 
+/**
+ * The index of her architecture work.
+ *
+ * This page used to open with a scroll cinematic of a single villa and a fact
+ * sheet about it, and never listed the projects at all — you had to guess which
+ * service page a job was filed under to find it. It is now a plain index: every
+ * project, in a deliberate order, each labelled with what kind of job it was and
+ * what it contains. The services are what she does, so they sit underneath as a
+ * way of working rather than as the way in.
+ */
 export default function ArchitecturePage() {
-    const project = projects[0];
-
-    // Fields still to be confirmed are held back rather than shown as blanks.
-    const facts = [
-        { k: "Type", v: project.type },
-        { k: "Location", v: project.location },
-        { k: "Year", v: String(project.year) },
-        { k: "Area", v: project.area },
-        { k: "Status", v: project.status },
-    ].filter((f) => f.v && f.v !== "TBC");
+    const projects = allProjects();
 
     return (
         <main className="bg-midnight min-h-screen">
             <Navbar />
 
-            <ProjectSequence project={project} />
+            {/* Header */}
+            <section className="relative px-6 md:px-12 pt-36 pb-14">
+                <div className="absolute top-32 left-1/2 -translate-x-1/2 w-[760px] h-[380px] bg-gold/[0.03] rounded-full blur-[170px] pointer-events-none" />
 
-            {/* Fact sheet — laid out like the title block on a drawing */}
-            <section className="relative z-10 bg-midnight border-t border-gold/10">
-                <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
-                    <div className="grid md:grid-cols-12 gap-12 md:gap-16">
-                        <div className="md:col-span-5">
-                            <div className="flex items-center gap-4 mb-6">
-                                <span className="h-px w-10 bg-gold/60" />
-                                <span className="text-gold/90 text-xs uppercase tracking-[0.32em]">
-                                    The Project
-                                </span>
-                            </div>
-                            <h2 className="font-serif text-4xl md:text-5xl font-bold text-cream leading-tight">
-                                {project.title}
-                            </h2>
-                            <p
-                                className="font-arabic text-gold/60 text-2xl mt-4"
-                                dir="rtl"
-                            >
-                                {project.titleAr}
-                            </p>
-                        </div>
-
-                        <div className="md:col-span-7">
-                            <p className="text-cream-muted text-lg md:text-xl font-light leading-relaxed">
-                                {project.summary}
-                            </p>
-
-                            <dl className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-8 mt-14 pt-10 border-t border-gold/10">
-                                {facts.map((f) => (
-                                    <div key={f.k}>
-                                        <dt className="text-warm-gray text-[0.6rem] uppercase tracking-[0.3em] mb-2">
-                                            {f.k}
-                                        </dt>
-                                        <dd className="text-cream text-sm font-light">
-                                            {f.v}
-                                        </dd>
-                                    </div>
-                                ))}
-                            </dl>
-
-                            {project.credit && (
-                                <p className="text-warm-gray/70 text-xs font-light mt-12 leading-relaxed">
-                                    {project.credit}
-                                </p>
-                            )}
-                        </div>
-                    </div>
+                <div className="relative max-w-5xl mx-auto text-center">
+                    <p className="text-gold text-xs uppercase tracking-[0.32em] mb-5 font-medium">
+                        Architecture &amp; Interiors
+                    </p>
+                    <h1 className="font-serif text-4xl md:text-6xl font-bold text-cream leading-[1.05]">
+                        The Work
+                    </h1>
+                    <p className="font-arabic text-gold/60 text-2xl mt-4" dir="rtl">
+                        الأعمال
+                    </p>
+                    <p className="text-cream-muted/90 text-lg font-light leading-relaxed mt-8 max-w-2xl mx-auto">
+                        Apartments, private villas, retail and public interiors — drawn in
+                        AutoCAD and Revit, modelled and rendered in 3ds Max, and followed
+                        through to the finished room.
+                    </p>
+                    <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-10" />
                 </div>
             </section>
 
-            {/* Practice — each links to that service's own page of work */}
+            {/* Every project, in order */}
+            <section className="px-6 md:px-12 pb-24">
+                <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+                    {projects.map((p) => {
+                        const cover = p.rooms[0]
+                            ? `${p.rooms[0].frames.dir}/f0001.webp`
+                            : p.work[0]?.images[0];
+                        if (!cover) return null;
+
+                        const contents = [
+                            p.work.length
+                                ? `${p.work.length} scheme${p.work.length === 1 ? "" : "s"}`
+                                : null,
+                            p.rooms.length
+                                ? `${p.rooms.length} walkthrough${p.rooms.length === 1 ? "" : "s"}`
+                                : null,
+                        ]
+                            .filter(Boolean)
+                            .join(" · ");
+
+                        return (
+                            <Link
+                                key={p.slug}
+                                href={`/architecture/project/${p.slug}`}
+                                className="group block rounded-lg overflow-hidden border border-gold/10 hover:border-gold/35 bg-charcoal/30 transition-colors duration-500"
+                            >
+                                <div className="relative aspect-[4/3] bg-charcoal overflow-hidden">
+                                    <Image
+                                        src={cover}
+                                        alt={p.project}
+                                        fill
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/15 to-transparent" />
+
+                                    {projectKind(p.slug) && (
+                                        <span className="absolute top-4 left-4 rounded-full bg-midnight/75 backdrop-blur-sm border border-gold/25 text-gold/90 text-[0.55rem] uppercase tracking-[0.25em] px-3 py-1.5">
+                                            {projectKind(p.slug)}
+                                        </span>
+                                    )}
+                                </div>
+
+                                <div className="p-6">
+                                    <h2 className="font-serif text-xl md:text-2xl text-cream group-hover:text-gold transition-colors duration-500 leading-snug">
+                                        {p.project}
+                                    </h2>
+                                    <p className="text-warm-gray text-[0.58rem] uppercase tracking-[0.25em] mt-3">
+                                        {[p.location, p.year].filter(Boolean).join("  ·  ")}
+                                    </p>
+                                    <p className="text-cream-muted/70 text-xs font-light mt-3">
+                                        {contents}
+                                    </p>
+                                </div>
+                            </Link>
+                        );
+                    })}
+                </div>
+            </section>
+
+            {/* How she works — the three services, after the work rather than instead of it */}
             <section className="relative z-10 bg-charcoal/40 border-t border-gold/10">
-                <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
-                    <div className="flex items-center gap-4 mb-14">
+                <div className="max-w-6xl mx-auto px-6 md:px-12 py-20 md:py-28">
+                    <div className="flex items-center gap-4 mb-12">
                         <span className="h-px w-10 bg-gold/60" />
                         <span className="text-gold/90 text-xs uppercase tracking-[0.32em]">
-                            Practice
+                            What She Does
                         </span>
                     </div>
 
@@ -97,7 +128,7 @@ export default function ArchitecturePage() {
                                 href={`/architecture/${s.id}`}
                                 className="group block rounded-xl border border-gold/10 hover:border-gold/30 bg-midnight/40 p-8 transition-colors"
                             >
-                                <h3 className="font-serif text-2xl md:text-3xl text-cream font-bold group-hover:text-gold transition-colors">
+                                <h3 className="font-serif text-2xl text-cream font-bold group-hover:text-gold transition-colors">
                                     {s.label}
                                 </h3>
                                 <p className="font-arabic text-gold/50 text-lg mt-2" dir="rtl">

@@ -187,12 +187,34 @@ const MOTION: Record<string, ProjectBundle["motion"]> = {
     },
 };
 
+/**
+ * How the projects are presented: the order they appear in, and the one word that
+ * says what kind of job each was. Without this they came out in whatever order the
+ * JSON happened to be in, and a visitor could not tell a built apartment from a
+ * student study at a glance.
+ */
+export const PROJECT_META: Record<string, { order: number; kind: string }> = {
+    "apartment-in-privado-madinaty": { order: 1, kind: "Built" },
+    "sherouk-villa": { order: 2, kind: "Residential" },
+    "madinaty-villa": { order: 3, kind: "Residential" },
+    "residential-plan-three-uae": { order: 4, kind: "Residential" },
+    "residential-plan-two": { order: 5, kind: "Residential" },
+    "residential-plan-one": { order: 6, kind: "Residential" },
+    "venos-store": { order: 7, kind: "Commercial" },
+    "civil-affairs-office": { order: 8, kind: "Public" },
+    "revit-studies": { order: 9, kind: "Study" },
+};
+
+export function projectKind(slug: string): string | undefined {
+    return PROJECT_META[slug]?.kind;
+}
+
 export function allProjects(): ProjectBundle[] {
     const keys = new Set<string>();
     for (const w of architectureWork) keys.add(w.project ?? "Other Work");
     for (const w of walkthroughs) keys.add(w.project ?? "Other Work");
 
-    return [...keys].map((project) => {
+    const bundles = [...keys].map((project) => {
         const work = architectureWork.filter((w) => (w.project ?? "Other Work") === project);
         const rooms = walkthroughs.filter((w) => (w.project ?? "Other Work") === project);
         const any = work[0] ?? rooms[0];
@@ -208,6 +230,13 @@ export function allProjects(): ProjectBundle[] {
             motion: MOTION[slug],
         };
     });
+
+    // Anything without an entry in PROJECT_META sorts to the end rather than
+    // disappearing, so a newly added project is visible until it is placed.
+    return bundles.sort(
+        (a, b) =>
+            (PROJECT_META[a.slug]?.order ?? 99) - (PROJECT_META[b.slug]?.order ?? 99)
+    );
 }
 
 export function projectBundle(slug: string): ProjectBundle | undefined {

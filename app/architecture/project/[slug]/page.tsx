@@ -7,6 +7,8 @@ import RoomPreview from "@/components/architecture/RoomPreview";
 import RenderGallery from "@/components/architecture/RenderGallery";
 import CompareReveal from "@/components/architecture/CompareReveal";
 import ScrollWalkthrough from "@/components/architecture/ScrollWalkthrough";
+import ProjectSequence from "@/components/architecture/ProjectSequence";
+import { getProjectBySlug } from "@/lib/projects";
 import { allProjects, projectBundle, comparisonsForProject } from "@/lib/architecture";
 
 export function generateStaticParams() {
@@ -39,6 +41,12 @@ export default async function ProjectPage({
     // A room with both an elevation and a render of the same wall can be shown as
     // one wiped against the other.
     const compared = comparisonsForProject(project.project);
+
+    // The villa's four exterior elevations are a scroll sequence of their own. It
+    // used to open /architecture, where it stood in for the whole practice; it
+    // belongs to this project, so it opens this page instead.
+    const sequence =
+        slug === "sherouk-villa" ? getProjectBySlug("sherouk-villa-elevations") : undefined;
     const paired = project.work.find(
         (w) => w.images.length === 2 && w.images.some((i) => i.includes("elevation"))
     );
@@ -46,6 +54,9 @@ export default async function ProjectPage({
     return (
         <main className="bg-midnight min-h-screen">
             <Navbar />
+
+            {/* A project that has an elevation sequence opens with it */}
+            {sequence && <ProjectSequence project={sequence} />}
 
             {/* A project that has a motion sequence opens with it */}
             {project.motion && (
