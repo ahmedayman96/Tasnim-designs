@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import ProjectRooms from "@/components/architecture/ProjectRooms";
+
 import Link from "next/link";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
@@ -86,17 +86,50 @@ export default async function ServicePage({
                 </div>
             </section>
 
-            {/* Walkthroughs, grouped under the project they belong to */}
-            {projects.map((p) => (
-                <ProjectRooms
-                    key={p.project}
-                    project={p.project}
-                    location={p.location}
-                    year={p.year}
-                    scope={p.scope}
-                    rooms={p.rooms}
-                />
-            ))}
+            {/* Projects — one folder each, opened to reveal its rooms */}
+            {projects.length > 0 && (
+                <section className="px-6 md:px-12 pt-10 pb-4">
+                    <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {projects.map((p) => (
+                            <Link
+                                key={p.slug}
+                                href={`/architecture/project/${p.slug}`}
+                                className="group relative block"
+                            >
+                                {/* Stacked edges behind the cover, so a project reads as a
+                                    folder holding several rooms rather than a single image. */}
+                                <span className="absolute -top-2 left-4 right-4 h-6 rounded-t-lg bg-charcoal/70 border-t border-x border-gold/10 group-hover:border-gold/25 transition-colors duration-500" />
+                                <span className="absolute -top-1 left-2 right-2 h-6 rounded-t-lg bg-charcoal/85 border-t border-x border-gold/10 group-hover:border-gold/30 transition-colors duration-500" />
+
+                                <div className="relative overflow-hidden rounded-lg border border-gold/10 group-hover:border-gold/40 transition-colors duration-500">
+                                    <div className="relative aspect-[16/11] bg-charcoal overflow-hidden">
+                                        <Image
+                                            src={`${p.rooms[0].frames.dir}/f0001.webp`}
+                                            alt={p.project}
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                            className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/40 to-transparent" />
+                                    </div>
+
+                                    <div className="absolute inset-x-0 bottom-0 p-7">
+                                        <p className="text-gold/80 text-[0.58rem] uppercase tracking-[0.3em] mb-2.5">
+                                            {p.rooms.length} Rooms · Scroll Walkthroughs
+                                        </p>
+                                        <h2 className="font-serif text-2xl md:text-3xl text-cream group-hover:text-gold transition-colors duration-500">
+                                            {p.project}
+                                        </h2>
+                                        <p className="text-warm-gray text-[0.6rem] uppercase tracking-[0.25em] mt-2.5">
+                                            {[p.location, p.year].filter(Boolean).join("  ·  ")}
+                                        </p>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </section>
+            )}
 
             {/* Work */}
             <section className="px-6 md:px-12 py-20">

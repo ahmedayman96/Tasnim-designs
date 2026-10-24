@@ -102,6 +102,16 @@ export function walkthroughsForService(id: ServiceId): Walkthrough[] {
  * The service pages present a project and its rooms, rather than a flat list of
  * rooms detached from the job they came from.
  */
+/** URL-safe key for a project name, so a project can have its own page. */
+export function projectSlug(project: string): string {
+    return project
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[̀-ͯ]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+
 export function walkthroughProjects(id: ServiceId) {
     const groups = new Map<string, Walkthrough[]>();
     for (const w of walkthroughsForService(id)) {
@@ -111,9 +121,33 @@ export function walkthroughProjects(id: ServiceId) {
     }
     return [...groups.entries()].map(([project, rooms]) => ({
         project,
+        slug: projectSlug(project),
         location: rooms[0].location,
         year: rooms[0].year,
         scope: rooms[0].scope,
         rooms,
     }));
+}
+
+/** Every project that has walkthroughs, across all services. */
+export function allWalkthroughProjects() {
+    const groups = new Map<string, Walkthrough[]>();
+    for (const w of walkthroughs) {
+        const key = w.project ?? "Other Work";
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key)!.push(w);
+    }
+    return [...groups.entries()].map(([project, rooms]) => ({
+        project,
+        slug: projectSlug(project),
+        location: rooms[0].location,
+        year: rooms[0].year,
+        scope: rooms[0].scope,
+        service: rooms[0].service,
+        rooms,
+    }));
+}
+
+export function projectBySlug(slug: string) {
+    return allWalkthroughProjects().find((p) => p.slug === slug);
 }
