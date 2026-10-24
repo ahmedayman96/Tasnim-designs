@@ -1,1 +1,86 @@
-[]
+[
+  {
+    "slug": "sherouk-janah",
+    "title": "Janah's Room",
+    "titleAr": "غرفة جنة",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "Fluted plaster panelling the full height of one wall, a low upholstered bed, and a window seat running under the glazing. Warm neutrals with a single figurative painting as the only colour.",
+    "images": [
+      "/architecture/sherouk-villa/janah_01.webp",
+      "/architecture/sherouk-villa/janah_02.webp",
+      "/architecture/sherouk-villa/janah_03.webp",
+      "/architecture/sherouk-villa/janah_04.webp",
+      "/architecture/sherouk-villa/janah_05.webp"
+    ]
+  },
+  {
+    "slug": "sherouk-master",
+    "title": "Master Suite",
+    "titleAr": "الجناح الرئيسي",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "The largest scheme in the house: bedroom, dressing room and a glazed walk-in wardrobe, tied together by a sculptural wavy mirror and bouclé seating.",
+    "images": [
+      "/architecture/sherouk-villa/master_01.webp",
+      "/architecture/sherouk-villa/master_02.webp",
+      "/architecture/sherouk-villa/master_03.webp",
+      "/architecture/sherouk-villa/master_04.webp",
+      "/architecture/sherouk-villa/master_05.webp",
+      "/architecture/sherouk-villa/master_06.webp",
+      "/architecture/sherouk-villa/master_07.webp",
+      "/architecture/sherouk-villa/master_08.webp",
+      "/architecture/sherouk-villa/master_09.webp",
+      "/architecture/sherouk-villa/master_10.webp"
+    ]
+  },
+  {
+    "slug": "sherouk-ruqayah",
+    "title": "Ruqayah's Room",
+    "titleAr": "غرفة رقية",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "A brass screen of vertical fins divides the bed from the sitting side, with a marble bench set into the opening and chevron oak running underneath.",
+    "images": [
+      "/architecture/sherouk-villa/ruqayah_01.webp",
+      "/architecture/sherouk-villa/ruqayah_02.webp",
+      "/architecture/sherouk-villa/ruqayah_03.webp",
+      "/architecture/sherouk-villa/ruqayah_04.webp",
+      "/architecture/sherouk-villa/ruqayah_05.webp"
+    ]
+  },
+  {
+    "slug": "sherouk-sedra",
+    "title": "Sedra's Room",
+    "titleAr": "غرفة سدرة",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "Quieter than the others — a crystal pendant over the bed, built-in shelving carried around the dressing table, and blue brought in only through the bedding.",
+    "images": [
+      "/architecture/sherouk-villa/sedra_01.webp",
+      "/architecture/sherouk-villa/sedra_02.webp",
+      "/architecture/sherouk-villa/sedra_03.webp",
+      "/architecture/sherouk-villa/sedra_04.webp",
+      "/architecture/sherouk-villa/sedra_05.webp",
+      "/architecture/sherouk-villa/sedra_06.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-pharaonic-bedroom",
+    "title": "Pharaonic Master Bedroom",
+    "titleAr": "غرفة النوم الفرعونية",
+    "service": "3d",
+    "project": "Madinaty Villa",
+    "location": "Madinaty",
+    "year": 2026,
+    "description": "A hand-drawn hieroglyphic panel set against carved plaster relief and an arched tile screen, with a travertine tub raised on a step beside the bed. Drawn in elevation first, then modelled and rendered.",
+    "images": [
+      "/architecture/madinaty-villa/pharaonic-render.webp",
+      "/architecture/madinaty-villa/pharaonic-elevation.webp"
+    ]
+  }
+]

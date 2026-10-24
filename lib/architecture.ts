@@ -151,3 +151,63 @@ export function allWalkthroughProjects() {
 export function projectBySlug(slug: string) {
     return allWalkthroughProjects().find((p) => p.slug === slug);
 }
+
+/**
+ * Projects assembled from everything that belongs to them — rendered rooms,
+ * drawings, and any walkthroughs — rather than per service. A project is the unit
+ * a visitor cares about; the service is how it is filed.
+ */
+export interface ProjectBundle {
+    project: string;
+    slug: string;
+    location?: string;
+    year?: number;
+    scope?: string;
+    work: ArchitectureWork[];
+    rooms: Walkthrough[];
+    /** A short scroll sequence used as the project's moving header, if it has one. */
+    motion?: { dir: string; count: number; width: number; height: number };
+}
+
+const MOTION: Record<string, ProjectBundle["motion"]> = {
+    "madinaty-villa": {
+        dir: "/architecture/madinaty-villa/motion",
+        count: 40,
+        width: 900,
+        height: 696,
+    },
+};
+
+export function allProjects(): ProjectBundle[] {
+    const keys = new Set<string>();
+    for (const w of architectureWork) keys.add(w.project ?? "Other Work");
+    for (const w of walkthroughs) keys.add(w.project ?? "Other Work");
+
+    return [...keys].map((project) => {
+        const work = architectureWork.filter((w) => (w.project ?? "Other Work") === project);
+        const rooms = walkthroughs.filter((w) => (w.project ?? "Other Work") === project);
+        const any = work[0] ?? rooms[0];
+        const slug = projectSlug(project);
+        return {
+            project,
+            slug,
+            location: (any as { location?: string })?.location,
+            year: (any as { year?: number })?.year,
+            scope: rooms[0]?.scope,
+            work,
+            rooms,
+            motion: MOTION[slug],
+        };
+    });
+}
+
+export function projectBundle(slug: string): ProjectBundle | undefined {
+    return allProjects().find((p) => p.slug === slug);
+}
+
+/** Projects that have anything filed under a given service. */
+export function projectsForService(id: ServiceId): ProjectBundle[] {
+    return allProjects().filter(
+        (p) => p.work.some((w) => w.service === id) || p.rooms.some((r) => r.service === id)
+    );
+}

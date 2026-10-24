@@ -9,7 +9,7 @@ import {
     SERVICES,
     serviceById,
     workForService,
-    walkthroughProjects,
+    projectsForService,
     type ServiceId,
 } from "@/lib/architecture";
 
@@ -41,7 +41,7 @@ export default async function ServicePage({
     if (!service) notFound();
 
     const work = workForService(service.id as ServiceId);
-    const projects = walkthroughProjects(service.id as ServiceId);
+    const projects = projectsForService(service.id as ServiceId);
 
     return (
         <main className="bg-midnight min-h-screen">
@@ -104,7 +104,7 @@ export default async function ServicePage({
                                 <div className="relative overflow-hidden rounded-lg border border-gold/10 group-hover:border-gold/40 transition-colors duration-500">
                                     <div className="relative aspect-[16/11] bg-charcoal overflow-hidden">
                                         <Image
-                                            src={`${p.rooms[0].frames.dir}/f0001.webp`}
+                                            src={p.rooms[0] ? `${p.rooms[0].frames.dir}/f0001.webp` : p.work[0].images[0]}
                                             alt={p.project}
                                             fill
                                             sizes="(max-width: 768px) 100vw, 50vw"
@@ -115,7 +115,7 @@ export default async function ServicePage({
 
                                     <div className="absolute inset-x-0 bottom-0 p-7">
                                         <p className="text-gold/80 text-[0.58rem] uppercase tracking-[0.3em] mb-2.5">
-                                            {p.rooms.length} Rooms · Scroll Walkthroughs
+                                            {[p.work.length ? `${p.work.length} Schemes` : null, p.rooms.length ? `${p.rooms.length} Walkthroughs` : null].filter(Boolean).join(" · ")}
                                         </p>
                                         <h2 className="font-serif text-2xl md:text-3xl text-cream group-hover:text-gold transition-colors duration-500">
                                             {p.project}
