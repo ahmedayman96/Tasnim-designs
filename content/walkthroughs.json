@@ -1,19 +1,112 @@
 [
   {
+    "slug": "reception-dining",
+    "title": "Reception & Dining",
+    "titleAr": "الاستقبال والسفرة",
+    "description": "The entry sequence — a marble and blackened-steel dining table, bouclé seating, and sheer layered curtains carrying the light down the length of the room.",
+    "project": "Apartment in Privado, Madinaty",
+    "location": "Madinaty",
+    "year": 2026,
+    "scope": "Interiors & finishing",
+    "service": "finishing",
+    "frames": { "dir": "/walkthrough/reception-dining", "count": 126, "width": 720, "height": 1280 },
+    "chapters": [
+      { "at": 0, "label": "Entry", "labelAr": "المدخل" },
+      { "at": 0.45, "label": "Dining", "labelAr": "السفرة" }
+    ]
+  },
+  {
+    "slug": "living-room",
+    "title": "Living Room",
+    "titleAr": "غرفة المعيشة",
+    "description": "Green velvet sectional against a slatted oak divider, a marble coffee table, and a cove-lit ceiling that runs through from the dining room.",
+    "project": "Apartment in Privado, Madinaty",
+    "location": "Madinaty",
+    "year": 2026,
+    "scope": "Interiors & finishing",
+    "service": "finishing",
+    "frames": { "dir": "/walkthrough/living-room", "count": 84, "width": 720, "height": 1280 },
+    "chapters": [
+      { "at": 0, "label": "Seating", "labelAr": "الجلسة" },
+      { "at": 0.55, "label": "The Divider", "labelAr": "الفاصل الخشبي" }
+    ]
+  },
+  {
+    "slug": "kitchen",
+    "title": "Kitchen",
+    "titleAr": "المطبخ",
+    "description": "Handleless oak and white cabinetry behind the slatted screen, with a stone worktop running to the hob and a concealed extractor above it.",
+    "project": "Apartment in Privado, Madinaty",
+    "location": "Madinaty",
+    "year": 2026,
+    "scope": "Interiors & finishing",
+    "service": "finishing",
+    "frames": { "dir": "/walkthrough/kitchen", "count": 105, "width": 720, "height": 1280 },
+    "chapters": [
+      { "at": 0, "label": "Through the Screen", "labelAr": "من خلف الفاصل" },
+      { "at": 0.5, "label": "Worktop", "labelAr": "سطح العمل" }
+    ]
+  },
+  {
+    "slug": "twin-bedroom",
+    "title": "Twin Bedroom",
+    "titleAr": "غرفة السريرين",
+    "description": "Two beds with upholstered arched headboards, a full-height arched mirror, and a ring pendant over the dressing corner.",
+    "project": "Apartment in Privado, Madinaty",
+    "location": "Madinaty",
+    "year": 2026,
+    "scope": "Interiors & finishing",
+    "service": "finishing",
+    "frames": { "dir": "/walkthrough/twin-bedroom", "count": 133, "width": 720, "height": 1280 },
+    "chapters": [
+      { "at": 0, "label": "The Beds", "labelAr": "الأسرّة" },
+      { "at": 0.45, "label": "Arched Mirror", "labelAr": "المرآة" },
+      { "at": 0.78, "label": "To the Window", "labelAr": "ناحية الشباك" }
+    ]
+  },
+  {
+    "slug": "master-bedroom",
+    "title": "Master Bedroom",
+    "titleAr": "غرفة النوم الرئيسية",
+    "description": "A quieter room in greys and soft wood — upholstered bed, bedside stone, and sheer curtains filtering the light from the long window.",
+    "project": "Apartment in Privado, Madinaty",
+    "location": "Madinaty",
+    "year": 2026,
+    "scope": "Interiors & finishing",
+    "service": "finishing",
+    "frames": { "dir": "/walkthrough/master-bedroom", "count": 130, "width": 720, "height": 1280 },
+    "chapters": [
+      { "at": 0, "label": "The Bed", "labelAr": "السرير" },
+      { "at": 0.5, "label": "Headboard", "labelAr": "ظهر السرير" }
+    ]
+  },
+  {
+    "slug": "bathroom",
+    "title": "Bathroom",
+    "titleAr": "الحمام",
+    "description": "Large-format tile, a timber vanity with a stone top, and a frameless glass shower enclosure set flush into the wall.",
+    "project": "Apartment in Privado, Madinaty",
+    "location": "Madinaty",
+    "year": 2026,
+    "scope": "Interiors & finishing",
+    "service": "finishing",
+    "frames": { "dir": "/walkthrough/bathroom", "count": 95, "width": 720, "height": 1280 },
+    "chapters": [
+      { "at": 0, "label": "Vanity", "labelAr": "الحوض" },
+      { "at": 0.55, "label": "Shower", "labelAr": "الدش" }
+    ]
+  },
+  {
     "slug": "el-shorouk-interior",
     "title": "Reception & Living",
     "titleAr": "الاستقبال والمعيشة",
     "description": "A finished interior walked end to end — the dining table in marble and blackened steel, bouclé seating, slatted oak panelling, and a cove-lit ceiling carrying through into the living room.",
-    "project": "El Shorouk Villa",
+    "project": "Apartment in Privado, Madinaty",
+    "location": "Madinaty",
     "year": 2026,
     "scope": "Interiors & finishing",
     "service": "finishing",
-    "frames": {
-      "dir": "/walkthrough/el-shorouk-interior",
-      "count": 167,
-      "width": 720,
-      "height": 1280
-    },
+    "frames": { "dir": "/walkthrough/el-shorouk-interior", "count": 167, "width": 720, "height": 1280 },
     "chapters": [
       { "at": 0, "label": "Dining", "labelAr": "غرفة الطعام" },
       { "at": 0.35, "label": "Through to Living", "labelAr": "إلى المعيشة" },

@@ -38,6 +38,7 @@ export default function ScrollWalkthrough({
 }) {
     const sectionRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const backdropRef = useRef<HTMLCanvasElement>(null);
     const framesRef = useRef<HTMLImageElement[]>([]);
     /** Last frame actually painted, so we don't redraw the same one. */
     const paintedRef = useRef(-1);
@@ -151,6 +152,32 @@ export default function ScrollWalkthrough({
             const ctx = canvas.getContext("2d");
             if (!ctx) return;
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            // The footage is 9:16, so on a wide screen the sharp frame can only
+            // ever occupy the middle. Rather than letterbox it against empty black,
+            // the same frame is painted across the full viewport behind it and
+            // blurred in CSS — the screen fills edge to edge and nothing is
+            // cropped away. Painted small, since it is about to be blurred anyway.
+            const backdrop = backdropRef.current;
+            if (backdrop) {
+                const bctx = backdrop.getContext("2d");
+                if (bctx) {
+                    const scale = Math.max(
+                        backdrop.width / img.width,
+                        backdrop.height / img.height
+                    );
+                    const w = img.width * scale;
+                    const h = img.height * scale;
+                    bctx.drawImage(
+                        img,
+                        (backdrop.width - w) / 2,
+                        (backdrop.height - h) / 2,
+                        w,
+                        h
+                    );
+                }
+            }
+
             paintedRef.current = index;
             // Exposed so the painted frame can be inspected from the console when
             // something looks out of step with the scroll position.
@@ -224,9 +251,19 @@ export default function ScrollWalkthrough({
             className="relative"
             aria-label={`${title} — scroll walkthrough`}
         >
-            <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-midnight px-4 py-20">
+            <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-midnight">
+                {/* Blurred full-bleed backdrop, so the frame reads as immersive on a
+                    wide screen instead of sitting in letterbox bars. */}
+                <canvas
+                    ref={backdropRef}
+                    width={192}
+                    height={108}
+                    aria-hidden="true"
+                    className="absolute inset-0 h-full w-full object-cover scale-110 blur-3xl brightness-[0.4] saturate-150 pointer-events-none"
+                />
+                <div className="absolute inset-0 bg-midnight/30 pointer-events-none" />
                 {/* The frame */}
-                <div className="relative h-full max-h-[78vh] aspect-[9/16] rounded-2xl overflow-hidden border border-gold/20 shadow-[0_0_80px_rgba(0,0,0,0.6)]">
+                <div className="relative z-10 h-full aspect-[9/16] max-w-full overflow-hidden shadow-[0_0_120px_rgba(0,0,0,0.8)]">
                     <canvas
                         ref={canvasRef}
                         width={width}
