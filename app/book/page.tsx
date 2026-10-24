@@ -53,11 +53,12 @@ export default function BookPage() {
                             Let&apos;s Connect · تواصلي معنا
                         </p>
                         <h1 className="font-serif text-4xl md:text-6xl font-bold text-cream mb-6">
-                            Book a Consultation
+                            Get in Touch
                         </h1>
                         <p className="text-cream-muted text-lg max-w-2xl mx-auto leading-relaxed">
-                            Have questions about a piece? Interested in a custom commission?
-                            Book a free 30-minute video call with Tasnim to discuss your vision.
+                            A commissioned piece, an apartment that needs drawing and
+                            fitting out, or a question about something in the gallery —
+                            book a free 30-minute call with Tasnim and talk it through.
                         </p>
                         <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-6" />
                     </motion.div>
@@ -90,17 +91,17 @@ export default function BookPage() {
                             {
                                 icon: "🎨",
                                 title: "Custom Commissions",
-                                desc: "Discuss bespoke artwork tailored to your space and style.",
+                                desc: "Bespoke artwork, made for your space and your palette.",
                             },
                             {
-                                icon: "📦",
-                                title: "Shipping & Framing",
-                                desc: "Learn about international shipping and framing options.",
+                                icon: "📐",
+                                title: "Interiors & Drawings",
+                                desc: "Layouts, 3D views and construction drawings — through to finishing on site.",
                             },
                             {
                                 icon: "💬",
                                 title: "Questions",
-                                desc: "Ask about techniques, materials, or anything that inspires you.",
+                                desc: "Shipping, framing, materials, or anything in the gallery.",
                             },
                         ].map((item) => (
                             <div

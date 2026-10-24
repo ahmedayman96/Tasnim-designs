@@ -21,30 +21,32 @@ export default function Navbar() {
     const bgOpacity = useTransform(scrollY, [0, 200], [0, 0.9]);
     const blur = useTransform(scrollY, [0, 200], [0, 20]);
 
+    // Four headings, not seven. Everything that is a way of looking at the art now
+    // sits under Gallery, and "Book a Call" and "Contact" were two doors to the same
+    // room — /book is that room, so Contact goes straight there.
     const links: NavLink[] = [
         {
             href: "/#gallery",
             label: "Gallery",
             children: [
                 { href: "/#gallery", label: "The Collection", hint: "Paintings & collages" },
+                { href: "/pieces", label: "Art Pieces", hint: "Objects & resin work" },
                 { href: "/gallery-3d", label: "3D Gallery", hint: "Walk through the room" },
+                { href: "/preview", label: "Room Preview", hint: "See a piece on your wall" },
             ],
         },
-        { href: "/pieces", label: "Art Pieces" },
         {
             href: "/architecture",
             label: "Architecture",
             children: [
-                { href: "/architecture", label: "Overview", hint: "Projects & practice" },
-                { href: "/architecture/2d", label: "2D Modelling", hint: "Construction drawings" },
-                { href: "/architecture/3d", label: "3D Modelling", hint: "Renders & visualisation" },
+                { href: "/architecture", label: "The Work", hint: "All nine projects" },
+                { href: "/architecture/2d", label: "2D Modelling", hint: "AutoCAD & Revit drawings" },
+                { href: "/architecture/3d", label: "3D Modelling", hint: "3ds Max renders" },
                 { href: "/architecture/finishing", label: "Finishing Services", hint: "Built & supervised" },
             ],
         },
-        { href: "/preview", label: "Room Preview" },
         { href: "/#about", label: "About" },
-        { href: "/book", label: "Book a Call" },
-        { href: "/#contact", label: "Contact" },
+        { href: "/book", label: "Contact" },
     ];
 
     const closeAll = () => {

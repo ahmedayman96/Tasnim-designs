@@ -27,9 +27,17 @@ export default function Home() {
           <ScrollVelocityRow baseVelocity={15} direction={1}>
             <span className="text-cream/10 mx-8">Mixed Media</span>
             <span className="text-gold/20 mx-8">✦</span>
+            <span className="text-cream/10 mx-8">Interior Design</span>
+            <span className="text-gold/20 mx-8">✦</span>
             <span className="text-cream/10 mx-8">Portraits</span>
             <span className="text-gold/20 mx-8">✦</span>
+            <span className="text-cream/10 font-arabic mx-8" dir="rtl">عمارة وفن</span>
+            <span className="text-gold/20 mx-8">✦</span>
+            <span className="text-cream/10 mx-8">3D Visualisation</span>
+            <span className="text-gold/20 mx-8">✦</span>
             <span className="text-cream/10 mx-8">Collage</span>
+            <span className="text-gold/20 mx-8">✦</span>
+            <span className="text-cream/10 mx-8">AutoCAD &amp; Revit</span>
             <span className="text-gold/20 mx-8">✦</span>
             <span className="text-cream/10 font-arabic mx-8" dir="rtl">فن أصلي</span>
             <span className="text-gold/20 mx-8">✦</span>
@@ -69,9 +77,11 @@ export default function Home() {
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="bg-charcoal/80 backdrop-blur-md rounded-lg p-4 border border-gold/10">
                   <p className="font-arabic text-gold text-lg" dir="rtl">
-                    الفن لغتي
+                    أرسمها وأبنيها
                   </p>
-                  <p className="text-cream-muted text-sm">Art is my language</p>
+                  <p className="text-cream-muted text-sm">
+                    I paint it, and I build it
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -84,7 +94,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <p className="text-gold text-sm uppercase tracking-[0.3em] mb-4">
-                The Artist
+                Artist &amp; Architect
               </p>
               <h2 className="font-serif text-4xl md:text-5xl font-bold text-cream mb-2">
                 Tasnim Elyamani
@@ -108,6 +118,24 @@ export default function Home() {
                   From delicate pencil portraits to bold mixed-media collages, I create art that resonates with emotion. Each piece carries a story — of heritage, of love, of the beauty I see in everyday moments.
                 </TextReveal>
               </div>
+
+              {/* The other half of the practice. Architecture is a degree and a
+                  working profession, not a sideline, and the site used to hide it. */}
+              <div className="mt-6">
+                <TextReveal
+                  className="text-cream-muted text-lg leading-relaxed"
+                  delay={1.2}
+                >
+                  I am also an architect and interior designer. I studied architecture at the British University in Egypt, and I work in AutoCAD and Revit for the drawings and 3ds Max for the renders — taking a room from a plan, through a view a client can walk into, to the finishes going in on site.
+                </TextReveal>
+              </div>
+
+              <Link
+                href="/architecture"
+                className="inline-flex items-center gap-2 text-gold/80 hover:text-gold text-xs uppercase tracking-[0.25em] mt-8 transition-colors"
+              >
+                See the architecture work &rarr;
+              </Link>
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-6 mt-12">
@@ -167,22 +195,28 @@ export default function Home() {
             لنبدع معاً
           </p>
           <p className="text-cream-muted text-lg max-w-lg mx-auto mb-10 leading-relaxed">
-            Have a vision for a custom piece? I&apos;d love to hear about it.
-            From personal portraits to unique art gifts, every commission is a
-            collaboration.
+            Have a vision for a custom piece, or a space that needs designing?
+            I&apos;d love to hear about it — a commissioned portrait, a full
+            interior package, or anything in between.
           </p>
 
           {/* Goes to the Cal.com booking page — this was previously a button with
               no href, so the site's main call to action did nothing when clicked. */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/book" className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-gold via-gold-light to-gold text-midnight font-bold uppercase tracking-[0.15em] transition-all hover:shadow-[0_0_40px_rgba(201,165,90,0.35)] hover:-translate-y-0.5 text-base px-10 py-4">
-              Start a Commission
+              Start a Project
             </Link>
             <Link
               href="/#gallery"
               className="text-cream-muted hover:text-gold text-sm uppercase tracking-[0.2em] transition-colors px-4 py-3"
             >
               See the Collection
+            </Link>
+            <Link
+              href="/architecture"
+              className="text-cream-muted hover:text-gold text-sm uppercase tracking-[0.2em] transition-colors px-4 py-3"
+            >
+              See the Architecture
             </Link>
           </div>
 

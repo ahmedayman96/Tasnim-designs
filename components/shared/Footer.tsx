@@ -18,11 +18,11 @@ export default function Footer() {
                             className="font-arabic text-gold/50 text-xl mb-4"
                             dir="rtl"
                         >
-                            تسنيم اليماني — فن أصلي
+                            تسنيم اليماني — فن وعمارة
                         </p>
                         <p className="text-warm-gray text-sm max-w-sm leading-relaxed">
-                            Original art and portraits crafted with passion. Each piece tells a
-                            unique story, bringing beauty and emotion into your space.
+                            Original art and portraits, and architecture and interior design —
+                            from the first drawing through to the finished room.
                         </p>
                     </div>
 
@@ -34,10 +34,12 @@ export default function Footer() {
                         <div className="flex flex-col gap-3">
                             {[
                                 { label: "Gallery", href: "/#gallery" },
+                                { label: "Art Pieces", href: "/pieces" },
                                 { label: "3D Gallery", href: "/gallery-3d" },
                                 { label: "Room Preview", href: "/preview" },
+                                { label: "Architecture", href: "/architecture" },
                                 { label: "About", href: "/#about" },
-                                { label: "Contact", href: "/#contact" },
+                                { label: "Contact", href: "/book" },
                             ].map((link) => (
                                 <Link
                                     key={link.label}

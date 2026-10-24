@@ -4,10 +4,25 @@ import { CartProvider } from "@/lib/cart-context";
 import CartPanel from "@/components/cart/CartPanel";
 
 export const metadata: Metadata = {
-  title: "Tasnim Elyamani — تسنيم اليماني | Original Art & Portraits",
+  title: "Tasnim Elyamani — تسنيم اليماني | Art, Architecture & Interiors",
   description:
-    "Discover handcrafted artwork by Tasnim Elyamani. Original portraits, mixed media collages, and paintings that capture emotion and beauty.",
-  keywords: ["art", "portraits", "mixed media", "collage", "Tasnim Elyamani", "تسنيم اليماني"],
+    "Original art and architecture by Tasnim Elyamani — portraits, mixed media and resin work, alongside interior design, 2D construction drawings in AutoCAD and Revit, and 3ds Max visualisation.",
+  keywords: [
+    "art",
+    "portraits",
+    "mixed media",
+    "collage",
+    "resin art",
+    "architecture",
+    "interior design",
+    "2D modelling",
+    "3D modelling",
+    "AutoCAD",
+    "Revit",
+    "3ds Max",
+    "Tasnim Elyamani",
+    "تسنيم اليماني",
+  ],
 };
 
 export default function RootLayout({
