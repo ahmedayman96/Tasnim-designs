@@ -82,5 +82,21 @@
       "/architecture/madinaty-villa/pharaonic-render.webp",
       "/architecture/madinaty-villa/pharaonic-elevation.webp"
     ]
+  },
+  {
+    "slug": "madinaty-master-shop-drawings",
+    "title": "Master Bedroom — Shop Drawings",
+    "titleAr": "رسومات تنفيذية — غرفة الماستر",
+    "service": "2d",
+    "project": "Madinaty Villa",
+    "location": "Madinaty",
+    "year": 2026,
+    "description": "Sections through the same room at 1:20, dimensioned wall by wall, with a materials key calling out velvet paint, cladding wood, strip cladding, LED, mirror and black marble. The drawings a contractor builds the Pharaonic bedroom from.",
+    "images": [
+      "/architecture/madinaty-villa/sheet_01.webp",
+      "/architecture/madinaty-villa/sheet_02.webp",
+      "/architecture/madinaty-villa/sheet_03.webp",
+      "/architecture/madinaty-villa/sheet_04.webp"
+    ]
   }
 ]
