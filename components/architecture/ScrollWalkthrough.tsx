@@ -53,12 +53,11 @@ export default function ScrollWalkthrough({
         offset: ["start start", "end end"],
     });
 
-    const frameSrc = (i: number) =>
-        `${dir}/f${String(i + 1).padStart(4, "0")}.webp`;
-
     // ---- load -------------------------------------------------------------
     useEffect(() => {
         let cancelled = false;
+        const frameSrc = (i: number) =>
+            `${dir}/f${String(i + 1).padStart(4, "0")}.webp`;
         const images: HTMLImageElement[] = new Array(frameCount);
         framesRef.current = images;
 

@@ -96,3 +96,24 @@ export function walkthroughBySlug(slug: string): Walkthrough | undefined {
 export function walkthroughsForService(id: ServiceId): Walkthrough[] {
     return walkthroughs.filter((w) => w.service === id);
 }
+
+/**
+ * Walkthroughs grouped by the building they belong to, in catalogue order.
+ * The service pages present a project and its rooms, rather than a flat list of
+ * rooms detached from the job they came from.
+ */
+export function walkthroughProjects(id: ServiceId) {
+    const groups = new Map<string, Walkthrough[]>();
+    for (const w of walkthroughsForService(id)) {
+        const key = w.project ?? "Other Work";
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key)!.push(w);
+    }
+    return [...groups.entries()].map(([project, rooms]) => ({
+        project,
+        location: rooms[0].location,
+        year: rooms[0].year,
+        scope: rooms[0].scope,
+        rooms,
+    }));
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import ProjectRooms from "@/components/architecture/ProjectRooms";
 import Link from "next/link";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
@@ -8,7 +9,7 @@ import {
     SERVICES,
     serviceById,
     workForService,
-    walkthroughsForService,
+    walkthroughProjects,
     type ServiceId,
 } from "@/lib/architecture";
 
@@ -40,7 +41,7 @@ export default async function ServicePage({
     if (!service) notFound();
 
     const work = workForService(service.id as ServiceId);
-    const walks = walkthroughsForService(service.id as ServiceId);
+    const projects = walkthroughProjects(service.id as ServiceId);
 
     return (
         <main className="bg-midnight min-h-screen">
@@ -85,43 +86,17 @@ export default async function ServicePage({
                 </div>
             </section>
 
-            {/* Walkthroughs — a finished space you move through by scrolling */}
-            {walks.length > 0 && (
-                <section className="px-6 md:px-12 pt-16">
-                    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {walks.map((w) => (
-                            <Link
-                                key={w.slug}
-                                href={`/architecture/walkthrough/${w.slug}`}
-                                className="group relative rounded-xl overflow-hidden border border-gold/15 hover:border-gold/40 transition-colors"
-                            >
-                                <div className="relative aspect-[16/10] bg-charcoal overflow-hidden">
-                                    <Image
-                                        src={`${w.frames.dir}/f0001.webp`}
-                                        alt={w.title}
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, 50vw"
-                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/30 to-transparent" />
-                                </div>
-
-                                <div className="absolute inset-x-0 bottom-0 p-6">
-                                    <p className="text-gold text-[0.6rem] uppercase tracking-[0.3em] mb-2">
-                                        Scroll Walkthrough
-                                    </p>
-                                    <h2 className="font-serif text-2xl text-cream group-hover:text-gold transition-colors">
-                                        {w.title}
-                                    </h2>
-                                    <p className="text-warm-gray text-[0.65rem] uppercase tracking-[0.25em] mt-2">
-                                        {[w.project, w.year].filter(Boolean).join(" · ")}
-                                    </p>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                </section>
-            )}
+            {/* Walkthroughs, grouped under the project they belong to */}
+            {projects.map((p) => (
+                <ProjectRooms
+                    key={p.project}
+                    project={p.project}
+                    location={p.location}
+                    year={p.year}
+                    scope={p.scope}
+                    rooms={p.rooms}
+                />
+            ))}
 
             {/* Work */}
             <section className="px-6 md:px-12 py-20">
@@ -169,7 +144,7 @@ export default async function ServicePage({
                                 </article>
                             ))}
                         </div>
-                    ) : walks.length > 0 ? null : (
+                    ) : projects.length > 0 ? null : (
                         /* Nothing published for this service yet. Say so plainly rather
                            than showing an empty grid, and keep a way forward. */
                         <div className="max-w-xl mx-auto text-center py-16">
