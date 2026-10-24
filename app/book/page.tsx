@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import ContactForm from "@/components/shared/ContactForm";
 
 export default function BookPage() {
     useEffect(() => {
@@ -62,6 +63,30 @@ export default function BookPage() {
                         </p>
                         <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-6" />
                     </motion.div>
+
+                    {/* Write, or book — a call suits someone ready to talk, and plenty
+                        of people would rather send a note than hold a slot. */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.15 }}
+                    >
+                        <div className="flex items-center gap-4 mb-6">
+                            <span className="h-px w-10 bg-gold/50" />
+                            <span className="text-gold/80 text-[0.6rem] uppercase tracking-[0.32em]">
+                                Send a Message
+                            </span>
+                        </div>
+                        <ContactForm />
+                    </motion.div>
+
+                    <div className="flex items-center gap-5 my-14">
+                        <span className="h-px flex-1 bg-gold/10" />
+                        <span className="text-warm-gray/60 text-[0.6rem] uppercase tracking-[0.3em]">
+                            or book a call
+                        </span>
+                        <span className="h-px flex-1 bg-gold/10" />
+                    </div>
 
                     {/* Cal.com Embed */}
                     <motion.div
