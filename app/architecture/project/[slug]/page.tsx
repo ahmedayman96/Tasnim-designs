@@ -86,8 +86,12 @@ export default async function ProjectPage({
                         {[
                             project.location,
                             project.year,
-                            project.work.length > 0 ? `${project.work.length} schemes` : null,
-                            project.rooms.length > 0 ? `${project.rooms.length} walkthroughs` : null,
+                            project.work.length > 0
+                                ? `${project.work.length} scheme${project.work.length === 1 ? "" : "s"}`
+                                : null,
+                            project.rooms.length > 0
+                                ? `${project.rooms.length} walkthrough${project.rooms.length === 1 ? "" : "s"}`
+                                : null,
                         ]
                             .filter(Boolean)
                             .join("  ·  ")}

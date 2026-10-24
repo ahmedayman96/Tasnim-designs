@@ -8,10 +8,15 @@ import Footer from "@/components/shared/Footer";
 import {
     SERVICES,
     serviceById,
-    workForService,
+    looseWorkForService,
     projectsForService,
     type ServiceId,
 } from "@/lib/architecture";
+
+/** "1 Scheme", "4 Schemes", and nothing at all for none. */
+function count(n: number, noun: string): string | null {
+    return n ? `${n} ${noun}${n === 1 ? "" : "s"}` : null;
+}
 
 export function generateStaticParams() {
     return SERVICES.map((s) => ({ service: s.id }));
@@ -40,7 +45,9 @@ export default async function ServicePage({
     const service = serviceById(id);
     if (!service) notFound();
 
-    const work = workForService(service.id as ServiceId);
+    // Only work that has no project of its own — the rest is reachable through the
+    // project folders above, and listing it twice made the page read as a dump.
+    const work = looseWorkForService(service.id as ServiceId);
     const projects = projectsForService(service.id as ServiceId);
 
     return (
@@ -115,7 +122,7 @@ export default async function ServicePage({
 
                                     <div className="absolute inset-x-0 bottom-0 p-7">
                                         <p className="text-gold/80 text-[0.58rem] uppercase tracking-[0.3em] mb-2.5">
-                                            {[p.work.length ? `${p.work.length} Schemes` : null, p.rooms.length ? `${p.rooms.length} Walkthroughs` : null].filter(Boolean).join(" · ")}
+                                            {[count(p.work.length, "Scheme"), count(p.rooms.length, "Walkthrough")].filter(Boolean).join(" · ")}
                                         </p>
                                         <h2 className="font-serif text-2xl md:text-3xl text-cream group-hover:text-gold transition-colors duration-500">
                                             {p.project}

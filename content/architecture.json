@@ -119,5 +119,317 @@
       "/architecture/privado-apartment/p08_08.webp",
       "/architecture/privado-apartment/p09_09.webp"
     ]
+  },
+  {
+    "slug": "plan-one-kitchens",
+    "title": "Kitchen Designs",
+    "titleAr": "تصميمات المطابخ",
+    "service": "3d",
+    "project": "Residential Plan One",
+    "description": "Four studies of one handleless kitchen — grey lacquer against book-matched marble, a tall column of integrated ovens, and a breakfast bar lit from a recessed cove.",
+    "images": [
+      "/architecture/residential-plan-one/kitchens_01.webp",
+      "/architecture/residential-plan-one/kitchens_02.webp",
+      "/architecture/residential-plan-one/kitchens_03.webp",
+      "/architecture/residential-plan-one/kitchens_04.webp",
+      "/architecture/residential-plan-one/kitchens_05.webp"
+    ]
+  },
+  {
+    "slug": "plan-one-master-suite",
+    "title": "Master Suite",
+    "titleAr": "الجناح الرئيسي",
+    "service": "3d",
+    "project": "Residential Plan One",
+    "description": "Bedroom, dressing and sitting area treated as one run: carved plaster relief behind the bed, a walk-in wardrobe closed in bronze glass, and a stone fireplace wall facing the seating.",
+    "images": [
+      "/architecture/residential-plan-one/master-suite_01.webp",
+      "/architecture/residential-plan-one/master-suite_02.webp",
+      "/architecture/residential-plan-one/master-suite_03.webp",
+      "/architecture/residential-plan-one/master-suite_04.webp",
+      "/architecture/residential-plan-one/master-suite_05.webp",
+      "/architecture/residential-plan-one/master-suite_06.webp",
+      "/architecture/residential-plan-one/master-suite_07.webp"
+    ]
+  },
+  {
+    "slug": "plan-one-boho-living",
+    "title": "Living Room, Boho Style",
+    "titleAr": "غرفة معيشة بوهيمية",
+    "service": "3d",
+    "project": "Residential Plan One",
+    "description": "Warmer and more tactile than the rest of the scheme — a woven wall hanging, rattan and raw timber, a deep linen sectional, and open shelving built around the window.",
+    "images": [
+      "/architecture/residential-plan-one/boho-living_01.webp",
+      "/architecture/residential-plan-one/boho-living_02.webp",
+      "/architecture/residential-plan-one/boho-living_03.webp",
+      "/architecture/residential-plan-one/boho-living_04.webp",
+      "/architecture/residential-plan-one/boho-living_05.webp",
+      "/architecture/residential-plan-one/boho-living_06.webp"
+    ]
+  },
+  {
+    "slug": "plan-one-furniture-plan",
+    "title": "Furniture Plan",
+    "titleAr": "مخطط الأثاث",
+    "service": "2d",
+    "project": "Residential Plan One",
+    "description": "The apartment set out room by room, furnished and colour-filled — the plan the rest of the scheme was drawn from.",
+    "images": [
+      "/architecture/residential-plan-one/plan_01.webp",
+      "/architecture/residential-plan-one/plan_02.webp"
+    ]
+  },
+  {
+    "slug": "plan-two-master-room",
+    "title": "Master Room",
+    "titleAr": "غرفة الماستر",
+    "service": "3d",
+    "project": "Residential Plan Two",
+    "description": "Brass fins run floor to ceiling behind the bed, with a mirrored dressing run opposite and a wardrobe closed in smoked glass.",
+    "images": [
+      "/architecture/residential-plan-two/master-room_01.webp",
+      "/architecture/residential-plan-two/master-room_02.webp",
+      "/architecture/residential-plan-two/master-room_03.webp",
+      "/architecture/residential-plan-two/master-room_04.webp",
+      "/architecture/residential-plan-two/master-room_05.webp",
+      "/architecture/residential-plan-two/master-room_06.webp"
+    ]
+  },
+  {
+    "slug": "plan-two-bedroom",
+    "title": "Bedroom",
+    "titleAr": "غرفة النوم",
+    "service": "3d",
+    "project": "Residential Plan Two",
+    "description": "A quieter room: a painted panel above the bed, a fluted headboard wall, and a full wardrobe run with the dressing table folded into it. Shown from above as well as at eye level.",
+    "images": [
+      "/architecture/residential-plan-two/bedroom_01.webp",
+      "/architecture/residential-plan-two/bedroom_02.webp",
+      "/architecture/residential-plan-two/bedroom_03.webp",
+      "/architecture/residential-plan-two/bedroom_04.webp",
+      "/architecture/residential-plan-two/bedroom_05.webp",
+      "/architecture/residential-plan-two/bedroom_06.webp"
+    ]
+  },
+  {
+    "slug": "plan-two-living",
+    "title": "Living",
+    "titleAr": "غرفة المعيشة",
+    "service": "3d",
+    "project": "Residential Plan Two",
+    "description": "The darkest room in the scheme — a full wall of veined marble, a sage sectional, and a bar set into the joinery with a cast bust lit against the stone.",
+    "images": [
+      "/architecture/residential-plan-two/living_01.webp",
+      "/architecture/residential-plan-two/living_02.webp",
+      "/architecture/residential-plan-two/living_03.webp",
+      "/architecture/residential-plan-two/living_04.webp",
+      "/architecture/residential-plan-two/living_05.webp"
+    ]
+  },
+  {
+    "slug": "plan-two-second-bedroom",
+    "title": "Second Bedroom",
+    "titleAr": "غرفة النوم الثانية",
+    "service": "3d",
+    "project": "Residential Plan Two",
+    "description": "Grey upholstery and dark timber panelling, with a dressing run under a continuous light line and a wardrobe wall in bronze mirror.",
+    "images": [
+      "/architecture/residential-plan-two/second-bedroom_01.webp",
+      "/architecture/residential-plan-two/second-bedroom_02.webp",
+      "/architecture/residential-plan-two/second-bedroom_03.webp",
+      "/architecture/residential-plan-two/second-bedroom_04.webp",
+      "/architecture/residential-plan-two/second-bedroom_05.webp"
+    ]
+  },
+  {
+    "slug": "plan-two-reception",
+    "title": "Reception",
+    "titleAr": "الاستقبال",
+    "service": "3d",
+    "project": "Residential Plan Two",
+    "description": "The formal room: cream panelling and gold reveals, a navy velvet seating group, and a marble-topped bar opening to the kitchen beyond.",
+    "images": [
+      "/architecture/residential-plan-two/reception_01.webp",
+      "/architecture/residential-plan-two/reception_02.webp",
+      "/architecture/residential-plan-two/reception_03.webp",
+      "/architecture/residential-plan-two/reception_04.webp",
+      "/architecture/residential-plan-two/reception_05.webp",
+      "/architecture/residential-plan-two/reception_06.webp"
+    ]
+  },
+  {
+    "slug": "plan-two-floor-plan",
+    "title": "Floor Plan",
+    "titleAr": "المخطط",
+    "service": "2d",
+    "project": "Residential Plan Two",
+    "description": "The layout the second scheme works to, drawn as a setting-out plan.",
+    "images": [
+      "/architecture/residential-plan-two/plan_01.webp"
+    ]
+  },
+  {
+    "slug": "plan-three-classic-master",
+    "title": "Classic Master Room",
+    "titleAr": "غرفة الماستر الكلاسيكية",
+    "service": "3d",
+    "project": "Residential Plan Three, UAE",
+    "location": "UAE",
+    "description": "Panelled walls, a cut-glass chandelier and a classical cornice, with the television set into a moulded surround facing the bed.",
+    "images": [
+      "/architecture/residential-plan-three-uae/classic-master_01.webp",
+      "/architecture/residential-plan-three-uae/classic-master_02.webp",
+      "/architecture/residential-plan-three-uae/classic-master_03.webp",
+      "/architecture/residential-plan-three-uae/classic-master_04.webp",
+      "/architecture/residential-plan-three-uae/classic-master_05.webp"
+    ]
+  },
+  {
+    "slug": "plan-three-modern-bedroom",
+    "title": "Modern Bedroom",
+    "titleAr": "غرفة النوم المودرن",
+    "service": "3d",
+    "project": "Residential Plan Three, UAE",
+    "location": "UAE",
+    "description": "The same house in a modern register — an upholstered headboard wall, a long low media run, and a glazed wardrobe lit from within.",
+    "images": [
+      "/architecture/residential-plan-three-uae/modern-bedroom_01.webp",
+      "/architecture/residential-plan-three-uae/modern-bedroom_02.webp",
+      "/architecture/residential-plan-three-uae/modern-bedroom_03.webp",
+      "/architecture/residential-plan-three-uae/modern-bedroom_04.webp",
+      "/architecture/residential-plan-three-uae/modern-bedroom_05.webp",
+      "/architecture/residential-plan-three-uae/modern-bedroom_06.webp",
+      "/architecture/residential-plan-three-uae/modern-bedroom_07.webp"
+    ]
+  },
+  {
+    "slug": "plan-three-kids-bedroom",
+    "title": "Kids' Bedroom",
+    "titleAr": "غرفة الأطفال",
+    "service": "3d",
+    "project": "Residential Plan Three, UAE",
+    "location": "UAE",
+    "description": "Arched niches in blue and white, a drawing wall, shelving at child height, and a soft play pit under a neon line.",
+    "images": [
+      "/architecture/residential-plan-three-uae/kids-bedroom_01.webp",
+      "/architecture/residential-plan-three-uae/kids-bedroom_02.webp",
+      "/architecture/residential-plan-three-uae/kids-bedroom_03.webp",
+      "/architecture/residential-plan-three-uae/kids-bedroom_04.webp",
+      "/architecture/residential-plan-three-uae/kids-bedroom_05.webp"
+    ]
+  },
+  {
+    "slug": "plan-three-living",
+    "title": "Living",
+    "titleAr": "غرفة المعيشة",
+    "service": "3d",
+    "project": "Residential Plan Three, UAE",
+    "location": "UAE",
+    "description": "A tall room in pale blue and cream — marble floor, gilt wall lights, and a curved stair returning to the gallery above.",
+    "images": [
+      "/architecture/residential-plan-three-uae/living_01.webp",
+      "/architecture/residential-plan-three-uae/living_02.webp",
+      "/architecture/residential-plan-three-uae/living_03.webp",
+      "/architecture/residential-plan-three-uae/living_04.webp",
+      "/architecture/residential-plan-three-uae/living_05.webp"
+    ]
+  },
+  {
+    "slug": "plan-three-classic-bathroom",
+    "title": "Bathroom, Classic Style",
+    "titleAr": "الحمام الكلاسيكي",
+    "service": "3d",
+    "project": "Residential Plan Three, UAE",
+    "location": "UAE",
+    "description": "Twin gilt mirrors against a violet mosaic panel, set between full-height marble and a black and gold vanity.",
+    "images": [
+      "/architecture/residential-plan-three-uae/classic-bathroom_01.webp",
+      "/architecture/residential-plan-three-uae/classic-bathroom_02.webp",
+      "/architecture/residential-plan-three-uae/classic-bathroom_03.webp",
+      "/architecture/residential-plan-three-uae/classic-bathroom_04.webp",
+      "/architecture/residential-plan-three-uae/classic-bathroom_05.webp"
+    ]
+  },
+  {
+    "slug": "plan-three-modern-bathrooms",
+    "title": "Bathrooms, Modern Style",
+    "titleAr": "الحمامات المودرن",
+    "service": "3d",
+    "project": "Residential Plan Three, UAE",
+    "location": "UAE",
+    "description": "Veined white marble carried across floor, wall and bath surround, with a freestanding tub and a frameless glass shower.",
+    "images": [
+      "/architecture/residential-plan-three-uae/modern-bathrooms_01.webp",
+      "/architecture/residential-plan-three-uae/modern-bathrooms_02.webp",
+      "/architecture/residential-plan-three-uae/modern-bathrooms_03.webp",
+      "/architecture/residential-plan-three-uae/modern-bathrooms_04.webp"
+    ]
+  },
+  {
+    "slug": "plan-three-ground-plan",
+    "title": "Ground Floor Plan",
+    "titleAr": "مخطط الدور الأرضي",
+    "service": "2d",
+    "project": "Residential Plan Three, UAE",
+    "location": "UAE",
+    "description": "The ground floor set out with room names and furniture.",
+    "images": [
+      "/architecture/residential-plan-three-uae/plan_01.webp"
+    ]
+  },
+  {
+    "slug": "venos-store",
+    "title": "The Shop Floor",
+    "titleAr": "صالة العرض",
+    "service": "3d",
+    "project": "VENOS Store",
+    "description": "A phone and accessories store: back-lit display walls in white and brass, a curved terracotta banquette wrapped around a planter, and a stone service counter under a sculptural light.",
+    "images": [
+      "/architecture/venos-store/store_01.webp",
+      "/architecture/venos-store/store_02.webp",
+      "/architecture/venos-store/store_03.webp",
+      "/architecture/venos-store/store_04.webp",
+      "/architecture/venos-store/store_05.webp",
+      "/architecture/venos-store/store_06.webp",
+      "/architecture/venos-store/store_07.webp",
+      "/architecture/venos-store/store_08.webp",
+      "/architecture/venos-store/store_09.webp"
+    ]
+  },
+  {
+    "slug": "civil-affairs-office",
+    "title": "Service Hall",
+    "titleAr": "قطاع الأحوال المدنية",
+    "service": "3d",
+    "project": "Civil Affairs Office",
+    "description": "A civil registry branch for the Ministry of Interior — a blue and white street elevation carrying the emblem, and inside a run of service windows behind glazed screens, with fixed waiting seating.",
+    "images": [
+      "/architecture/civil-affairs-office/office_01.webp",
+      "/architecture/civil-affairs-office/office_02.webp",
+      "/architecture/civil-affairs-office/office_03.webp",
+      "/architecture/civil-affairs-office/office_04.webp",
+      "/architecture/civil-affairs-office/office_05.webp",
+      "/architecture/civil-affairs-office/office_06.webp",
+      "/architecture/civil-affairs-office/office_07.webp"
+    ]
+  },
+  {
+    "slug": "revit-studies",
+    "title": "Pavilion Studies",
+    "titleAr": "دراسات الجناح",
+    "service": "3d",
+    "project": "Revit Studies",
+    "description": "Modelled in Revit: a timber canopy curving over a planted court and pool, perforated screens casting pattern across the terrace, and a glazed pavilion stepped into the slope.",
+    "images": [
+      "/architecture/revit-studies/study_01.webp",
+      "/architecture/revit-studies/study_02.webp",
+      "/architecture/revit-studies/study_03.webp",
+      "/architecture/revit-studies/study_04.webp",
+      "/architecture/revit-studies/study_05.webp",
+      "/architecture/revit-studies/study_06.webp",
+      "/architecture/revit-studies/study_07.webp",
+      "/architecture/revit-studies/study_08.webp"
+    ]
   }
 ]

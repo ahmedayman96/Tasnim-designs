@@ -64,6 +64,14 @@ export function workForService(id: ServiceId): ArchitectureWork[] {
 }
 
 /**
+ * Work that is not filed under a project, so the service page can list it without
+ * repeating what its project folders already show.
+ */
+export function looseWorkForService(id: ServiceId): ArchitectureWork[] {
+    return workForService(id).filter((w) => !w.project);
+}
+
+/**
  * A scroll walkthrough: a finished space the viewer moves through by scrolling,
  * built from frames pre-extracted from a video of the space.
  */
