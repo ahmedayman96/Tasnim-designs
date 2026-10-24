@@ -1,8 +1,8 @@
 [
   {
-    "slug": "sherouk-janah",
-    "title": "Janah's Room",
-    "titleAr": "غرفة جنة",
+    "slug": "sherouk-room-one",
+    "title": "Room One",
+    "titleAr": "الغرفة الأولى",
     "service": "3d",
     "project": "Sherouk Villa",
     "year": 2026,
@@ -37,9 +37,9 @@
     ]
   },
   {
-    "slug": "sherouk-ruqayah",
-    "title": "Ruqayah's Room",
-    "titleAr": "غرفة رقية",
+    "slug": "sherouk-room-two",
+    "title": "Room Two",
+    "titleAr": "الغرفة الثانية",
     "service": "3d",
     "project": "Sherouk Villa",
     "year": 2026,
@@ -53,9 +53,9 @@
     ]
   },
   {
-    "slug": "sherouk-sedra",
-    "title": "Sedra's Room",
-    "titleAr": "غرفة سدرة",
+    "slug": "sherouk-room-three",
+    "title": "Room Three",
+    "titleAr": "الغرفة الثالثة",
     "service": "3d",
     "project": "Sherouk Villa",
     "year": 2026,
@@ -97,6 +97,27 @@
       "/architecture/madinaty-villa/sheet_02.webp",
       "/architecture/madinaty-villa/sheet_03.webp",
       "/architecture/madinaty-villa/sheet_04.webp"
+    ]
+  },
+  {
+    "slug": "privado-apartment-3d",
+    "title": "The Design",
+    "titleAr": "التصميم",
+    "service": "3d",
+    "project": "Apartment in Privado, Madinaty",
+    "location": "Madinaty",
+    "year": 2026,
+    "description": "The apartment modelled before it was built — reception, living, kitchen and bedrooms. The walkthroughs below are the same rooms, finished.",
+    "images": [
+      "/architecture/privado-apartment/p01_01.webp",
+      "/architecture/privado-apartment/p02_02.webp",
+      "/architecture/privado-apartment/p03_03.webp",
+      "/architecture/privado-apartment/p04_04.webp",
+      "/architecture/privado-apartment/p05_05.webp",
+      "/architecture/privado-apartment/p06_06.webp",
+      "/architecture/privado-apartment/p07_07.webp",
+      "/architecture/privado-apartment/p08_08.webp",
+      "/architecture/privado-apartment/p09_09.webp"
     ]
   }
 ]
