@@ -201,8 +201,7 @@ export const PROJECT_META: Record<string, { order: number; kind: string }> = {
     "residential-plan-two": { order: 5, kind: "Residential" },
     "residential-plan-one": { order: 6, kind: "Residential" },
     "venos-store": { order: 7, kind: "Commercial" },
-    "civil-affairs-office": { order: 8, kind: "Public" },
-    "revit-studies": { order: 9, kind: "Study" },
+    "revit-studies": { order: 8, kind: "Study" },
 };
 
 export function projectKind(slug: string): string | undefined {

@@ -382,21 +382,6 @@
     ]
   },
   {
-    "slug": "civil-affairs-office",
-    "title": "Service Hall",
-    "titleAr": "قطاع الأحوال المدنية",
-    "service": "3d",
-    "project": "Civil Affairs Office",
-    "description": "A civil registry branch for the Ministry of Interior — a blue and white street elevation carrying the emblem, and inside a run of service windows behind glazed screens, with fixed waiting seating.",
-    "images": [
-      "/architecture/civil-affairs-office/office_03.webp",
-      "/architecture/civil-affairs-office/office_04.webp",
-      "/architecture/civil-affairs-office/office_05.webp",
-      "/architecture/civil-affairs-office/office_06.webp",
-      "/architecture/civil-affairs-office/office_07.webp"
-    ]
-  },
-  {
     "slug": "revit-studies",
     "title": "Pavilion Studies",
     "titleAr": "دراسات الجناح",
