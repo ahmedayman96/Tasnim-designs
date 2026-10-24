@@ -5,9 +5,9 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import RoomPreview from "@/components/architecture/RoomPreview";
 import RenderGallery from "@/components/architecture/RenderGallery";
-import DrawingReveal from "@/components/architecture/DrawingReveal";
+import CompareReveal from "@/components/architecture/CompareReveal";
 import ScrollWalkthrough from "@/components/architecture/ScrollWalkthrough";
-import { allProjects, projectBundle } from "@/lib/architecture";
+import { allProjects, projectBundle, comparisonsForProject } from "@/lib/architecture";
 
 export function generateStaticParams() {
     return allProjects().map((p) => ({ slug: p.slug }));
@@ -38,6 +38,7 @@ export default async function ProjectPage({
 
     // A room with both an elevation and a render of the same wall can be shown as
     // one wiped against the other.
+    const compared = comparisonsForProject(project.project);
     const paired = project.work.find(
         (w) => w.images.length === 2 && w.images.some((i) => i.includes("elevation"))
     );
@@ -104,9 +105,12 @@ export default async function ProjectPage({
                                 Drawn, then Built
                             </span>
                         </div>
-                        <DrawingReveal
-                            drawing={paired.images.find((i) => i.includes("elevation"))!}
-                            render={paired.images.find((i) => !i.includes("elevation"))!}
+                        <CompareReveal
+                            before={paired.images.find((i) => i.includes("elevation"))!}
+                            after={paired.images.find((i) => !i.includes("elevation"))!}
+                            beforeLabel="Elevation"
+                            afterLabel="Render"
+                            caption="Move across the image — the drawing becomes the room."
                             alt={paired.title}
                         />
                     </div>
@@ -120,6 +124,56 @@ export default async function ProjectPage({
                         {project.work.map((w, i) => (
                             <RenderGallery key={w.slug} work={w} index={i} />
                         ))}
+                    </div>
+                </section>
+            )}
+
+            {/* Designed against delivered, where both exist for the same view */}
+            {compared.length > 0 && (
+                <section className="px-6 md:px-12 py-20 border-t border-gold/10">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="flex items-center gap-4 mb-4">
+                            <span className="h-px w-10 bg-gold/50" />
+                            <span className="text-gold/80 text-[0.6rem] uppercase tracking-[0.32em]">
+                                Designed, then Delivered
+                            </span>
+                        </div>
+                        <p className="text-cream-muted/70 text-sm font-light max-w-xl mb-14">
+                            The render on the left, the finished room on the right. Drag across
+                            each one.
+                        </p>
+
+                        <div className="space-y-20 md:space-y-28">
+                            {compared.map((c) => (
+                                <div key={c.title} className="grid md:grid-cols-12 gap-8 items-start">
+                                    <div className="md:col-span-4">
+                                        <h3 className="font-serif text-2xl md:text-3xl text-cream">
+                                            {c.title}
+                                        </h3>
+                                        {c.titleAr && (
+                                            <p className="font-arabic text-gold/50 text-lg mt-1.5" dir="rtl">
+                                                {c.titleAr}
+                                            </p>
+                                        )}
+                                        {c.note && (
+                                            <p className="text-cream-muted/80 text-sm font-light leading-relaxed mt-5">
+                                                {c.note}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="md:col-span-8">
+                                        <CompareReveal
+                                            before={c.before}
+                                            after={c.after}
+                                            beforeLabel="Render"
+                                            afterLabel="Built"
+                                            caption="Drag across — the render becomes the room."
+                                            alt={c.title}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </section>
             )}

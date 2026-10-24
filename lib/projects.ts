@@ -32,9 +32,9 @@ export interface Project {
 
 export const projects: Project[] = [
     {
-        slug: "rotunda-villa",
-        title: "Rotunda Villa",
-        titleAr: "فيلا الروتوندا",
+        slug: "sherouk-villa-elevations",
+        title: "Sherouk Villa",
+        titleAr: "فيلا الشروق",
         type: "Private Residence",
         location: "TBC",
         year: 2026,
@@ -47,7 +47,7 @@ export const projects: Project[] = [
             {
                 label: "01 / Garden Side",
                 labelAr: "جهة الحديقة",
-                title: "Rotunda Villa",
+                title: "Sherouk Villa",
                 caption:
                     "The villa reads quietly from the garden — a flat travertine mass, opened where the rotunda pushes forward and lifts into its dome.",
                 image: "/images/architecture/01-garden.webp",

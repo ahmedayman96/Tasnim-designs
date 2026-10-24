@@ -1,5 +1,6 @@
 import workData from "@/content/architecture.json";
 import walkthroughData from "@/content/walkthroughs.json";
+import comparisonData from "@/content/comparisons.json";
 
 /** The services she offers. The order here is the order they appear in the nav. */
 export const SERVICES = [
@@ -210,4 +211,20 @@ export function projectsForService(id: ServiceId): ProjectBundle[] {
     return allProjects().filter(
         (p) => p.work.some((w) => w.service === id) || p.rooms.some((r) => r.service === id)
     );
+}
+
+/** Two stages of one view, shown wiped against each other. */
+export interface Comparison {
+    project: string;
+    title: string;
+    titleAr?: string;
+    before: string;
+    after: string;
+    note?: string;
+}
+
+export const comparisons: Comparison[] = comparisonData as Comparison[];
+
+export function comparisonsForProject(project: string): Comparison[] {
+    return comparisons.filter((c) => c.project === project);
 }

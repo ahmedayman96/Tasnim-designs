@@ -4,25 +4,29 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Drawing to render, wiped by the cursor.
+ * Two stages of the same view, wiped by the cursor.
  *
- * The elevation and the render show the same wall. Rather than placing them side
- * by side and asking the viewer to compare, one is revealed through the other:
- * drag or move across and the drawing becomes the built thing. On touch, the wipe
- * follows the finger; with no pointer at all it settles at the midpoint, so both
- * halves are visible and the comparison still reads.
+ * Used for elevation against render, and for render against the finished room.
+ * Rather than placing them side by side and asking the viewer to compare, one is
+ * revealed through the other: move across and the earlier stage becomes the later
+ * one. On touch the wipe follows the finger; with no pointer at all it rests at
+ * the midpoint, so both halves show and the comparison still reads.
  */
-export default function DrawingReveal({
-    drawing,
-    render,
-    drawingLabel = "Elevation",
-    renderLabel = "Render",
+export default function CompareReveal({
+    before,
+    after,
+    beforeLabel,
+    afterLabel,
+    caption,
     alt,
 }: {
-    drawing: string;
-    render: string;
-    drawingLabel?: string;
-    renderLabel?: string;
+    /** Shown on the left of the wipe — the earlier stage. */
+    before: string;
+    /** Revealed on the right — what it became. */
+    after: string;
+    beforeLabel: string;
+    afterLabel: string;
+    caption?: string;
     alt: string;
 }) {
     const ref = useRef<HTMLDivElement>(null);
@@ -56,7 +60,7 @@ export default function DrawingReveal({
                 className="relative aspect-[4/3] overflow-hidden bg-charcoal cursor-ew-resize select-none"
             >
                 {/* the render sits underneath */}
-                <Image src={render} alt={alt} fill sizes="100vw" className="object-cover" priority />
+                <Image src={after} alt={alt} fill sizes="100vw" className="object-cover" priority />
 
                 {/* the drawing is clipped back to the wipe */}
                 <div
@@ -64,8 +68,8 @@ export default function DrawingReveal({
                     style={{ clipPath: `inset(0 ${(1 - at) * 100}% 0 0)` }}
                 >
                     <Image
-                        src={drawing}
-                        alt={`${alt} — ${drawingLabel}`}
+                        src={before}
+                        alt={`${alt} — ${beforeLabel}`}
                         fill
                         sizes="100vw"
                         className="object-cover"
@@ -85,15 +89,15 @@ export default function DrawingReveal({
                 </div>
 
                 <span className="absolute top-4 left-4 text-gold/80 text-[0.55rem] uppercase tracking-[0.3em] bg-midnight/50 px-2.5 py-1">
-                    {drawingLabel}
+                    {beforeLabel}
                 </span>
                 <span className="absolute top-4 right-4 text-cream/80 text-[0.55rem] uppercase tracking-[0.3em] bg-midnight/50 px-2.5 py-1">
-                    {renderLabel}
+                    {afterLabel}
                 </span>
             </div>
 
             <figcaption className="text-warm-gray text-xs font-light mt-4 text-center">
-                Move across the image — the drawing becomes the room.
+                {caption ?? "Move across the image."}
             </figcaption>
         </figure>
     );
