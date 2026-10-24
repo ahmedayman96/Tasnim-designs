@@ -1,0 +1,24 @@
+[
+  {
+    "slug": "el-shorouk-interior",
+    "title": "Reception & Living",
+    "titleAr": "الاستقبال والمعيشة",
+    "description": "A finished interior walked end to end — the dining table in marble and blackened steel, bouclé seating, slatted oak panelling, and a cove-lit ceiling carrying through into the living room.",
+    "project": "El Shorouk Villa",
+    "year": 2026,
+    "scope": "Interiors & finishing",
+    "service": "finishing",
+    "frames": {
+      "dir": "/walkthrough/el-shorouk-interior",
+      "count": 167,
+      "width": 720,
+      "height": 1280
+    },
+    "chapters": [
+      { "at": 0, "label": "Dining", "labelAr": "غرفة الطعام" },
+      { "at": 0.35, "label": "Through to Living", "labelAr": "إلى المعيشة" },
+      { "at": 0.62, "label": "Living Room", "labelAr": "غرفة المعيشة" },
+      { "at": 0.85, "label": "Detail", "labelAr": "التفاصيل" }
+    ]
+  }
+]

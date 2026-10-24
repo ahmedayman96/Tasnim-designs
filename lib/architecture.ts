@@ -1,4 +1,5 @@
 import workData from "@/content/architecture.json";
+import walkthroughData from "@/content/walkthroughs.json";
 
 /** The services she offers. The order here is the order they appear in the nav. */
 export const SERVICES = [
@@ -59,4 +60,39 @@ export function serviceById(id: string) {
 
 export function workForService(id: ServiceId): ArchitectureWork[] {
     return architectureWork.filter((w) => w.service === id);
+}
+
+/**
+ * A scroll walkthrough: a finished space the viewer moves through by scrolling,
+ * built from frames pre-extracted from a video of the space.
+ */
+export interface Walkthrough {
+    slug: string;
+    title: string;
+    titleAr?: string;
+    description: string;
+    project?: string;
+    location?: string;
+    year?: number;
+    scope?: string;
+    /** Which service page lists it. */
+    service: ServiceId;
+    frames: {
+        /** Public directory holding f0001.webp … */
+        dir: string;
+        count: number;
+        width: number;
+        height: number;
+    };
+    chapters: { at: number; label: string; labelAr?: string }[];
+}
+
+export const walkthroughs: Walkthrough[] = walkthroughData as Walkthrough[];
+
+export function walkthroughBySlug(slug: string): Walkthrough | undefined {
+    return walkthroughs.find((w) => w.slug === slug);
+}
+
+export function walkthroughsForService(id: ServiceId): Walkthrough[] {
+    return walkthroughs.filter((w) => w.service === id);
 }
