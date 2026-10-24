@@ -9,10 +9,28 @@
     "year": 2026,
     "scope": "Interiors & finishing",
     "service": "finishing",
-    "frames": { "dir": "/walkthrough/reception-dining", "count": 126, "width": 720, "height": 1280 },
+    "frames": {
+      "dir": "/walkthrough/reception-dining",
+      "count": 102,
+      "width": 720,
+      "height": 1280
+    },
     "chapters": [
-      { "at": 0, "label": "Entry", "labelAr": "المدخل" },
-      { "at": 0.45, "label": "Dining", "labelAr": "السفرة" }
+      {
+        "at": 0,
+        "label": "Dining",
+        "labelAr": "السفرة"
+      },
+      {
+        "at": 0.55,
+        "label": "The Artwork",
+        "labelAr": "اللوحة"
+      },
+      {
+        "at": 0.78,
+        "label": "At the Table",
+        "labelAr": "حول الطاولة"
+      }
     ]
   },
   {
@@ -25,10 +43,23 @@
     "year": 2026,
     "scope": "Interiors & finishing",
     "service": "finishing",
-    "frames": { "dir": "/walkthrough/living-room", "count": 84, "width": 720, "height": 1280 },
+    "frames": {
+      "dir": "/walkthrough/living-room",
+      "count": 72,
+      "width": 720,
+      "height": 1280
+    },
     "chapters": [
-      { "at": 0, "label": "Seating", "labelAr": "الجلسة" },
-      { "at": 0.55, "label": "The Divider", "labelAr": "الفاصل الخشبي" }
+      {
+        "at": 0,
+        "label": "Seating",
+        "labelAr": "الجلسة"
+      },
+      {
+        "at": 0.55,
+        "label": "The Divider",
+        "labelAr": "الفاصل الخشبي"
+      }
     ]
   },
   {
@@ -41,10 +72,23 @@
     "year": 2026,
     "scope": "Interiors & finishing",
     "service": "finishing",
-    "frames": { "dir": "/walkthrough/kitchen", "count": 105, "width": 720, "height": 1280 },
+    "frames": {
+      "dir": "/walkthrough/kitchen",
+      "count": 81,
+      "width": 720,
+      "height": 1280
+    },
     "chapters": [
-      { "at": 0, "label": "Through the Screen", "labelAr": "من خلف الفاصل" },
-      { "at": 0.5, "label": "Worktop", "labelAr": "سطح العمل" }
+      {
+        "at": 0,
+        "label": "Through the Screen",
+        "labelAr": "من خلف الفاصل"
+      },
+      {
+        "at": 0.5,
+        "label": "Worktop",
+        "labelAr": "سطح العمل"
+      }
     ]
   },
   {
@@ -57,11 +101,28 @@
     "year": 2026,
     "scope": "Interiors & finishing",
     "service": "finishing",
-    "frames": { "dir": "/walkthrough/twin-bedroom", "count": 133, "width": 720, "height": 1280 },
+    "frames": {
+      "dir": "/walkthrough/twin-bedroom",
+      "count": 101,
+      "width": 720,
+      "height": 1280
+    },
     "chapters": [
-      { "at": 0, "label": "The Beds", "labelAr": "الأسرّة" },
-      { "at": 0.45, "label": "Arched Mirror", "labelAr": "المرآة" },
-      { "at": 0.78, "label": "To the Window", "labelAr": "ناحية الشباك" }
+      {
+        "at": 0,
+        "label": "The Beds",
+        "labelAr": "الأسرّة"
+      },
+      {
+        "at": 0.45,
+        "label": "Arched Mirror",
+        "labelAr": "المرآة"
+      },
+      {
+        "at": 0.78,
+        "label": "To the Window",
+        "labelAr": "ناحية الشباك"
+      }
     ]
   },
   {
@@ -74,26 +135,52 @@
     "year": 2026,
     "scope": "Interiors & finishing",
     "service": "finishing",
-    "frames": { "dir": "/walkthrough/master-bedroom", "count": 130, "width": 720, "height": 1280 },
+    "frames": {
+      "dir": "/walkthrough/master-bedroom",
+      "count": 57,
+      "width": 720,
+      "height": 1280
+    },
     "chapters": [
-      { "at": 0, "label": "The Bed", "labelAr": "السرير" },
-      { "at": 0.5, "label": "Headboard", "labelAr": "ظهر السرير" }
+      {
+        "at": 0,
+        "label": "Dressing Mirror",
+        "labelAr": "المرآة"
+      },
+      {
+        "at": 0.5,
+        "label": "The Bed",
+        "labelAr": "السرير"
+      }
     ]
   },
   {
-    "slug": "bathroom",
-    "title": "Bathroom",
-    "titleAr": "الحمام",
-    "description": "Large-format tile, a timber vanity with a stone top, and a frameless glass shower enclosure set flush into the wall.",
+    "slug": "second-bedroom",
+    "title": "Second Bedroom",
+    "titleAr": "غرفة النوم الثانية",
+    "description": "A calmer room in taupe and soft grey — an upholstered bed with a low wide headboard, bedside reading lights set into the wall, and sheer curtains along the window.",
     "project": "Apartment in Privado, Madinaty",
     "location": "Madinaty",
     "year": 2026,
     "scope": "Interiors & finishing",
     "service": "finishing",
-    "frames": { "dir": "/walkthrough/bathroom", "count": 95, "width": 720, "height": 1280 },
+    "frames": {
+      "dir": "/walkthrough/second-bedroom",
+      "count": 34,
+      "width": 720,
+      "height": 1280
+    },
     "chapters": [
-      { "at": 0, "label": "Vanity", "labelAr": "الحوض" },
-      { "at": 0.55, "label": "Shower", "labelAr": "الدش" }
+      {
+        "at": 0,
+        "label": "The Bed",
+        "labelAr": "السرير"
+      },
+      {
+        "at": 0.6,
+        "label": "To the Window",
+        "labelAr": "ناحية الشباك"
+      }
     ]
   },
   {
@@ -106,12 +193,33 @@
     "year": 2026,
     "scope": "Interiors & finishing",
     "service": "finishing",
-    "frames": { "dir": "/walkthrough/el-shorouk-interior", "count": 167, "width": 720, "height": 1280 },
+    "frames": {
+      "dir": "/walkthrough/el-shorouk-interior",
+      "count": 167,
+      "width": 720,
+      "height": 1280
+    },
     "chapters": [
-      { "at": 0, "label": "Dining", "labelAr": "غرفة الطعام" },
-      { "at": 0.35, "label": "Through to Living", "labelAr": "إلى المعيشة" },
-      { "at": 0.62, "label": "Living Room", "labelAr": "غرفة المعيشة" },
-      { "at": 0.85, "label": "Detail", "labelAr": "التفاصيل" }
+      {
+        "at": 0,
+        "label": "Dining",
+        "labelAr": "غرفة الطعام"
+      },
+      {
+        "at": 0.35,
+        "label": "Through to Living",
+        "labelAr": "إلى المعيشة"
+      },
+      {
+        "at": 0.62,
+        "label": "Living Room",
+        "labelAr": "غرفة المعيشة"
+      },
+      {
+        "at": 0.85,
+        "label": "Detail",
+        "labelAr": "التفاصيل"
+      }
     ]
   }
 ]
