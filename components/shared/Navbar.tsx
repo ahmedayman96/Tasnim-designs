@@ -31,7 +31,16 @@ export default function Navbar() {
             ],
         },
         { href: "/pieces", label: "Art Pieces" },
-        { href: "/architecture", label: "Architecture" },
+        {
+            href: "/architecture",
+            label: "Architecture",
+            children: [
+                { href: "/architecture", label: "Overview", hint: "Projects & practice" },
+                { href: "/architecture/2d", label: "2D Modelling", hint: "Construction drawings" },
+                { href: "/architecture/3d", label: "3D Modelling", hint: "Renders & visualisation" },
+                { href: "/architecture/finishing", label: "Finishing Services", hint: "Built & supervised" },
+            ],
+        },
         { href: "/preview", label: "Room Preview" },
         { href: "/#about", label: "About" },
         { href: "/book", label: "Book a Call" },
@@ -88,13 +97,16 @@ export default function Navbar() {
                                     }
                                 }}
                             >
-                                <button
-                                    type="button"
+                                {/* A link, not a toggling button: onMouseEnter already
+                                    opens the panel, so a click-to-toggle closed it again
+                                    the moment the cursor arrived. Clicking now goes to the
+                                    section's own page, and hover or keyboard focus reveals
+                                    the children. */}
+                                <Link
+                                    href={link.href}
                                     aria-expanded={openMenu === link.label}
                                     aria-haspopup="true"
-                                    onClick={() =>
-                                        setOpenMenu(openMenu === link.label ? null : link.label)
-                                    }
+                                    onClick={closeAll}
                                     className="relative flex items-center gap-1.5 text-cream-muted hover:text-gold text-sm uppercase tracking-[0.2em] transition-colors duration-300 group"
                                 >
                                     {link.label}
@@ -106,7 +118,7 @@ export default function Navbar() {
                                         &#9662;
                                     </motion.span>
                                     <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold transition-all duration-300 group-hover:w-full" />
-                                </button>
+                                </Link>
 
                                 <AnimatePresence>
                                     {openMenu === link.label && (

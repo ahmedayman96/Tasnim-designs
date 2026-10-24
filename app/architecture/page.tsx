@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import ProjectSequence from "@/components/architecture/ProjectSequence";
+import Link from "next/link";
 import { projects } from "@/lib/projects";
+import { SERVICES } from "@/lib/architecture";
 
 export const metadata: Metadata = {
     title: "Architecture & Interiors — Tasnim Elyamani",
@@ -78,7 +80,7 @@ export default function ArchitecturePage() {
                 </div>
             </section>
 
-            {/* Services */}
+            {/* Practice — each links to that service's own page of work */}
             <section className="relative z-10 bg-charcoal/40 border-t border-gold/10">
                 <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
                     <div className="flex items-center gap-4 mb-14">
@@ -88,38 +90,26 @@ export default function ArchitecturePage() {
                         </span>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-12 md:gap-16">
-                        {[
-                            {
-                                t: "Architecture",
-                                ta: "العمارة",
-                                d: "Concept through to elevation studies — massing, façade composition, and the material logic that holds them together.",
-                            },
-                            {
-                                t: "Interiors",
-                                ta: "التصميم الداخلي",
-                                d: "Full interior packages: joinery detailing, material and finish schedules, lighting layouts, and furniture selection.",
-                            },
-                            {
-                                t: "Documentation",
-                                ta: "الرسومات التنفيذية",
-                                d: "Construction drawings a contractor can build from — masonry and setting-out plans, wiring and lighting, sections and details at 1:50.",
-                            },
-                        ].map((s) => (
-                            <div key={s.t}>
-                                <h3 className="font-serif text-2xl md:text-3xl text-cream font-bold">
-                                    {s.t}
+                    <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+                        {SERVICES.map((s) => (
+                            <Link
+                                key={s.id}
+                                href={`/architecture/${s.id}`}
+                                className="group block rounded-xl border border-gold/10 hover:border-gold/30 bg-midnight/40 p-8 transition-colors"
+                            >
+                                <h3 className="font-serif text-2xl md:text-3xl text-cream font-bold group-hover:text-gold transition-colors">
+                                    {s.label}
                                 </h3>
-                                <p
-                                    className="font-arabic text-gold/50 text-lg mt-2"
-                                    dir="rtl"
-                                >
-                                    {s.ta}
+                                <p className="font-arabic text-gold/50 text-lg mt-2" dir="rtl">
+                                    {s.labelAr}
                                 </p>
                                 <p className="text-cream-muted/80 text-sm font-light leading-relaxed mt-5">
-                                    {s.d}
+                                    {s.blurb}
                                 </p>
-                            </div>
+                                <span className="inline-block text-gold/70 text-[0.65rem] uppercase tracking-[0.25em] mt-6 group-hover:text-gold transition-colors">
+                                    See the work &rarr;
+                                </span>
+                            </Link>
                         ))}
                     </div>
                 </div>
