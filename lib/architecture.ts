@@ -193,10 +193,15 @@ const MOTION: Record<string, ProjectBundle["motion"]> = {
  * JSON happened to be in, and a visitor could not tell a built apartment from a
  * student study at a glance.
  */
-export const PROJECT_META: Record<string, { order: number; kind: string }> = {
+export const PROJECT_META: Record<string, { order: number; kind: string; summary?: string }> = {
     "apartment-in-privado-madinaty": { order: 1, kind: "Built" },
     "sherouk-villa": { order: 2, kind: "Residential" },
-    "madinaty-villa": { order: 3, kind: "Residential" },
+    "madinaty-villa": {
+        order: 3,
+        kind: "Built",
+        summary:
+            "Every interior in the house, designed in 3D and carried through to execution on site: four bedrooms, the living room, the kitchen and dining space, and the laundry. The furniture was designed for the house, and the artworks on its walls are Tasnim's own.",
+    },
     "residential-plan-three-uae": { order: 4, kind: "Residential" },
     "residential-plan-two": { order: 5, kind: "Residential" },
     "residential-plan-one": { order: 6, kind: "Residential" },
@@ -206,6 +211,11 @@ export const PROJECT_META: Record<string, { order: number; kind: string }> = {
 
 export function projectKind(slug: string): string | undefined {
     return PROJECT_META[slug]?.kind;
+}
+
+/** What the job covered, in a sentence or two, where the rooms shown are only part of it. */
+export function projectSummary(slug: string): string | undefined {
+    return PROJECT_META[slug]?.summary;
 }
 
 export function allProjects(): ProjectBundle[] {

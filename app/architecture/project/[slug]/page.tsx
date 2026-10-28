@@ -9,7 +9,7 @@ import CompareReveal from "@/components/architecture/CompareReveal";
 import ScrollWalkthrough from "@/components/architecture/ScrollWalkthrough";
 import ProjectSequence from "@/components/architecture/ProjectSequence";
 import { getProjectBySlug } from "@/lib/projects";
-import { allProjects, projectBundle, comparisonsForProject } from "@/lib/architecture";
+import { allProjects, projectBundle, comparisonsForProject, projectSummary } from "@/lib/architecture";
 
 export function generateStaticParams() {
     return allProjects().map((p) => ({ slug: p.slug }));
@@ -107,6 +107,12 @@ export default async function ProjectPage({
                             .filter(Boolean)
                             .join("  ·  ")}
                     </p>
+
+                    {projectSummary(project.slug) && (
+                        <p className="text-cream-muted/85 text-base md:text-lg font-light leading-relaxed max-w-2xl mt-8">
+                            {projectSummary(project.slug)}
+                        </p>
+                    )}
                 </div>
             </section>
 
