@@ -206,7 +206,12 @@ export const PROJECT_META: Record<string, { order: number; kind: string; summary
     "residential-plan-two": { order: 5, kind: "Residential" },
     "residential-plan-one": { order: 6, kind: "Residential" },
     "venos-store": { order: 7, kind: "Commercial" },
-    "revit-studies": { order: 8, kind: "Study" },
+    "revit-studies": {
+        order: 8,
+        kind: "Student work",
+        summary:
+            "Student work from university, modelled and rendered in Revit. These are design studies, not a commissioned or built project.",
+    },
 };
 
 export function projectKind(slug: string): string | undefined {
