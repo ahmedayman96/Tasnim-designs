@@ -119,6 +119,23 @@
     ]
   },
   {
+    "slug": "sherouk-room-five",
+    "title": "Room Five",
+    "titleAr": "الغرفة الخامسة",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "Taupe throughout, with a black marble panel behind a channel-tufted bed and matching bench. A glass wardrobe framed in black holds lit shelving, an arched backlit mirror hangs over a floating vanity, and an upholstered window seat sits on a fluted timber base.",
+    "images": [
+      "/architecture/sherouk-villa/room_five_01.webp",
+      "/architecture/sherouk-villa/room_five_02.webp",
+      "/architecture/sherouk-villa/room_five_03.webp",
+      "/architecture/sherouk-villa/room_five_04.webp",
+      "/architecture/sherouk-villa/room_five_05.webp",
+      "/architecture/sherouk-villa/room_five_06.webp"
+    ]
+  },
+  {
     "slug": "madinaty-pharaonic-bedroom",
     "title": "Pharaonic Master Bedroom",
     "titleAr": "غرفة النوم الفرعونية",
