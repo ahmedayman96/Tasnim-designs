@@ -87,6 +87,38 @@
     ]
   },
   {
+    "slug": "sherouk-room-four",
+    "title": "Room Four",
+    "titleAr": "الغرفة الرابعة",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "Dark grey throughout, with the desk set into a curved bay of glazing and the television wall lit in blue from behind. Two egg chairs sit between the bed and a glass wardrobe framed in black, and a carved relief runs above the headboard.",
+    "images": [
+      "/architecture/sherouk-villa/room_four_01.webp",
+      "/architecture/sherouk-villa/room_four_02.webp",
+      "/architecture/sherouk-villa/room_four_03.webp",
+      "/architecture/sherouk-villa/room_four_04.webp",
+      "/architecture/sherouk-villa/room_four_05.webp",
+      "/architecture/sherouk-villa/room_four_06.webp"
+    ]
+  },
+  {
+    "slug": "sherouk-gym",
+    "title": "Gym",
+    "titleAr": "صالة الرياضة",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "Glazed on two sides to the trees, under a slatted timber ceiling with track spots. Treadmills and a cross-trainer face the view; the free weights and benches sit back against the solid wall.",
+    "images": [
+      "/architecture/sherouk-villa/gym_01.webp",
+      "/architecture/sherouk-villa/gym_02.webp",
+      "/architecture/sherouk-villa/gym_03.webp",
+      "/architecture/sherouk-villa/gym_04.webp"
+    ]
+  },
+  {
     "slug": "madinaty-pharaonic-bedroom",
     "title": "Pharaonic Master Bedroom",
     "titleAr": "غرفة النوم الفرعونية",
