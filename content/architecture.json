@@ -1,5 +1,22 @@
 [
   {
+    "slug": "sherouk-living-room",
+    "title": "Living Room",
+    "titleAr": "غرفة المعيشة",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "Double height, with full-height glazing and crystal sphere pendants hung through the void. Curved bouclé sofas face a black marble plinth under the television, and a geometric painting is the one strong colour in the room. A coffee bar in warm wood sits at the back, beside the stair lit tread by tread.",
+    "images": [
+      "/architecture/sherouk-villa/living_01.webp",
+      "/architecture/sherouk-villa/living_02.webp",
+      "/architecture/sherouk-villa/living_03.webp",
+      "/architecture/sherouk-villa/living_04.webp",
+      "/architecture/sherouk-villa/living_05.webp",
+      "/architecture/sherouk-villa/living_06.webp"
+    ]
+  },
+  {
     "slug": "sherouk-room-one",
     "title": "Room One",
     "titleAr": "الغرفة الأولى",
