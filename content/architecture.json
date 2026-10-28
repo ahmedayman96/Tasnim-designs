@@ -1,5 +1,99 @@
 [
   {
+    "slug": "sherouk-entrance-corridor",
+    "title": "Entrance & Corridor",
+    "titleAr": "المدخل والممر",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "A long marble corridor lined in pale fluted panelling, with a black glass column and a cluster of blue ceramic discs above a pair of sculptural lounge chairs. Smoked-glass consoles sit under a lit mirror with a jagged edge, and seen from above, a cloud of glass pendants hangs over the entrance.",
+    "images": [
+      "/architecture/sherouk-villa/gf_corridor_01.webp",
+      "/architecture/sherouk-villa/gf_corridor_02.webp",
+      "/architecture/sherouk-villa/gf_corridor_03.webp",
+      "/architecture/sherouk-villa/gf_corridor_04.webp",
+      "/architecture/sherouk-villa/gf_corridor_05.webp",
+      "/architecture/sherouk-villa/gf_corridor_06.webp",
+      "/architecture/sherouk-villa/gf_corridor_07.webp"
+    ]
+  },
+  {
+    "slug": "sherouk-reception",
+    "title": "Reception",
+    "titleAr": "الاستقبال",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "One open room for sitting and dining: curved sofas around low tables and a linear fireplace, a long dining table under a cloud of glass pendants, and cut-out mirrors with organic edges on the wall behind. Arched windows with sheer curtains run along the far side.",
+    "images": [
+      "/architecture/sherouk-villa/gf_reception_01.webp",
+      "/architecture/sherouk-villa/gf_reception_02.webp",
+      "/architecture/sherouk-villa/gf_reception_03.webp",
+      "/architecture/sherouk-villa/gf_reception_04.webp",
+      "/architecture/sherouk-villa/gf_reception_05.webp"
+    ]
+  },
+  {
+    "slug": "sherouk-stairs",
+    "title": "Stairs",
+    "titleAr": "الدرج",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "Treads lit from beneath rise beside a smoked-glass balustrade, with planting gathered at the foot of the stair and veined stone carried up the wall.",
+    "images": [
+      "/architecture/sherouk-villa/gf_stairs_01.webp",
+      "/architecture/sherouk-villa/gf_stairs_02.webp",
+      "/architecture/sherouk-villa/gf_stairs_03.webp",
+      "/architecture/sherouk-villa/gf_stairs_04.webp",
+      "/architecture/sherouk-villa/gf_stairs_05.webp"
+    ]
+  },
+  {
+    "slug": "sherouk-kitchen",
+    "title": "Kitchen",
+    "titleAr": "المطبخ",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "White gloss and grey cabinetry with a black granite worktop and splashback. An island with three stools sits under a ribbon pendant, with glass-fronted display shelving to one side and a second island set against an abstract canvas.",
+    "images": [
+      "/architecture/sherouk-villa/gf_kitchen_01.webp",
+      "/architecture/sherouk-villa/gf_kitchen_02.webp",
+      "/architecture/sherouk-villa/gf_kitchen_03.webp",
+      "/architecture/sherouk-villa/gf_kitchen_04.webp",
+      "/architecture/sherouk-villa/gf_kitchen_05.webp",
+      "/architecture/sherouk-villa/gf_kitchen_06.webp"
+    ]
+  },
+  {
+    "slug": "sherouk-guest-bedroom",
+    "title": "Guest Bedroom",
+    "titleAr": "غرفة الضيوف",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "Timber panelling and a wall of open shelving with a wine fridge, a deep modular sofa around a round table, and a television over a floating console.",
+    "images": [
+      "/architecture/sherouk-villa/gf_guest_01.webp",
+      "/architecture/sherouk-villa/gf_guest_02.webp",
+      "/architecture/sherouk-villa/gf_guest_03.webp",
+      "/architecture/sherouk-villa/gf_guest_04.webp"
+    ]
+  },
+  {
+    "slug": "sherouk-terrace",
+    "title": "Terrace",
+    "titleAr": "التراس",
+    "service": "3d",
+    "project": "Sherouk Villa",
+    "year": 2026,
+    "description": "Low grey sofas and lounge chairs behind a glass balustrade, with planting set against arched openings.",
+    "images": [
+      "/architecture/sherouk-villa/gf_terrace_01.webp"
+    ]
+  },
+  {
     "slug": "sherouk-living-room",
     "title": "Living Room",
     "titleAr": "غرفة المعيشة",
