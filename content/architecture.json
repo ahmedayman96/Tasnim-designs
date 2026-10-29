@@ -734,22 +734,5 @@
       "/architecture/venos-store/store_08.webp",
       "/architecture/venos-store/store_09.webp"
     ]
-  },
-  {
-    "slug": "revit-studies",
-    "title": "Pavilion Studies",
-    "titleAr": "دراسات الجناح",
-    "service": "3d",
-    "project": "Revit Studies",
-    "description": "Student work from university, modelled and rendered in Revit: a timber canopy curving over a planted court and pool, perforated screens casting pattern across the terrace, and a glazed pavilion stepped into the slope.",
-    "images": [
-      "/architecture/revit-studies/study_02.webp",
-      "/architecture/revit-studies/study_03.webp",
-      "/architecture/revit-studies/study_04.webp",
-      "/architecture/revit-studies/study_05.webp",
-      "/architecture/revit-studies/study_06.webp",
-      "/architecture/revit-studies/study_07.webp",
-      "/architecture/revit-studies/study_08.webp"
-    ]
   }
 ]
