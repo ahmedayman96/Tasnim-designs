@@ -576,6 +576,17 @@
     ]
   },
   {
+    "slug": "beauty-salon",
+    "title": "The Salon",
+    "titleAr": "الصالون",
+    "service": "3d",
+    "project": "Beauty Salon",
+    "description": "A freelance salon interior in blush and gold: oval gold-framed mirrors hung from the ceiling between the styling stations, blush leather chairs, a backlit onyx wall behind the wash basins, lit shelving for product along both sides, and polished cream marble underfoot beneath an open dark ceiling with track lights.",
+    "images": [
+      "/architecture/beauty-salon/salon_01.webp"
+    ]
+  },
+  {
     "slug": "venos-store",
     "title": "The Shop Floor",
     "titleAr": "صالة العرض",

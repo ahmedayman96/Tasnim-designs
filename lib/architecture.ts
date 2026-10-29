@@ -206,9 +206,10 @@ export const PROJECT_META: Record<string, { order: number; kind: string; summary
     "residential-plan-three-uae": { order: 5, kind: "Residential" },
     "residential-plan-two": { order: 6, kind: "Residential" },
     "residential-plan-one": { order: 7, kind: "Residential" },
-    "venos-store": { order: 8, kind: "Commercial" },
+    "beauty-salon": { order: 8, kind: "Commercial" },
+    "venos-store": { order: 9, kind: "Commercial" },
     "revit-studies": {
-        order: 9,
+        order: 10,
         kind: "Student work",
         summary:
             "Student work from university, modelled and rendered in Revit. These are design studies, not a commissioned or built project.",
