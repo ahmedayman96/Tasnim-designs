@@ -41,7 +41,7 @@ export function validateArtwork(artwork) {
     // A piece can go up as a draft: no price yet (shown as "price on request",
     // and refused by checkout), no Arabic title, no story until she writes one.
     // These are the fields the page genuinely cannot render without.
-    const required = ["slug", "title", "medium", "year", "image", "description"];
+    const required = ["slug", "title", "medium", "image", "description"];
 
     for (const field of required) {
         const value = artwork[field];
@@ -60,7 +60,8 @@ export function validateArtwork(artwork) {
             problems.push("price must be a positive number, or null for on-request");
         }
     }
-    if (typeof artwork.year !== "number" || artwork.year < 1900 || artwork.year > 2100) {
+    // Older pieces can go up without a year rather than with a wrong one.
+    if (artwork.year !== undefined && (typeof artwork.year !== "number" || artwork.year < 1900 || artwork.year > 2100)) {
         problems.push("year looks wrong");
     }
     for (const key of ["bg", "accent", "textColor"]) {

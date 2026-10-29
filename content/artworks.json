@@ -165,11 +165,11 @@
     "story": "",
     "theme": {
       "bg": "#0c1112",
-      "accent": "#6bafc7",
+      "accent": "#6baec7",
       "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
-      "textColor": "#d1e0e6"
+      "textColor": "#d2e0e5"
     },
-    "gridSpan": "md:col-span-1 md:row-span-1",
+    "gridSpan": "md:col-span-2 md:row-span-1",
     "category": "object"
   },
   {
@@ -190,5 +190,444 @@
       "textColor": "#d1dce6"
     },
     "gridSpan": "md:col-span-1 md:row-span-2"
+  },
+  {
+    "slug": "petals-in-relief",
+    "title": "Petals in Relief",
+    "titleAr": "",
+    "medium": "Textured painting",
+    "size": "",
+    "price": null,
+    "image": "/images/petals-in-relief.webp",
+    "description": "Sculpted petals and leaf forms built up in thick relief, curling out of a pale swirl on the left into deep navy and teal on the right.",
+    "story": "",
+    "theme": {
+      "bg": "#110f0e",
+      "accent": "#b39c7f",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e0dcd6"
+    },
+    "gridSpan": "md:col-span-2 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "figure-with-a-heron",
+    "title": "Figure with a Heron",
+    "titleAr": "",
+    "medium": "Painting",
+    "size": "",
+    "price": null,
+    "image": "/images/figure-with-a-heron.webp",
+    "description": "A tall stylised figure in black with round white spectacles and a crescent moon at the crown, set against harlequin diamonds in blue and green, with a blue heron standing in front. It now hangs, backlit, in a lounge.",
+    "story": "",
+    "theme": {
+      "bg": "#12100d",
+      "accent": "#c39d6f",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e4dcd3"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "sold": true
+  },
+  {
+    "slug": "autumn-leaves",
+    "title": "Autumn Leaves",
+    "titleAr": "",
+    "medium": "Mixed media: crystal, mirror, gold leaf",
+    "size": "",
+    "price": null,
+    "image": "/images/autumn-leaves.webp",
+    "description": "Feathered leaves in gold, grey and rose mirrored about the centre of a black ground, with clusters of crystal and mirror shards falling between them and gold leaf along their edges.",
+    "story": "",
+    "theme": {
+      "bg": "#110f0d",
+      "accent": "#bd9475",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e2dad4"
+    },
+    "gridSpan": "md:col-span-2 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "the-dome-of-the-rock-in-spring",
+    "title": "The Dome of the Rock in Spring",
+    "titleAr": "",
+    "medium": "Painting",
+    "size": "",
+    "price": null,
+    "image": "/images/the-dome-of-the-rock-in-spring.webp",
+    "description": "The Dome of the Rock under a bright spring sky, framed by pink and white blossom, with people crossing the stone courtyard and a girl wheeling a bicycle in the foreground.",
+    "story": "",
+    "theme": {
+      "bg": "#0c1112",
+      "accent": "#6bafc7",
+      "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
+      "textColor": "#d1e1e6"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "sold": true
+  },
+  {
+    "slug": "black-horse",
+    "title": "Black Horse",
+    "titleAr": "",
+    "medium": "Painting",
+    "size": "",
+    "price": null,
+    "image": "/images/black-horse.webp",
+    "description": "A black horse galloping towards the viewer out of a black ground, its mane streaming, picked out in silver, white and touches of gold.",
+    "story": "",
+    "theme": {
+      "bg": "#0c1012",
+      "accent": "#6ba2c7",
+      "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
+      "textColor": "#d1dde6"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "sold": true
+  },
+  {
+    "slug": "the-golden-tree",
+    "title": "The Golden Tree",
+    "titleAr": "",
+    "medium": "Painting",
+    "size": "",
+    "price": null,
+    "image": "/images/the-golden-tree.webp",
+    "description": "A gold tree twisting up out of a dark green forest of layered trunks and leaves, its branches dissolving into a flock of small gold birds beneath a full gold moon.",
+    "story": "",
+    "theme": {
+      "bg": "#110f0d",
+      "accent": "#b99679",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e1dbd5"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "sold": true
+  },
+  {
+    "slug": "blue-geode-diptych",
+    "title": "Blue Geode Diptych",
+    "titleAr": "",
+    "medium": "Resin and crystal, two panels",
+    "size": "",
+    "price": null,
+    "image": "/images/blue-geode-diptych.webp",
+    "description": "Two panels that meet in the middle to make one geode: bands of deep blue resin, white crystal and gold curving out from the seam.",
+    "story": "",
+    "theme": {
+      "bg": "#0c1112",
+      "accent": "#6bb0c7",
+      "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
+      "textColor": "#d1e1e6"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "white-bloom",
+    "title": "White Bloom",
+    "titleAr": "",
+    "medium": "Textured painting, round canvas",
+    "size": "",
+    "price": null,
+    "image": "/images/white-bloom.webp",
+    "description": "A white flower in thick relief on a round black canvas, its petals edged in gold and its centre raised in gold stamens.",
+    "story": "",
+    "theme": {
+      "bg": "#11100e",
+      "accent": "#b0a482",
+      "gradient": "from-yellow-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e0ddd7"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "roses-violin-and-candles",
+    "title": "Roses, Violin and Candles",
+    "titleAr": "",
+    "medium": "Painting",
+    "size": "",
+    "price": null,
+    "image": "/images/roses-violin-and-candles.webp",
+    "description": "A classical still life on a dark ground: pink roses in a glass vase, a lit three-branch candelabra, and a violin with a quill and sealed letter on the table, set into a carved moulded wall panel.",
+    "story": "",
+    "theme": {
+      "bg": "#11100d",
+      "accent": "#b99f79",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e2dcd5"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "birds-on-a-gold-branch",
+    "title": "Birds on a Gold Branch",
+    "titleAr": "",
+    "medium": "Painted wall panel",
+    "size": "",
+    "price": null,
+    "image": "/images/birds-on-a-gold-branch.webp",
+    "description": "Flowering branches and two small blue birds painted over a burnished gold ground, set into an ornate moulded wall panel above a pair of gilded chairs.",
+    "story": "",
+    "theme": {
+      "bg": "#11100d",
+      "accent": "#baa078",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e2ddd5"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "sold": true
+  },
+  {
+    "slug": "gold-leaf-abstract",
+    "title": "Gold Leaf Abstract",
+    "titleAr": "",
+    "medium": "Mixed media with gold leaf",
+    "size": "",
+    "price": null,
+    "image": "/images/gold-leaf-abstract.webp",
+    "description": "A tall abstract of broad sweeping strokes in bronze, cream and silver, crossed by a band of crackled gold leaf.",
+    "story": "",
+    "theme": {
+      "bg": "#11100d",
+      "accent": "#be9e74",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e3dcd4"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "blue-and-gold",
+    "title": "Blue and Gold",
+    "titleAr": "",
+    "medium": "Textured painting",
+    "size": "",
+    "price": null,
+    "image": "/images/blue-and-gold.webp",
+    "description": "A wide abstract of heavy palette-knife strokes in navy, gold and cream sweeping diagonally across the canvas, framed in black and hung above a bed.",
+    "story": "",
+    "theme": {
+      "bg": "#0c1012",
+      "accent": "#6ba3c7",
+      "gradient": "from-blue-900/20 via-transparent to-indigo-900/10",
+      "textColor": "#d1dee6"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "gold-crescent",
+    "title": "Gold Crescent",
+    "titleAr": "",
+    "medium": "Mixed media relief",
+    "size": "",
+    "price": null,
+    "image": "/images/gold-crescent.webp",
+    "description": "A burnished gold half-disc with a polished curled edge, raised off a white square panel, hung on a plastered wall above a sofa.",
+    "story": "",
+    "theme": {
+      "bg": "#11100d",
+      "accent": "#b89d7a",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e1dcd5"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "sold": true
+  },
+  {
+    "slug": "black-geode",
+    "title": "Black Geode",
+    "titleAr": "",
+    "medium": "Resin and crystal",
+    "size": "",
+    "price": null,
+    "image": "/images/black-geode.webp",
+    "description": "A geode in black and silver: veins of crushed crystal and glass running diagonally across a poured black and pewter resin ground, edged in silver.",
+    "story": "",
+    "theme": {
+      "bg": "#110f0e",
+      "accent": "#b49a7e",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e0dbd6"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "the-tree-of-palestine",
+    "title": "The Tree of Palestine",
+    "titleAr": "",
+    "medium": "Carved olive wood, epoxy resin",
+    "size": "90 × 150 cm",
+    "year": 2024,
+    "price": null,
+    "image": "/images/the-tree-of-palestine.webp",
+    "description": "Olive wood carved in the outline of Palestine, with a white dove at the top, the Dome of the Rock, a keffiyeh pattern, Kufic lettering in gold across the surface, and a channel filled with green epoxy resin.",
+    "story": "",
+    "theme": {
+      "bg": "#110f0d",
+      "accent": "#bb9b77",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e2dcd5"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "ronaldo",
+    "title": "Ronaldo",
+    "titleAr": "",
+    "medium": "Painting",
+    "size": "",
+    "price": null,
+    "image": "/images/ronaldo.webp",
+    "description": "A footballer seen from behind in a white number 7 shirt, arms spread in celebration against a stormy grey sky.",
+    "story": "",
+    "theme": {
+      "bg": "#11100d",
+      "accent": "#b89e7a",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e1dcd5"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "sold": true
+  },
+  {
+    "slug": "gold-leaves",
+    "title": "Gold Leaves",
+    "titleAr": "",
+    "medium": "Mixed media with gold leaf",
+    "size": "",
+    "price": null,
+    "image": "/images/gold-leaves.webp",
+    "description": "Grey and white strokes drawn down the canvas over a block of black, crossed by a diagonal trail of raised gold leaves, with gold leaf flecked into the top corners.",
+    "story": "",
+    "theme": {
+      "bg": "#120f0d",
+      "accent": "#c39c6f",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e4dcd3"
+    },
+    "gridSpan": "md:col-span-2 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "black-bloom",
+    "title": "Black Bloom",
+    "titleAr": "",
+    "medium": "Mixed media relief",
+    "size": "",
+    "price": null,
+    "image": "/images/black-bloom.webp",
+    "description": "A pleated black ring around a pale textured centre, raised off a square black panel and hung on a white marble wall.",
+    "story": "",
+    "theme": {
+      "bg": "#11100d",
+      "accent": "#bba777",
+      "gradient": "from-yellow-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e2ded5"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "line-figure",
+    "title": "Line Figure",
+    "titleAr": "",
+    "medium": "Raised line on board",
+    "size": "",
+    "price": null,
+    "image": "/images/line-figure.webp",
+    "description": "A seated figure drawn in a single continuous raised line in rose gold on a charcoal board.",
+    "story": "",
+    "theme": {
+      "bg": "#110f0e",
+      "accent": "#b19681",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e0dbd7"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "sold": true
+  },
+  {
+    "slug": "red-rose",
+    "title": "Red Rose",
+    "titleAr": "",
+    "medium": "Painting",
+    "size": "",
+    "price": null,
+    "image": "/images/red-rose.webp",
+    "description": "A single red rose opening out of a black ground, its petals built up in dry, glowing strokes of red.",
+    "story": "",
+    "theme": {
+      "bg": "#120c0d",
+      "accent": "#c76b71",
+      "gradient": "from-rose-900/20 via-transparent to-yellow-900/10",
+      "textColor": "#e6d1d2"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "sold": true
+  },
+  {
+    "slug": "gold-and-blue-pair",
+    "title": "Gold and Blue, a Pair",
+    "titleAr": "",
+    "medium": "Mixed media with gold leaf, two pieces",
+    "size": "",
+    "price": null,
+    "image": "/images/gold-and-blue-pair.webp",
+    "description": "Two small abstracts in gold frames, one in grey and white with gold leaf, the other with a sweep of deep blue, hung side by side above a sofa.",
+    "story": "",
+    "theme": {
+      "bg": "#12100d",
+      "accent": "#c0a072",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e3ddd4"
+    },
+    "gridSpan": "md:col-span-2 md:row-span-1",
+    "sold": true
+  },
+  {
+    "slug": "two-cars",
+    "title": "Two Cars",
+    "titleAr": "",
+    "medium": "Mixed media on wood",
+    "size": "",
+    "price": null,
+    "image": "/images/two-cars.webp",
+    "description": "A pair of panels, each with a die-cast car fixed to the surface: a black off-roader on ochre beside a burst of white paint, and a black saloon on a red and black field splashed with blue and black.",
+    "story": "",
+    "theme": {
+      "bg": "#12100d",
+      "accent": "#c79e6b",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e4dcd2"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "sold": true
+  },
+  {
+    "slug": "resin-clock",
+    "title": "Resin Clock",
+    "titleAr": "",
+    "medium": "Resin, crushed glass",
+    "size": "",
+    "price": null,
+    "image": "/images/resin-clock.webp",
+    "description": "A round wall clock in poured resin: cream marbled with gold, two teal corners edged in green and clear glass, a seam of gold crystal across the middle, and gold Roman numerals.",
+    "story": "",
+    "theme": {
+      "bg": "#11100e",
+      "accent": "#b6a07c",
+      "gradient": "from-amber-900/20 via-transparent to-emerald-900/10",
+      "textColor": "#e1ddd6"
+    },
+    "gridSpan": "md:col-span-1 md:row-span-2",
+    "category": "object",
+    "sold": true
   }
 ]

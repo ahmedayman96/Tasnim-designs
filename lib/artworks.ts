@@ -6,7 +6,8 @@ export interface Artwork {
     titleAr: string;
     medium: string;
     size: string;
-    year: number;
+    /** Absent when she hasn't said when it was made — never guessed. */
+    year?: number;
     /**
      * null means "price on request" — the piece is on show but not for sale yet.
      * Newly added work starts this way until the artist sets a price, so that no
@@ -48,6 +49,10 @@ export function getArtworkBySlug(slug: string): Artwork | undefined {
 export const paintings: Artwork[] = artworks.filter(
     (a) => (a.category ?? "painting") === "painting"
 );
+
+/** Paintings still on offer, and the ones already in collections — shown apart. */
+export const availablePaintings: Artwork[] = paintings.filter((a) => !a.sold);
+export const soldPaintings: Artwork[] = paintings.filter((a) => a.sold);
 
 /** Functional and sculptural work — chess sets, tables, vessels. */
 export const objects: Artwork[] = artworks.filter((a) => a.category === "object");

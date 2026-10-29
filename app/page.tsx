@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/scroll-based-velocity";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { availablePaintings, soldPaintings } from "@/lib/artworks";
 
 export default function Home() {
   return (
@@ -48,7 +49,17 @@ export default function Home() {
       </section>
 
       {/* ---- Bento Grid Gallery ---- */}
-      <BentoGallery />
+      <BentoGallery items={availablePaintings} />
+
+      {/* ---- Sold work: on show, not for sale ---- */}
+      {soldPaintings.length > 0 && (
+        <BentoGallery
+          items={soldPaintings}
+          id="sold"
+          eyebrow="Sold Works"
+          heading="In Private Collections"
+        />
+      )}
 
       {/* ---- About Section ---- */}
       <section className="relative py-24 md:py-32 px-6 md:px-12" id="about">

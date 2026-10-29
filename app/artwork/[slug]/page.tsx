@@ -21,7 +21,7 @@ export async function generateMetadata({
     if (!artwork) return { title: "Not Found" };
 
     return {
-        title: `${artwork.title} — ${artwork.titleAr} | Tasnim Elyamani`,
+        title: `${[artwork.title, artwork.titleAr].filter(Boolean).join(" — ")} | Tasnim Elyamani`,
         description: artwork.description,
     };
 }

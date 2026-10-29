@@ -47,7 +47,7 @@ export default function BentoGallery({
                 {/* Bento Grid */}
                 <div
                     ref={ref}
-                    className="grid grid-cols-1 md:grid-cols-3 auto-rows-[280px] md:auto-rows-[320px] gap-4"
+                    className="grid grid-cols-1 md:grid-cols-3 auto-rows-[280px] md:auto-rows-[320px] gap-4 md:grid-flow-dense"
                 >
                     {items.map((artwork, i) => (
                         <motion.div
@@ -55,7 +55,7 @@ export default function BentoGallery({
                             className={`${artwork.gridSpan || ""} relative`}
                             initial={{ opacity: 0, y: 40, scale: 0.95 }}
                             animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                            transition={{ duration: 0.7, delay: i * 0.15, ease: [0.25, 0.1, 0, 1] }}
+                            transition={{ duration: 0.7, delay: Math.min(i, 8) * 0.12, ease: [0.25, 0.1, 0, 1] }}
                         >
                             <Link href={`/artwork/${artwork.slug}`} className="block h-full">
                                 <MagicCard
@@ -92,7 +92,7 @@ export default function BentoGallery({
                                             {artwork.description}
                                         </p>
                                         <span className="text-gold text-sm font-medium tracking-wider uppercase">
-                                            {artwork.medium} · {artwork.size}
+                                            {[artwork.medium, artwork.size].filter(Boolean).join(" · ")}
                                         </span>
                                     </div>
 

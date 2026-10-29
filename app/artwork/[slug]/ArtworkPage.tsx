@@ -1,6 +1,6 @@
 "use client";
 
-import { priceLabel, type Artwork } from "@/lib/artworks";
+import { isPurchasable, priceLabel, type Artwork } from "@/lib/artworks";
 import { useCart } from "@/lib/cart-context";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
@@ -114,32 +114,28 @@ export default function ArtworkPage({ artwork, related }: ArtworkPageProps) {
                         {artwork.title}
                     </h1>
 
+                    {/* Size and year are often unknown for older pieces; skip them rather than show gaps. */}
                     <div className="flex flex-wrap items-center gap-4 mb-8">
-                        <span
-                            className="text-sm uppercase tracking-[0.2em] opacity-70"
-                            style={{ color: artwork.theme.accent }}
-                        >
-                            {artwork.medium}
-                        </span>
-                        <span className="w-1 h-1 rounded-full opacity-30" style={{ backgroundColor: artwork.theme.accent }} />
-                        <span
-                            className="text-sm opacity-50"
-                            style={{ color: artwork.theme.textColor }}
-                        >
-                            {artwork.size}
-                        </span>
-                        <span className="w-1 h-1 rounded-full opacity-30" style={{ backgroundColor: artwork.theme.accent }} />
-                        <span
-                            className="text-sm opacity-50"
-                            style={{ color: artwork.theme.textColor }}
-                        >
-                            {artwork.year}
-                        </span>
+                        {[artwork.medium, artwork.size, artwork.year ? String(artwork.year) : ""]
+                            .filter(Boolean)
+                            .map((value, i) => (
+                                <span key={i} className="flex items-center gap-4">
+                                    {i > 0 && (
+                                        <span className="w-1 h-1 rounded-full opacity-30" style={{ backgroundColor: artwork.theme.accent }} />
+                                    )}
+                                    <span
+                                        className={i === 0 ? "text-sm uppercase tracking-[0.2em] opacity-70" : "text-sm opacity-50"}
+                                        style={{ color: i === 0 ? artwork.theme.accent : artwork.theme.textColor }}
+                                    >
+                                        {value}
+                                    </span>
+                                </span>
+                            ))}
                     </div>
                 </motion.div>
 
                 {/* Description + Story */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+                <div className={`grid grid-cols-1 gap-12 mt-12 ${artwork.story ? "md:grid-cols-2" : "max-w-3xl"}`}>
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -160,25 +156,27 @@ export default function ArtworkPage({ artwork, related }: ArtworkPageProps) {
                         </p>
                     </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                    >
-                        <h2
-                            className="font-serif text-2xl font-bold mb-4"
-                            style={{ color: artwork.theme.textColor }}
+                    {artwork.story && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
                         >
-                            The Story
-                        </h2>
-                        <p
-                            className="text-lg leading-relaxed opacity-70"
-                            style={{ color: artwork.theme.textColor }}
-                        >
-                            {artwork.story}
-                        </p>
-                    </motion.div>
+                            <h2
+                                className="font-serif text-2xl font-bold mb-4"
+                                style={{ color: artwork.theme.textColor }}
+                            >
+                                The Story
+                            </h2>
+                            <p
+                                className="text-lg leading-relaxed opacity-70"
+                                style={{ color: artwork.theme.textColor }}
+                            >
+                                {artwork.story}
+                            </p>
+                        </motion.div>
+                    )}
                 </div>
 
                 {/* Price + CTA */}
@@ -197,7 +195,7 @@ export default function ArtworkPage({ artwork, related }: ArtworkPageProps) {
                             className="text-sm uppercase tracking-[0.2em] opacity-50 mb-1"
                             style={{ color: artwork.theme.textColor }}
                         >
-                            Price
+                            {artwork.sold ? "In a private collection" : "Price"}
                         </p>
                         <p
                             className="font-serif text-4xl font-bold"
@@ -207,21 +205,23 @@ export default function ArtworkPage({ artwork, related }: ArtworkPageProps) {
                         </p>
                     </div>
                     <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => addToCart(artwork)}
-                            disabled={isInCart}
-                            className={`px-8 py-3 rounded-xl font-bold text-sm uppercase tracking-[0.15em] transition-all ${isInCart
-                                    ? "bg-green-500/10 border border-green-500/30 text-green-400 cursor-default"
-                                    : "bg-gradient-to-r from-gold via-gold-light to-gold text-midnight hover:shadow-[0_0_30px_rgba(201,165,90,0.3)]"
-                                }`}
-                        >
-                            {isInCart ? "✓ In Collection" : "Add to Collection"}
-                        </button>
+                        {isPurchasable(artwork) && (
+                            <button
+                                onClick={() => addToCart(artwork)}
+                                disabled={isInCart}
+                                className={`px-8 py-3 rounded-xl font-bold text-sm uppercase tracking-[0.15em] transition-all ${isInCart
+                                        ? "bg-green-500/10 border border-green-500/30 text-green-400 cursor-default"
+                                        : "bg-gradient-to-r from-gold via-gold-light to-gold text-midnight hover:shadow-[0_0_30px_rgba(201,165,90,0.3)]"
+                                    }`}
+                            >
+                                {isInCart ? "✓ In Collection" : "Add to Collection"}
+                            </button>
+                        )}
                         <Link
                             href="/book"
                             className="px-8 py-3 rounded-xl border border-gold/30 text-gold hover:bg-gold/10 hover:border-gold/60 font-bold text-sm uppercase tracking-[0.15em] transition-all inline-flex items-center"
                         >
-                            Inquire
+                            {artwork.sold ? "Commission a Similar Piece" : "Inquire"}
                         </Link>
                     </div>
                 </motion.div>
