@@ -230,6 +230,94 @@
     ]
   },
   {
+    "slug": "madinaty-reception",
+    "title": "The Reception and Entrance",
+    "titleAr": "الاستقبال والمدخل",
+    "service": "3d",
+    "project": "Madinaty Villa",
+    "location": "Madinaty",
+    "year": 2026,
+    "description": "A curved navy velvet sofa against a wall of backlit fluted plaster, under a cloud of hanging glass pendants, with bouclé lounge chairs on walnut frames and a stepped black coffee table. Beside it, a sculpted chaise by the window under an arc lamp, and at the entrance a walnut door with a brass inlay, a walnut bench on a turned foot, and an indoor planter.",
+    "images": [
+      "/architecture/madinaty-villa/reception_01.webp",
+      "/architecture/madinaty-villa/reception_02.webp",
+      "/architecture/madinaty-villa/reception_03.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-living-room",
+    "title": "The Living Room",
+    "titleAr": "غرفة المعيشة",
+    "service": "3d",
+    "project": "Madinaty Villa",
+    "location": "Madinaty",
+    "year": 2026,
+    "description": "A travertine frame for the television set into a wall of carved stone, lit from above and below, with a linear fireplace in a blue stone plinth beneath it. Lit display shelving in gold rises between three curved columns, and a long low sectional faces a rust velvet chair across a patterned rug.",
+    "images": [
+      "/architecture/madinaty-villa/living_01.webp",
+      "/architecture/madinaty-villa/living_02.webp",
+      "/architecture/madinaty-villa/living_03.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-dining",
+    "title": "The Dining Room",
+    "titleAr": "السفرة",
+    "service": "3d",
+    "project": "Madinaty Villa",
+    "location": "Madinaty",
+    "year": 2026,
+    "description": "A glass-edged dining table on a brass or fluted walnut base, eight walnut chairs in cream and rust bouclé, and a hanging cloud of glass petals over it. Behind, a full wall of carved stone, a walnut sideboard, and lit glass cabinets either side; the dining room opens onto the kitchen.",
+    "images": [
+      "/architecture/madinaty-villa/dining_01.webp",
+      "/architecture/madinaty-villa/dining_02.webp",
+      "/architecture/madinaty-villa/dining_03.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-kitchen",
+    "title": "The Kitchen",
+    "titleAr": "المطبخ",
+    "service": "3d",
+    "project": "Madinaty Villa",
+    "location": "Madinaty",
+    "year": 2026,
+    "description": "A U-shaped kitchen in warm grey under an arched window: a diagonal run of lit walnut spice shelves through the wall cabinets, a black veined-marble splashback and worktop, built-in ovens, and a tall wall of cabinets housing two fridges.",
+    "images": [
+      "/architecture/madinaty-villa/kitchen_01.webp",
+      "/architecture/madinaty-villa/kitchen_02.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-sitting-room",
+    "title": "The Sitting Room",
+    "titleAr": "غرفة الجلوس",
+    "service": "3d",
+    "project": "Madinaty Villa",
+    "location": "Madinaty",
+    "year": 2026,
+    "description": "A deep U-shaped sofa in cream under woven pendant lamps, with travertine tables and a resin top. The walls carry the Egyptian theme of the house: a painted hieroglyphic panel, a carved relief of hieroglyphs beside a grid of arched niches, and textured plaster with lit recesses.",
+    "images": [
+      "/architecture/madinaty-villa/sitting_01.webp",
+      "/architecture/madinaty-villa/sitting_02.webp",
+      "/architecture/madinaty-villa/sitting_03.webp",
+      "/architecture/madinaty-villa/sitting_04.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-laundry",
+    "title": "The Laundry and Coffee Corner",
+    "titleAr": "الغسيل وركن القهوة",
+    "service": "3d",
+    "project": "Madinaty Villa",
+    "location": "Madinaty",
+    "year": 2026,
+    "description": "Walnut joinery built around the laundry: the washer, shelves for detergents and linens, a hanging rail, and a tall bay for the ironing board and vacuum. Beside it, a coffee corner with a wine fridge, open shelves and a black stone splashback.",
+    "images": [
+      "/architecture/madinaty-villa/laundry_01.webp"
+    ]
+  },
+  {
     "slug": "madinaty-pharaonic-bedroom",
     "title": "Pharaonic Master Bedroom",
     "titleAr": "غرفة النوم الفرعونية",
