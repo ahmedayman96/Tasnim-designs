@@ -61,7 +61,7 @@ export default function RenderGallery({ work, index }: { work: ArchitectureWork;
                         {work.description}
                     </p>
                     <p className="text-warm-gray text-[0.6rem] uppercase tracking-[0.3em] mt-7">
-                        {work.images.length} views
+                        {work.images.length} {work.images.length === 1 ? "view" : "views"}
                     </p>
                 </div>
 
