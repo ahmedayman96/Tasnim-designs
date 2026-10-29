@@ -212,8 +212,9 @@ export const PROJECT_META: Record<string, { order: number; kind: string; summary
     "residential-plan-three-uae": { order: 6, kind: "Residential" },
     "residential-plan-two": { order: 7, kind: "Residential" },
     "residential-plan-one": { order: 8, kind: "Residential" },
-    "beauty-salon": { order: 9, kind: "Commercial" },
-    "venos-store": { order: 10, kind: "Commercial" },
+    "fashion-boutique": { order: 9, kind: "Commercial" },
+    "beauty-salon": { order: 10, kind: "Commercial" },
+    "venos-store": { order: 11, kind: "Commercial" },
 };
 
 export function projectKind(slug: string): string | undefined {

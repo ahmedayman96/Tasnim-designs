@@ -708,6 +708,34 @@
     ]
   },
   {
+    "slug": "fashion-boutique-bags-shoes",
+    "title": "Bags and Shoes",
+    "titleAr": "الشنط والأحذية",
+    "service": "3d",
+    "project": "Fashion Boutique",
+    "description": "A bag and shoe store under a lit tray ceiling: gold birdcages hung on chains in front of the window with a bag in each, a timber plinth of bags running along the glass, and a central island of white display tiers raised on timber spheres around a round column. Bags sit on backlit floating shelves and in an arched niche, with a timber cash desk and polished marble underfoot.",
+    "images": [
+      "/architecture/fashion-boutique/bags_01.webp",
+      "/architecture/fashion-boutique/bags_02.webp",
+      "/architecture/fashion-boutique/bags_03.webp",
+      "/architecture/fashion-boutique/bags_04.webp",
+      "/architecture/fashion-boutique/bags_05.webp"
+    ]
+  },
+  {
+    "slug": "fashion-boutique-clothing",
+    "title": "Clothing",
+    "titleAr": "الملابس",
+    "service": "3d",
+    "project": "Fashion Boutique",
+    "description": "The clothing side of the boutique, on a warm timber floor: a wall of veined marble panels with a black steel frame carrying rails and lit shelves, marble plinths joined by glass shelves on stacked stone spheres, ceiling-hung rails, curtained fitting rooms behind arches, an arched mirror, and the cash desk under the brand's laurel logo.",
+    "images": [
+      "/architecture/fashion-boutique/clothing_01.webp",
+      "/architecture/fashion-boutique/clothing_02.webp",
+      "/architecture/fashion-boutique/clothing_03.webp"
+    ]
+  },
+  {
     "slug": "beauty-salon",
     "title": "The Salon",
     "titleAr": "الصالون",
