@@ -312,9 +312,23 @@
     "project": "Madinaty Villa",
     "location": "Madinaty",
     "year": 2026,
-    "description": "Walnut joinery built around the laundry: the washer, shelves for detergents and linens, a hanging rail, and a tall bay for the ironing board and vacuum. Beside it, a coffee corner with a wine fridge, open shelves and a black stone splashback.",
+    "description": "Walnut joinery built around the laundry: the washer, shelves for detergents and linens, a hanging rail, and a tall bay for the ironing board and vacuum. Beside it, a coffee corner with a wine fridge, open shelves and a black stone splashback. A column carved with hieroglyphs stands between the laundry and the sitting room.",
     "images": [
-      "/architecture/madinaty-villa/laundry_01.webp"
+      "/architecture/madinaty-villa/laundry_01.webp",
+      "/architecture/madinaty-villa/laundry_02.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-staircase-built",
+    "title": "The Staircase, as Built",
+    "titleAr": "السلم بعد التنفيذ",
+    "service": "finishing",
+    "project": "Madinaty Villa",
+    "location": "Madinaty",
+    "year": 2026,
+    "description": "A photograph from the finished house, not a render: white marble treads over black veined risers and skirting, with step lights set into the skirting, and one of Tasnim's resin wave pieces hung on the landing wall.",
+    "images": [
+      "/architecture/madinaty-villa/stair_built_01.webp"
     ]
   },
   {
