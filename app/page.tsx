@@ -65,8 +65,8 @@ export default function Home() {
               transition={{ duration: 0.8 }}
             >
               <Image
-                src="/images/artwork-3.png"
-                alt="Tasnim Elyamani — Artist"
+                src="/architecture/madinaty-villa/stair_built_01.webp"
+                alt="Tasnim Elyamani — her resin wave piece on the staircase of Madinaty Villa, a house she designed and built"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
