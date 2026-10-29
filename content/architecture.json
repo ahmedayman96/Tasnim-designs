@@ -260,6 +260,36 @@
     ]
   },
   {
+    "slug": "bayoot-bay-guest-rooms",
+    "title": "The Guest Rooms",
+    "titleAr": "غرف الفندق",
+    "service": "3d",
+    "project": "Bayoot Bay Hotel",
+    "description": "Ten guest rooms, designed in 3D and then built: the finishing and the furniture were carried out on site to her drawings. Each room pairs a bed against a backlit stone-textured wall between walnut panels with a sitting area of low bouclé sofas, a walnut coffee table on two spheres, a herringbone oak floor, flush walnut doors and wardrobes, a free-form backlit mirror and a tea station on a rounded walnut cabinet.",
+    "images": [
+      "/architecture/bayoot-bay-hotel/room_01.webp",
+      "/architecture/bayoot-bay-hotel/room_02.webp",
+      "/architecture/bayoot-bay-hotel/room_03.webp",
+      "/architecture/bayoot-bay-hotel/room_04.webp",
+      "/architecture/bayoot-bay-hotel/room_05.webp",
+      "/architecture/bayoot-bay-hotel/room_06.webp"
+    ]
+  },
+  {
+    "slug": "bayoot-bay-hospital-rooms",
+    "title": "The Hospital Suites",
+    "titleAr": "غرف المستشفى",
+    "service": "3d",
+    "project": "Bayoot Bay Hotel",
+    "description": "The hotel's hospital rooms, designed in 3D: the bed set into a backlit arched walnut niche, a lit wood column and a recessed coffee niche in the joinery, a curtain on a ceiling track to screen the bed, and a sofa and coffee table so the room reads as a suite rather than a ward.",
+    "images": [
+      "/architecture/bayoot-bay-hotel/hospital_01.webp",
+      "/architecture/bayoot-bay-hotel/hospital_02.webp",
+      "/architecture/bayoot-bay-hotel/hospital_03.webp",
+      "/architecture/bayoot-bay-hotel/hospital_04.webp"
+    ]
+  },
+  {
     "slug": "66-motors-showroom",
     "title": "The Showroom",
     "titleAr": "صالة العرض",

@@ -202,14 +202,20 @@ export const PROJECT_META: Record<string, { order: number; kind: string; summary
         summary:
             "Every interior in the house, designed in 3D and carried through to execution on site: four bedrooms, the living room, the kitchen and dining space, and the laundry. The furniture was designed for the house, and the artworks on its walls are Tasnim's own.",
     },
-    "66-motors-showroom": { order: 4, kind: "Commercial" },
-    "residential-plan-three-uae": { order: 5, kind: "Residential" },
-    "residential-plan-two": { order: 6, kind: "Residential" },
-    "residential-plan-one": { order: 7, kind: "Residential" },
-    "beauty-salon": { order: 8, kind: "Commercial" },
-    "venos-store": { order: 9, kind: "Commercial" },
+    "bayoot-bay-hotel": {
+        order: 4,
+        kind: "Built",
+        summary:
+            "Ten guest rooms designed in 3D and carried through to execution on site, including the finishing and the furniture, which was made to her designs. The hotel's hospital rooms were designed in 3D.",
+    },
+    "66-motors-showroom": { order: 5, kind: "Commercial" },
+    "residential-plan-three-uae": { order: 6, kind: "Residential" },
+    "residential-plan-two": { order: 7, kind: "Residential" },
+    "residential-plan-one": { order: 8, kind: "Residential" },
+    "beauty-salon": { order: 9, kind: "Commercial" },
+    "venos-store": { order: 10, kind: "Commercial" },
     "revit-studies": {
-        order: 10,
+        order: 11,
         kind: "Student work",
         summary:
             "Student work from university, modelled and rendered in Revit. These are design studies, not a commissioned or built project.",
