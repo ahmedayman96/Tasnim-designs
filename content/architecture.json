@@ -420,6 +420,22 @@
     ]
   },
   {
+    "slug": "madinaty-two-kitchen",
+    "title": "The Kitchen",
+    "titleAr": "المطبخ",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "The closed kitchen behind the open one: a U of taupe cabinets with a black stone worktop under a book-matched stone splashback, glass-fronted wall cabinets lit from within, and a window over the sink. A tall unit in textured bronze laminate houses the fridge and microwave, and beside it a walk-in pantry of lit oak shelves.",
+    "images": [
+      "/architecture/madinaty-villa-two/kitchen_01.webp",
+      "/architecture/madinaty-villa-two/kitchen_02.webp",
+      "/architecture/madinaty-villa-two/kitchen_03.webp",
+      "/architecture/madinaty-villa-two/kitchen_04.webp",
+      "/architecture/madinaty-villa-two/kitchen_05.webp"
+    ]
+  },
+  {
     "slug": "madinaty-two-entrance",
     "title": "The Entrance",
     "titleAr": "المدخل",
