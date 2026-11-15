@@ -575,6 +575,49 @@
     ]
   },
   {
+    "slug": "madinaty-two-roof-bedroom",
+    "title": "Roof: The Bedroom and Bathroom",
+    "titleAr": "السطح: غرفة النوم وحمامها",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "A bedroom on the roof, with a scalloped brown velvet headboard and an olive quilt set into a corner of oak panels and fluted oak, lit along every joint, under a large figurative painting in black and cream stripes. A walnut wardrobe with reeded glass doors stands opposite. Its bathroom is in pale stone and walnut: a walk-in shower behind a glass screen, a wall-hung WC under a lit niche, and a floating walnut vanity beneath a pebble-shaped mirror lit from behind.",
+    "images": [
+      "/architecture/madinaty-villa-two/roof_bedroom_01.webp",
+      "/architecture/madinaty-villa-two/roof_bedroom_02.webp",
+      "/architecture/madinaty-villa-two/roof_bedroom_03.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-two-roof-lounge",
+    "title": "Roof: The Lounge and Study",
+    "titleAr": "السطح: الجلسة والمكتب",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "A glass room on the roof, framed in black steel and glazed overhead, opening onto the terrace through full-height doors. A cream bouclé sectional sits on a patterned rug in rust and cream, with a split marble coffee table and a woven side table, against a wall of oak and fluted panels lit along each seam. A large abstract painting in sage, ochre and rust faces the sofa, the television floats in front of the glass, and a timber desk takes the corner with the view.",
+    "images": [
+      "/architecture/madinaty-villa-two/roof_lounge_01.webp",
+      "/architecture/madinaty-villa-two/roof_lounge_02.webp",
+      "/architecture/madinaty-villa-two/roof_lounge_03.webp",
+      "/architecture/madinaty-villa-two/roof_lounge_04.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-two-roof-terrace",
+    "title": "Roof: The Terrace",
+    "titleAr": "السطح: التراس",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "The roof terrace under a black steel pergola with draped fabric shades: a U-shaped built-in bench with timber seats, lit beneath, around a round steel fire pit stacked with logs, planters of shrubs and a climbing green wall, and an outdoor kitchen with a grill and black stone worktop. A round travertine table with woven teak chairs sits outside the study.",
+    "images": [
+      "/architecture/madinaty-villa-two/roof_terrace_01.webp",
+      "/architecture/madinaty-villa-two/roof_terrace_02.webp",
+      "/architecture/madinaty-villa-two/roof_terrace_03.webp"
+    ]
+  },
+  {
     "slug": "66-motors-showroom",
     "title": "The Showroom",
     "titleAr": "صالة العرض",
