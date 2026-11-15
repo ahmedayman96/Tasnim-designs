@@ -529,6 +529,20 @@
     ]
   },
   {
+    "slug": "madinaty-two-first-floor-bathroom",
+    "title": "First Floor: The Bathroom",
+    "titleAr": "الدور الأول: الحمام",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "A bathroom in textured cream stone and light oak: a freestanding tub with a black floor-standing mixer against the end wall, a wall-hung WC, and lit stone niches and slim oak shelving for bottles, towels and candles. Tall oak cabinets close over a laundry bay for the washing machine, beside a floating oak vanity with a stone basin and a capsule mirror lit around its edge against pill-shaped tiles.",
+    "images": [
+      "/architecture/madinaty-villa-two/ff_wc_01.webp",
+      "/architecture/madinaty-villa-two/ff_wc_02.webp",
+      "/architecture/madinaty-villa-two/ff_wc_03.webp"
+    ]
+  },
+  {
     "slug": "66-motors-showroom",
     "title": "The Showroom",
     "titleAr": "صالة العرض",
