@@ -543,6 +543,23 @@
     ]
   },
   {
+    "slug": "madinaty-two-master-suite",
+    "title": "First Floor: The Master Bedroom and Bathroom",
+    "titleAr": "الدور الأول: غرفة النوم الرئيسية وحمامها",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "A master bedroom in cream and walnut with touches of deep red: the bed stands against a freestanding wall of classical panel mouldings that curves into fluted plaster by the window, with ribbed red velvet stools at its foot. A wall of walnut wardrobes with reeded glass doors faces it, and an arched dressing niche, lit around its edge and lined in burl veneer, holds a mirror, a floating walnut dressing table and a red velvet chair. Its bathroom is in travertine and light oak: a floating vanity with a stone basin under a capsule mirror lit from behind, a wall-hung WC under a tall oak cabinet, and a walk-in rain shower behind a glass screen with lit niches and a stone bench.",
+    "images": [
+      "/architecture/madinaty-villa-two/ff_master_01.webp",
+      "/architecture/madinaty-villa-two/ff_master_02.webp",
+      "/architecture/madinaty-villa-two/ff_master_03.webp",
+      "/architecture/madinaty-villa-two/ff_master_04.webp",
+      "/architecture/madinaty-villa-two/ff_master_05.webp",
+      "/architecture/madinaty-villa-two/ff_master_06.webp"
+    ]
+  },
+  {
     "slug": "66-motors-showroom",
     "title": "The Showroom",
     "titleAr": "صالة العرض",
