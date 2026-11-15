@@ -208,13 +208,14 @@ export const PROJECT_META: Record<string, { order: number; kind: string; summary
         summary:
             "Ten guest rooms designed in 3D and carried through to execution on site, including the finishing and the furniture, which was made to her designs. The hotel's hospital rooms were designed in 3D.",
     },
-    "66-motors-showroom": { order: 5, kind: "Commercial" },
-    "residential-plan-three-uae": { order: 6, kind: "Residential" },
-    "residential-plan-two": { order: 7, kind: "Residential" },
-    "residential-plan-one": { order: 8, kind: "Residential" },
-    "fashion-boutique": { order: 9, kind: "Commercial" },
-    "beauty-salon": { order: 10, kind: "Commercial" },
-    "venos-store": { order: 11, kind: "Commercial" },
+    "madinaty-villa-two": { order: 5, kind: "Residential" },
+    "66-motors-showroom": { order: 6, kind: "Commercial" },
+    "residential-plan-three-uae": { order: 7, kind: "Residential" },
+    "residential-plan-two": { order: 8, kind: "Residential" },
+    "residential-plan-one": { order: 9, kind: "Residential" },
+    "fashion-boutique": { order: 10, kind: "Commercial" },
+    "beauty-salon": { order: 11, kind: "Commercial" },
+    "venos-store": { order: 12, kind: "Commercial" },
 };
 
 export function projectKind(slug: string): string | undefined {

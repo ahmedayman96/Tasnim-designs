@@ -391,6 +391,62 @@
     ]
   },
   {
+    "slug": "madinaty-two-living",
+    "title": "The Living Room",
+    "titleAr": "غرفة المعيشة",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "A curved travertine wall for the television, lit around its edge and set between bronze panels with floating shelves, facing low bouclé sofas around a pair of stacked bronze coffee tables. Linear track lights run the length of the ceiling, and a coffee corner sits between the windows.",
+    "images": [
+      "/architecture/madinaty-villa-two/living_01.webp",
+      "/architecture/madinaty-villa-two/living_02.webp",
+      "/architecture/madinaty-villa-two/living_03.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-two-dining",
+    "title": "The Dining Room and Kitchen",
+    "titleAr": "السفرة والمطبخ",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "A long stone table on two cylindrical bases, with cream bouclé and rust velvet chairs on walnut frames, under a cloud of glass and brass pendants. It opens onto the living room on one side and onto an open kitchen of pale cabinets, a marble splashback and lit bronze display shelving on the other.",
+    "images": [
+      "/architecture/madinaty-villa-two/dining_01.webp",
+      "/architecture/madinaty-villa-two/dining_02.webp",
+      "/architecture/madinaty-villa-two/dining_03.webp",
+      "/architecture/madinaty-villa-two/dining_04.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-two-entrance",
+    "title": "The Entrance",
+    "titleAr": "المدخل",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "A wall of smoked bronze glass behind a floating oak console and a rust velvet bench, a curved oak column and a bronze-clad pier at the front door, and marble steps up to the private wing, lit along each tread. A glass planter of olive and bird-of-paradise sits on a lit bed of gravel.",
+    "images": [
+      "/architecture/madinaty-villa-two/entrance_01.webp",
+      "/architecture/madinaty-villa-two/entrance_02.webp",
+      "/architecture/madinaty-villa-two/entrance_03.webp"
+    ]
+  },
+  {
+    "slug": "madinaty-two-guest-toilet",
+    "title": "The Guest Toilet",
+    "titleAr": "حمام الضيوف",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "Two schemes for the guest toilet in stone, oak and pale picket tiles: one with a stone basin on a fluted travertine pedestal under an arched backlit mirror, the other with a vessel basin on a floating oak vanity, a capsule mirror, and an oak cabinet over the cistern wall.",
+    "images": [
+      "/architecture/madinaty-villa-two/toilet_01.webp",
+      "/architecture/madinaty-villa-two/toilet_02.webp"
+    ]
+  },
+  {
     "slug": "66-motors-showroom",
     "title": "The Showroom",
     "titleAr": "صالة العرض",
