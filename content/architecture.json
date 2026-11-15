@@ -560,6 +560,21 @@
     ]
   },
   {
+    "slug": "madinaty-two-second-bedroom",
+    "title": "First Floor: Bedroom Two",
+    "titleAr": "الدور الأول: الغرفة الثانية",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "A twin bedroom with two beds under rounded caramel velvet headboards, set either side of a full-height mirror and a small walnut dressing table, against a wall of upholstered panels with columns of round bronze wall lights. A large abstract painting in amber and cream hangs backlit on the side wall, and opposite the beds, walnut wardrobes with long recessed pulls frame a lit display niche over a fluted cream chest, with a desk by the window.",
+    "images": [
+      "/architecture/madinaty-villa-two/ff_bedroom2_01.webp",
+      "/architecture/madinaty-villa-two/ff_bedroom2_02.webp",
+      "/architecture/madinaty-villa-two/ff_bedroom2_03.webp",
+      "/architecture/madinaty-villa-two/ff_bedroom2_04.webp"
+    ]
+  },
+  {
     "slug": "66-motors-showroom",
     "title": "The Showroom",
     "titleAr": "صالة العرض",
