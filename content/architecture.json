@@ -463,6 +463,32 @@
     ]
   },
   {
+    "slug": "madinaty-two-garden",
+    "title": "The Garden",
+    "titleAr": "الحديقة",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "The outdoor garden around the villa: a rain-curtain water wall in a black steel frame, falling into a lit black stone basin with koi, at the end of a long lawn edged in planting. A timber pergola shelters an outdoor lounge and kitchen on a raised deck, with a dining table beside it, and a paved path runs along the house past the front door to a slatted timber gate and the planted street frontage.",
+    "images": [
+      "/architecture/madinaty-villa-two/garden_01.webp",
+      "/architecture/madinaty-villa-two/garden_02.webp",
+      "/architecture/madinaty-villa-two/garden_03.webp",
+      "/architecture/madinaty-villa-two/garden_04.webp",
+      "/architecture/madinaty-villa-two/garden_05.webp",
+      "/architecture/madinaty-villa-two/garden_06.webp",
+      "/architecture/madinaty-villa-two/garden_07.webp",
+      "/architecture/madinaty-villa-two/garden_08.webp",
+      "/architecture/madinaty-villa-two/garden_09.webp",
+      "/architecture/madinaty-villa-two/garden_10.webp",
+      "/architecture/madinaty-villa-two/garden_11.webp",
+      "/architecture/madinaty-villa-two/garden_12.webp",
+      "/architecture/madinaty-villa-two/garden_13.webp",
+      "/architecture/madinaty-villa-two/garden_14.webp",
+      "/architecture/madinaty-villa-two/garden_15.webp"
+    ]
+  },
+  {
     "slug": "66-motors-showroom",
     "title": "The Showroom",
     "titleAr": "صالة العرض",
