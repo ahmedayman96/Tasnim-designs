@@ -489,6 +489,25 @@
     ]
   },
   {
+    "slug": "madinaty-two-outdoor-kitchen",
+    "title": "The Outdoor Kitchen",
+    "titleAr": "المطبخ الخارجي",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "A kitchen in the garden under a glass roof on a black steel frame, opening onto the lawn. Oak base units and a black marble worktop run beneath a band of glazing, with two kamado grills, a Bosch oven and a tall oak unit for the fridge and microwave under pale wall cabinets. Beside it, a live-edge timber table on a black glass base with bouclé and walnut chairs, a built-in sofa along the house wall, and olive trees in stone planters.",
+    "images": [
+      "/architecture/madinaty-villa-two/outdoor_kitchen_01.webp",
+      "/architecture/madinaty-villa-two/outdoor_kitchen_02.webp",
+      "/architecture/madinaty-villa-two/outdoor_kitchen_03.webp",
+      "/architecture/madinaty-villa-two/outdoor_kitchen_04.webp",
+      "/architecture/madinaty-villa-two/outdoor_kitchen_05.webp",
+      "/architecture/madinaty-villa-two/outdoor_kitchen_06.webp",
+      "/architecture/madinaty-villa-two/outdoor_kitchen_07.webp",
+      "/architecture/madinaty-villa-two/outdoor_kitchen_08.webp"
+    ]
+  },
+  {
     "slug": "66-motors-showroom",
     "title": "The Showroom",
     "titleAr": "صالة العرض",
