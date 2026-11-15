@@ -513,6 +513,22 @@
     ]
   },
   {
+    "slug": "madinaty-two-first-bedroom",
+    "title": "First Floor: Bedroom One",
+    "titleAr": "الدور الأول: الغرفة الأولى",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "A bedroom built around an arched headboard wall of carved swirling relief in caramel and cream, lit from behind its beaded frame, with a scalloped upholstered bed and an olive velvet quilt. A window seat runs the length of the bay, and opposite, a desk and dressing table sits against fluted panels and a mirror, between lit oak shelving and a wardrobe behind reeded bronze glass, on a herringbone oak floor.",
+    "images": [
+      "/architecture/madinaty-villa-two/ff_bedroom1_01.webp",
+      "/architecture/madinaty-villa-two/ff_bedroom1_02.webp",
+      "/architecture/madinaty-villa-two/ff_bedroom1_03.webp",
+      "/architecture/madinaty-villa-two/ff_bedroom1_04.webp",
+      "/architecture/madinaty-villa-two/ff_bedroom1_05.webp"
+    ]
+  },
+  {
     "slug": "66-motors-showroom",
     "title": "The Showroom",
     "titleAr": "صالة العرض",
