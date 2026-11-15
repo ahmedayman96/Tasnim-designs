@@ -464,12 +464,12 @@
   },
   {
     "slug": "madinaty-two-garden",
-    "title": "The Garden",
-    "titleAr": "الحديقة",
+    "title": "The Garden and Outdoor Kitchen",
+    "titleAr": "الحديقة والمطبخ الخارجي",
     "service": "3d",
     "project": "Madinaty Villa Two",
     "location": "Madinaty",
-    "description": "The outdoor garden around the villa: a rain-curtain water wall in a black steel frame, falling into a lit black stone basin with koi, at the end of a long lawn edged in planting. A timber pergola shelters an outdoor lounge and kitchen on a raised deck, with a dining table beside it, and a paved path runs along the house past the front door to a slatted timber gate and the planted street frontage.",
+    "description": "The outdoor garden around the villa: a rain-curtain water wall in a black steel frame, falling into a lit black stone basin with koi, at the end of a long lawn edged in planting. A timber pergola shelters an outdoor lounge on a raised deck, and a paved path runs along the house past the front door to a slatted timber gate and the planted street frontage. Off the lawn, an outdoor kitchen under a glass roof on a black steel frame: oak base units and a black marble worktop beneath a band of glazing, two kamado grills, a tall oak unit for the fridge and microwave, and a live-edge timber table with bouclé and walnut chairs beside a built-in sofa.",
     "images": [
       "/architecture/madinaty-villa-two/garden_01.webp",
       "/architecture/madinaty-villa-two/garden_02.webp",
@@ -485,18 +485,7 @@
       "/architecture/madinaty-villa-two/garden_12.webp",
       "/architecture/madinaty-villa-two/garden_13.webp",
       "/architecture/madinaty-villa-two/garden_14.webp",
-      "/architecture/madinaty-villa-two/garden_15.webp"
-    ]
-  },
-  {
-    "slug": "madinaty-two-outdoor-kitchen",
-    "title": "The Outdoor Kitchen",
-    "titleAr": "المطبخ الخارجي",
-    "service": "3d",
-    "project": "Madinaty Villa Two",
-    "location": "Madinaty",
-    "description": "A kitchen in the garden under a glass roof on a black steel frame, opening onto the lawn. Oak base units and a black marble worktop run beneath a band of glazing, with two kamado grills, a Bosch oven and a tall oak unit for the fridge and microwave under pale wall cabinets. Beside it, a live-edge timber table on a black glass base with bouclé and walnut chairs, a built-in sofa along the house wall, and olive trees in stone planters.",
-    "images": [
+      "/architecture/madinaty-villa-two/garden_15.webp",
       "/architecture/madinaty-villa-two/outdoor_kitchen_01.webp",
       "/architecture/madinaty-villa-two/outdoor_kitchen_02.webp",
       "/architecture/madinaty-villa-two/outdoor_kitchen_03.webp",
