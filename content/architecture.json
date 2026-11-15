@@ -497,6 +497,22 @@
     ]
   },
   {
+    "slug": "madinaty-two-first-floor-living",
+    "title": "First Floor: The Living Area",
+    "titleAr": "الدور الأول: المعيشة",
+    "service": "3d",
+    "project": "Madinaty Villa Two",
+    "location": "Madinaty",
+    "description": "The family living area upstairs: a low modular sofa in charcoal bouclé set into a corner of walnut lattice screens and fluted panels, lit from behind, beside a wall of Arabic calligraphy carved in relief. Opposite, the television sits on a backlit panel of grey stone over a floating walnut unit, with lit walnut shelving to one side and the marble stair rising behind a glass balustrade. A walnut kitchenette with a laundry corner sits off the room by the window.",
+    "images": [
+      "/architecture/madinaty-villa-two/ff_living_01.webp",
+      "/architecture/madinaty-villa-two/ff_living_02.webp",
+      "/architecture/madinaty-villa-two/ff_living_03.webp",
+      "/architecture/madinaty-villa-two/ff_living_04.webp",
+      "/architecture/madinaty-villa-two/ff_living_05.webp"
+    ]
+  },
+  {
     "slug": "66-motors-showroom",
     "title": "The Showroom",
     "titleAr": "صالة العرض",
